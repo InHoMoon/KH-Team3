@@ -67,7 +67,7 @@ $(document).ready(function(){
 <%	} %>
 </table>
 
-<div id="btnBox" class="pull-right"> <!-- 오른쪽으로 붙게 하는듯? -->
+<div id="btnBox" class="pull-right"> 
 	<button id="btnWrite" class="btn btn-primary">글쓰기</button>
 </div>
 <div class="clearfix"></div>

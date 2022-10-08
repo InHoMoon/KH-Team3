@@ -9,7 +9,7 @@
 <body>
 
 <form action="./write" method="post" enctype="multipart/form-data">
-
+	<table></table>
 </form>
 
 </body>

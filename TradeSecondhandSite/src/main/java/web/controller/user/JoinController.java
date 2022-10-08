@@ -40,8 +40,6 @@ public class JoinController extends HttpServlet {
 		// 회원가입 성공 페이지로 이동
 		req.getRequestDispatcher("/WEB-INF/views/user/joinSuccess.jsp").forward(req, resp);
 		
-		// 머지테스트용
-		
 	}
 	
 }

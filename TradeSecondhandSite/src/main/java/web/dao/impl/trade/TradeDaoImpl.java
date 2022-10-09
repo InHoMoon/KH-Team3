@@ -262,7 +262,8 @@ public class TradeDaoImpl implements TradeDao {
 				trade.setTitle(rs.getString("title"));
 				trade.setUserid(rs.getString("userid"));
 				trade.setContent(rs.getString("content"));
-				trade.setState(rs.getString("state"));
+				trade.setProductState(rs.getString("product_state"));
+				trade.setSaleState(rs.getString("sale_state"));
 				trade.setPrice(rs.getInt("price"));
 				trade.setHit(rs.getInt("hit"));
 				trade.setCategory(rs.getString("category"));

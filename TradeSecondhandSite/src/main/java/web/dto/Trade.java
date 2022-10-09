@@ -11,13 +11,14 @@ public class Trade {
 	private int hit;
 	private Date insertDate;
 	private int price;
-	private String state;
+	private String productState;
+	private String saleState;
 	private String category;
 	
 	public Trade() {}
-
+	
 	public Trade(int tradeno, String title, String userid, String content, int hit, Date insertDate, int price,
-			String state, String category) {
+			String productState, String saleState, String category) {
 		super();
 		this.tradeno = tradeno;
 		this.title = title;
@@ -26,15 +27,18 @@ public class Trade {
 		this.hit = hit;
 		this.insertDate = insertDate;
 		this.price = price;
-		this.state = state;
+		this.productState = productState;
+		this.saleState = saleState;
 		this.category = category;
 	}
+	
+	
 
 	@Override
 	public String toString() {
 		return "Trade [tradeno=" + tradeno + ", title=" + title + ", userid=" + userid + ", content=" + content
-				+ ", hit=" + hit + ", insertDate=" + insertDate + ", price=" + price + ", state=" + state
-				+ ", category=" + category + "]";
+				+ ", hit=" + hit + ", insertDate=" + insertDate + ", price=" + price + ", productState=" + productState
+				+ ", saleState=" + saleState + ", category=" + category + "]";
 	}
 
 	public int getTradeno() {
@@ -93,12 +97,20 @@ public class Trade {
 		this.price = price;
 	}
 
-	public String getState() {
-		return state;
+	public String getProductState() {
+		return productState;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setProductState(String productState) {
+		this.productState = productState;
+	}
+
+	public String getSaleState() {
+		return saleState;
+	}
+
+	public void setSaleState(String saleState) {
+		this.saleState = saleState;
 	}
 
 	public String getCategory() {
@@ -110,5 +122,5 @@ public class Trade {
 	}
 	
 	
-
+	
 }

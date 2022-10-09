@@ -18,6 +18,8 @@ public class NoticeDaoImpl implements NoticeDao {
 	private PreparedStatement ps = null; //SQL수행 객체
 	private ResultSet rs = null; //조회 결과 객체
 	
+	
+	
 	// 총 게시글 조회 (페이징 처리X)
 	@Override
 	public List<Notice> selectAll(Connection conn) {
@@ -62,6 +64,8 @@ public class NoticeDaoImpl implements NoticeDao {
 		return noticeList;	
 	}
 
+	
+	
 	
 	// 총 게시글 조회 (페이징)
 	@Override
@@ -116,6 +120,8 @@ public class NoticeDaoImpl implements NoticeDao {
 		return noticeList;
 	}
 
+	
+	
 	@Override
 	public int selectCntAll(Connection conn) {
 
@@ -144,6 +150,8 @@ public class NoticeDaoImpl implements NoticeDao {
 		return count;
 	}
 
+	
+	
 	
 	//조회수 1 증가	
 	@Override
@@ -178,6 +186,8 @@ public class NoticeDaoImpl implements NoticeDao {
 		return res;
 	}
 
+	
+	
 	@Override
 	public Notice selectNoticeByNno(Connection conn, Notice nno) {
 			
@@ -440,6 +450,64 @@ public class NoticeDaoImpl implements NoticeDao {
 		
 	}
 
+	
+	//------------검색 (페이징 없)--------------
+	
+	@Override
+	public List<Notice> selectAllSearch(Connection conn, String keyWord, String searchWord) {
+		
+		//SQL작성
+		String sql = "";
+
+		sql += "SELECT nno, ncategory, ntitle, nhit, nwritedate";
+		sql += "	FROM notice";
+		sql += "	WHERE ncategory LIKE ?";
+		sql += "	AND (ncontent LIKE ? OR ntitle LIKE ? )";
+		sql += "	ORDER BY ntop DESC, nno DESC";
+		
+		
+		//결과 저장할 List
+		List<Notice> noticeSerchList = new ArrayList<>();
+		
+		try {
+			//SQL 수행 객체 생성
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, keyWord);
+			ps.setString(2, "%" + searchWord + "%");
+			ps.setString(3, "%" + searchWord + "%");
+			
+			//SQL 수행 및 결과 저장
+			rs = ps.executeQuery();
+			
+			//조회 결과 처리
+			while(rs.next() ) {
+				Notice n = new Notice();	 //결과값 저장 객체
+				
+				n.setNno(rs.getInt("nno"));
+				n.setNcategory(rs.getString("ncategory"));
+				n.setNtitle(rs.getString("ntitle"));
+				n.setNwritedate(rs.getDate("nwritedate"));
+				n.setNhit(rs.getInt("nhit"));
+				
+				//리스트에 결과값 저장
+				noticeSerchList.add(n);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+
+		return noticeSerchList;
+	}
+
+	
+	
+	
+	//-----------검색 (페이징 있) ---------------
 
 	@Override
 	public List<Notice> selectAllSearch(Connection conn, Paging paging, String keyWord, String searchWord) {
@@ -451,16 +519,18 @@ public class NoticeDaoImpl implements NoticeDao {
 		sql += "	        SELECT";
 		sql += "			  nno, ncategory, ntitle, nhit, nwritedate";
 		sql += "			FROM notice";
-		sql += "			WHERE ncategory LIKE '?'";
+		sql += "			WHERE ncategory LIKE ?";
 		sql += "			AND (ncontent LIKE ? OR ntitle LIKE ? )";
 		sql += "	        ORDER BY ntop DESC, nno DESC";
 		sql += " 	) N";
 		sql += " ) NOTICE";
-		sql += " WHERE rnum BETWEEN ? AND ?";
+		sql += "  WHERE rnum BETWEEN ? AND ?";
 		
 		
 		//결과 저장할 List
 		List<Notice> noticeSerchList = new ArrayList<>();
+		
+		System.out.println("nDAOimpl : "+paging);
 		
 		try {
 			//SQL 수행 객체 생성
@@ -487,6 +557,7 @@ public class NoticeDaoImpl implements NoticeDao {
 				
 				//리스트에 결과값 저장
 				noticeSerchList.add(n);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

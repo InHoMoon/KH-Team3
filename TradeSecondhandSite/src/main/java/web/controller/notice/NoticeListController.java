@@ -66,39 +66,32 @@ public class NoticeListController extends HttpServlet {
 			System.out.println( "키워드 : " + keyWord + ", 검색어 : " + searchWord );
 			
 			
+			//-----페이징 없이 전달--------------
+			List<Notice> searchlist = noticeService.getSearch(keyWord, searchWord);
 			
+			
+			//---------검색(페이징 있) -----------------
+/*			
 			// 전달파라미터에서 현재 페이징 객체 계산하기
 			Paging paging = noticeService.getSearchPaging(req, keyWord, searchWord );
 			System.out.println(paging);
-			
-			
-			List<Notice> searchlist = null;
-			
-			if(paging.getTotalCount() < 11) {
+					
 				
-				searchlist = noticeService.getList();
+			//게시글 페이징 목록 조회
+			List<Notice> searchlist = noticeService.getNoticeSearchList( paging, keyWord, searchWord );
 				
-			}else {
-				
-				//게시글 페이징 목록 조회
-				searchlist = noticeService.getNoticeSearchList( paging, keyWord, searchWord );
-				System.out.println(searchlist);
-				
-			}
-			
-			
-			
+*/			
+			//-------------------------------------------
 			
 			
 			//조회된 결과(MODEL값)를 "noticeList"라는 이름으로 JSP코드에 list객체를 전달한다
 			req.setAttribute("noticeList", searchlist);
 			
 			//페이징 객체 MODEL값 전달
-			req.setAttribute("paging", paging);
+			//req.setAttribute("paging", paging);
 			
 			//View 지정 및 응답
 			req.getRequestDispatcher("/WEB-INF/views/notice/noticeList.jsp").forward(req, resp);
 		}
 		
-			
-}
+}	

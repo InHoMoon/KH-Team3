@@ -97,17 +97,21 @@ public interface NoticeService {
 	public void delete(Notice notice);
 	
 	
-	//----검색------
+	//-------검색(페이징 없)
 	
-	/** 
+	/**
 	 * 검색 게시글 전체 조회
 	 * 
-	 * @param paging - 페이징 정보 객체
-	 * @return List<Notice> - 검색 게시글 전체 조회 결과 목록
+	 * @param keyWord - 분류 키워드
+	 * @param searchWord - 제목/내용 검색어
+	 * @return 
 	 */
-	public List<Notice> getNoticeSearchList(Paging paging,String keyWord, String searchWord);
+	public List<Notice> getSearch(String keyWord, String searchWord);
 	
 	
+	
+	
+	//----검색 (페이징 있)------
 	
 	/** 
 	 * 검색 게시글 페이징 객체 생성
@@ -116,5 +120,17 @@ public interface NoticeService {
 	 * @return Paging - 검색 페이징 계산이 완료된 객체
 	 */
 	public Paging getSearchPaging(HttpServletRequest req, String keyWord, String searchWord );
+	
+	
+	
+	/** 
+	 * 검색 게시글 전체 조회 (페이징)
+	 * 
+	 * @param paging - 페이징 정보 객체
+	 * @return List<Notice> - 검색 게시글 전체 조회 결과 목록
+	 */
+	public List<Notice> getNoticeSearchList(Paging paging,String keyWord, String searchWord);
+
+
 
 }

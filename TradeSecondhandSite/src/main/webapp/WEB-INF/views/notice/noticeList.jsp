@@ -81,8 +81,9 @@ $(document).ready(function() {
 
 <div class="clearfix"></div>
 
-
+<% if( (Paging) request.getAttribute("paging") !=null ) { %>
 <%@ include file="../layout/paging.jsp" %>
+<% } %>
 
  <div>
  <form action="./list" method="post" >

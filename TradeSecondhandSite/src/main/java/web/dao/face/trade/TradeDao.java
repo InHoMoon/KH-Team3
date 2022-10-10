@@ -5,6 +5,7 @@ import java.util.List;
 
 import util.Paging;
 import web.dto.Trade;
+import web.dto.TradeImg;
 
 
 
@@ -48,5 +49,30 @@ public interface TradeDao {
 	 * @return 조회결과 객체
 	 */
 	public Trade selectTradeByTradeNo(Connection conn, Trade tradeno);
+	
+	/**
+	 * 시퀀스를 통해 다음 게시글 번호 조회
+	 * @param conn db연결 객체
+	 * @return 다음 게시글 번호 반환
+	 */
+	public int selectNextTradeno(Connection conn);
+	
+	
+	/**
+	 * 게시글 입력
+	 * @param conn db연결 객체
+	 * @param trade 입력될 게시글 내용
+	 * @return
+	 */
+	public int insert(Connection conn, Trade trade);
+	
+	
+	/**
+	 * 이미지 입력
+	 * @param conn db연결 객체
+	 * @param tradeImg
+	 * @return
+	 */
+	public int insertImg(Connection conn, TradeImg tradeImg);
 
 }

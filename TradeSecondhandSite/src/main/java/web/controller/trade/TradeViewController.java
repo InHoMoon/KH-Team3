@@ -24,7 +24,8 @@ public class TradeViewController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//전달 파라미터 tradeno 저장 
 		Trade tradeno = tradeService.getTradeno(req);
-				
+		
+		//게시물 상세 조회	
 		Trade viewTrade = tradeService.view(tradeno);
 				
 		req.setAttribute("viewTrade", viewTrade);

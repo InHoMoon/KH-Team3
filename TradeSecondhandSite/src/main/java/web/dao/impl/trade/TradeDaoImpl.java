@@ -11,6 +11,7 @@ import common.JDBCTemplate;
 import util.Paging;
 import web.dao.face.trade.TradeDao;
 import web.dto.Trade;
+import web.dto.TradeImg;
 
 
 public class TradeDaoImpl implements TradeDao {
@@ -280,6 +281,93 @@ public class TradeDaoImpl implements TradeDao {
 		}
 		
 		return trade;
+	}
+
+	@Override
+	public int selectNextTradeno(Connection conn) {
+		
+		
+		String sql = "";
+		sql += "SELECT trade_seq.nextval FROM dual";
+		
+		int nextTradeno = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			rs = ps.executeQuery();
+			
+			while( rs.next() ) {
+				nextTradeno = rs.getInt("nextval");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return nextTradeno;
+	}
+
+	@Override
+	public int insert(Connection conn, Trade trade) {
+		
+		String sql = "";
+		sql += "INSERT INTO trade ( tradeno, title, userid, content, product_state, price, hit )";
+		sql += " VALUES ( ?, ?, ?, ?, ?, ?, 0 )";
+		
+		int res = 0;
+
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, trade.getTradeno());
+			ps.setString(2, trade.getTitle());
+			ps.setString(3, trade.getUserid());
+			ps.setString(4, trade.getContent());
+			ps.setString(5, trade.getProductState());
+			ps.setInt(6, trade.getPrice());
+			
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int insertImg(Connection conn, TradeImg tradeImg) {
+
+
+		String sql="";
+		sql += "INSERT INTO (imgno, tradeno, originname, storedname, filesize)";
+		sql += " VALUES( tradeimg_seq.nextval, ?, ?, ?, ? )";
+		
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, tradeImg.getTradeno());
+			ps.setString(2, tradeImg.getOriginName());
+			ps.setString(3, tradeImg.getStoredName());
+			ps.setInt(4, tradeImg.getImgsize());
+			
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return res;
 	}
 
 }

@@ -55,6 +55,12 @@ public interface TradeService {
 	 * @return 게시물 상세 조회 객체
 	 */
 	public Trade view(Trade tradeno);
+	
+	/**
+	 *  입력한 게시글을 작성하고 db에 저장
+	 * @param req - 요청정보 객체
+	 */
+	public void write(HttpServletRequest req);
 
 
 

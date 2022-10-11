@@ -46,15 +46,17 @@ $(document).ready(function(){
 <table class="table table-striped table-hover table-condensed">
 <tr>
 	<th style="width: 15%">글번호</th>
+	<th style="width: 15%">판매 상태</th>
 	<th style="width: 30%">제목</th>
-	<th style="width: 20%">아이디</th>
-	<th style="width: 15%">조회수</th>
-	<th style="width: 20%">작성일</th>
+	<th style="width: 15%">아이디</th>
+	<th style="width: 10%">조회수</th>
+	<th style="width: 25%">작성일</th>
 </tr>
 
 <%	for(int i=0; i<searchList.size(); i++) { %>
 <tr>
 	<td><%=searchList.get(i).getTradeno() %></td>
+	<td><%=searchList.get(i).getProductState() %></td>
 	<td>
 		<a href="./view?tradeno=<%=searchList.get(i).getTradeno() %>">
 			<%=searchList.get(i).getTitle() %>

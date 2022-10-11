@@ -73,15 +73,27 @@ function updateContents() {
 		<tr>
 			<td class="text-center">제목</td>
 			<td colspan="2"><input type="text" name="title" style="width: 100%;" placeholder="제목을 입력하세요" ></td>
-			<td colspan="2">
+			<td>
+				<select class="form-control text-center" name="category"  id="category">
+					<option>카테고리 선택</option>
+					<option>가전·TV</option>
+					<option>컴퓨터·태블릿·모바일</option>
+					<option>자동차 용품</option>
+					<option>가구</option>
+					<option>식품</option>
+					<option>패션·잡화·뷰티</option>
+				</select>
+			</td>
+			<td>
 				<select class="form-control text-center" name="productState" >
-					<option>상품 상태</option>
+					<option>상품 상태 선택</option>
 					<option>미개봉</option>
 					<option>거의 새 것</option>
 					<option>사용감 있음</option>
 				</select>
 			</td>
 		</tr>
+		
 		<tr>
 			<td class="text-center">판매자 정보</td>
 			<td class="text-center"><%=session.getAttribute("userid") %></td>

@@ -33,21 +33,23 @@ $(document).ready(function() {
 <table class="table table-bordered">
 
 <tr>
-<td class="info">글번호</td><td><%=viewTrade.getTradeno() %></td>
-<td class="info">작성일</td><td><%=viewTrade.getInsertDate() %></td>
+<td class="info text-center">제목</td><td ><%=viewTrade.getTitle() %></td>
+<td class="info text-center">작성일</td><td><%=viewTrade.getInsertDate() %></td>
 </tr>
 
 <tr>
-<td class="info">제목</td><td colspan="3"><%=viewTrade.getTitle() %></td>
+<td class="info text-center">카테고리</td><td><%=viewTrade.getCategory() %></td>
+<td class="info text-center">아이디</td><td><%=viewTrade.getUserid() %></td>
 </tr>
 
 <tr>
-<td class="info">아이디</td><td><%=viewTrade.getUserid() %></td>
-<td class="info">닉네임</td><td></td>
+<td class="info text-center">제품 상태</td><td><%=viewTrade.getProductState() %></td>
+<td class="info text-center">가격</td><td><%=viewTrade.getPrice() %></td>
 </tr>
 
 <tr>
-<td class="info">조회수</td><td colspan="3"><%=viewTrade.getHit() %></td>
+<td class="info text-center">판매 상태</td><td><%=viewTrade.getSaleState() %></td>
+<td class="info text-center">조회수</td><td><%=viewTrade.getHit() %></td>
 </tr>
 
 <tr>
@@ -56,6 +58,9 @@ $(document).ready(function() {
 <tr><td colspan="4"><%=viewTrade.getContent() %></td></tr>
 
 </table>
+
+
+
 
 
 

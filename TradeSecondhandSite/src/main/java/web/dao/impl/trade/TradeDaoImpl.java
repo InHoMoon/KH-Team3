@@ -57,7 +57,7 @@ public class TradeDaoImpl implements TradeDao {
 		sql += "	SELECT rownum rnum, T.* FROM (";
 		sql += "		SELECT";
 		sql += "			tradeno, title, userid";
-		sql += "			, hit, insert_date";
+		sql += "			, hit, insert_date, product_state";
 		sql += "		FROM trade";
 		sql += "		ORDER BY tradeno DESC";
 		sql += "	) T";
@@ -85,6 +85,7 @@ public class TradeDaoImpl implements TradeDao {
 				t.setUserid(rs.getString("userid"));
 				t.setHit(rs.getInt("hit"));
 				t.setInsertDate(rs.getDate("insert_date"));
+				t.setProductState(rs.getString("product_state"));
 						
 				//리스트에 결과값 저장
 				tradeList.add(t);
@@ -116,7 +117,7 @@ public class TradeDaoImpl implements TradeDao {
 				sql += "	SELECT rownum rnum, T.* FROM (";
 				sql += "		SELECT";
 				sql += "			tradeno, title, userid";
-				sql += "			, hit, insert_date";
+				sql += "			, hit, insert_date, product_state";
 				sql += "		FROM trade";
 				sql += "		WHERE title LIKE ?";
 				sql += "		ORDER BY tradeno DESC";
@@ -144,6 +145,7 @@ public class TradeDaoImpl implements TradeDao {
 						t.setUserid(rs.getString("userid"));
 						t.setHit(rs.getInt("hit"));
 						t.setInsertDate(rs.getDate("insert_date"));
+						t.setProductState(rs.getString("product_state"));
 								
 						//리스트에 결과값 저장
 						searchList.add(t);
@@ -164,7 +166,7 @@ public class TradeDaoImpl implements TradeDao {
 			sql += "	SELECT rownum rnum, T.* FROM (";
 			sql += "		SELECT";
 			sql += "			tradeno, title, userid";
-			sql += "			, hit, insert_date";
+			sql += "			, hit, insert_date, product_state";
 			sql += "		FROM trade";
 			sql += "		WHERE userid LIKE ?";
 			sql += "		ORDER BY tradeno DESC";
@@ -192,6 +194,7 @@ public class TradeDaoImpl implements TradeDao {
 					t.setUserid(rs.getString("userid"));
 					t.setHit(rs.getInt("hit"));
 					t.setInsertDate(rs.getDate("insert_date"));
+					t.setProductState(rs.getString("product_state"));
 							
 					//리스트에 결과값 저장
 					searchList.add(t);
@@ -315,8 +318,8 @@ public class TradeDaoImpl implements TradeDao {
 	public int insert(Connection conn, Trade trade) {
 		
 		String sql = "";
-		sql += "INSERT INTO trade ( tradeno, title, userid, content, product_state, price, hit )";
-		sql += " VALUES ( ?, ?, ?, ?, ?, ?, 0 )";
+		sql += "INSERT INTO trade ( tradeno, title, userid, content, product_state, price, sale_state, category, hit )";
+		sql += " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?,  0 )";
 		
 		int res = 0;
 
@@ -329,6 +332,8 @@ public class TradeDaoImpl implements TradeDao {
 			ps.setString(4, trade.getContent());
 			ps.setString(5, trade.getProductState());
 			ps.setInt(6, trade.getPrice());
+			ps.setString(7, trade.getSaleState());
+			ps.setString(8, trade.getCategory());
 			
 			res = ps.executeUpdate();
 			

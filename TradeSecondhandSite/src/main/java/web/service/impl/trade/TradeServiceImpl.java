@@ -191,13 +191,21 @@ public class TradeServiceImpl implements TradeService {
 				if( "content".equals(key) ) {
 					trade.setContent(value);
 				}
-				//판매상태
+				//제품상태
 				if( "productState".equals(key) ) {
 					trade.setProductState(value);
+				}
+				//판매상태
+				if( "saleState".equals(key) ) {
+					trade.setSaleState(value);
 				}
 				//가격
 				if( "price".equals(key) ) {
 					trade.setPrice( Integer.parseInt(value));
+				}
+				//카테고리
+				if( "category".equals(key) ) {
+					trade.setCategory(value);
 				}
 						
 			} // if( item.isFormField() ) end

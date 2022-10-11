@@ -1,42 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>중고거래 사이트</title>
 
-<!----------------------------------------------------------------------------------------------------  -->
-
-<!-- header 수정시 삭제 -->
-
-<!-- jQuery 2.2.4 -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-
-<!-- 부트스트랩 3 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-<style type="text/css">
-#header, #footer {
-	text-align: center;
-	background: #6ff;
-}
-
-#header h1 a {
-	text-decoration: none;
-	color: #333;
-}
-</style>
-
-<header id="header">
-	<h1><a href=[ 메인 페이지 path ]>중고거래 사이트</a></h1>
-</header>
-
-<div class="container">
-
-<!----------------------------------------------------------------------------------------------------  -->
+<%@ include file="../layout/header.jsp" %>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -51,8 +16,8 @@ $(document).ready(function() {
 	
 	// 취소 버튼
 	$("#btnCancel").click(function() {
-		history.go(-1) // 뒤로가기
-// 		$(location).attr('href', '/') // 메인으로 가기
+// 		history.go(-1) // 뒤로가기
+		$(location).attr('href', '/') // 메인으로 가기
 	})
 	
 })
@@ -148,16 +113,4 @@ $(document).ready(function() {
 
 </form>
 
-<!----------------------------------------------------------------------------------------------------  -->
-
-</div><!-- .container end -->
-
-<footer id="footer">
-	<small>[footer 내용 삽입 필요]</small>
-</footer>
-
-
-</body>
-</html>
-
-<!----------------------------------------------------------------------------------------------------  -->
+<%@ include file="../layout/footer.jsp" %>

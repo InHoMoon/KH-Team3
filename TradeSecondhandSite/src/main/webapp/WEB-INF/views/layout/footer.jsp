@@ -1,11 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-</div><!-- .container end -->
+<style type="text/css">
 
+#footer {
+	background-color: LightGray;
+}
+
+</style>
+
+</div> <!-- container end-->
+<br><br><br><br><br><br>
 <footer id="footer">
-	<small>악플달지마세요!</small>
+	<small> footer </small>
+	<br><br><br><br><br><br>
 </footer>
+
 
 </body>
 </html>

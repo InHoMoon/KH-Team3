@@ -17,7 +17,6 @@ $(document).ready(function() {
 		$(location).attr('href', './list')
 	})
 	
-	
 	//수정버튼
 	$("#btnUpdate").click(function() {
 		$(location).attr('href', './update?nno=<%=viewNotice.getNno() %>')

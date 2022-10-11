@@ -76,7 +76,7 @@ public class NoticeDaoImpl implements NoticeDao {
 		sql += "	SELECT rownum rnum, N.* FROM (";
 		sql += "	        SELECT";
 		sql += "			  nno, ncategory, ntitle";
-		sql += "	          , nhit, nwritedate";
+		sql += "	          , nhit, nwritedate, ntop";
 		sql += "			FROM notice";
 		sql += "	        ORDER BY ntop DESC, nno DESC";
 		sql += " 	) N";
@@ -106,6 +106,7 @@ public class NoticeDaoImpl implements NoticeDao {
 				n.setNtitle(rs.getString("ntitle"));
 				n.setNwritedate(rs.getDate("nwritedate"));
 				n.setNhit(rs.getInt("nhit"));
+				n.setNtop(rs.getInt("ntop"));
 				
 				//리스트에 결과값 저장
 				noticeList.add(n);
@@ -194,7 +195,7 @@ public class NoticeDaoImpl implements NoticeDao {
 		String sql = "";
 		sql += "SELECT";
 		sql += "	nno, ncategory, ntitle";
-		sql += "	, ncontent, nhit, nwritedate";
+		sql += "	, ncontent, nhit, nwritedate, ntop";
 		sql += " FROM notice";
 		sql += " WHERE nno = ?";
 				
@@ -215,6 +216,7 @@ public class NoticeDaoImpl implements NoticeDao {
 				n.setNcontent(rs.getString("ncontent"));
 				n.setNwritedate(rs.getDate("nwritedate"));
 				n.setNhit(rs.getInt("nhit"));
+				n.setNtop(rs.getInt("ntop"));
 				
 			}
 			

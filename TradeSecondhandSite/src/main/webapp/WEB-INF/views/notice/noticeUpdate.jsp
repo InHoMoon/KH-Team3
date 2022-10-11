@@ -58,6 +58,12 @@ $(document).ready(function() {
 		$("#beforeFile").toggle();
 		$("#afterFile").toggle();
 	})
+	
+	
+	
+	if(<%=updateNotice.getNtop() == 1%>) {
+		$("#ntop").attr("checked", "on")
+	}
 })
 
 

@@ -3,12 +3,25 @@
 
 <%@ include file="../layout/header.jsp" %>
 
-<h1>회원가입 성공</h1>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	// 로그인 버튼
+	$("#btnLogin").click(function() {
+		$(location).attr('href', '/login') // loginController으로 가기
+	})
+	
+})
+</script>
+
+<h1 style="text-align: center;">회원가입 성공</h1>
 <hr>
 
-<h3><%=session.getAttribute("userid") %>님, 가입을 축하합니다</h3>
+<h3 style="text-align: center;"><%=session.getAttribute("userid") %>님, 가입을 축하합니다</h3>
 
-<a href="<%=request.getContextPath() %>/login">로그인 하러가기</a>
+<div class="text-center">
+	<button type="button" class="btn btn-primary" id="btnLogin">로그인</button>
+</div>
 
 <%@ include file="../layout/footer.jsp" %>
  

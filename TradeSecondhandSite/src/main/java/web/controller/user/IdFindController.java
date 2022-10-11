@@ -10,55 +10,53 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import web.dto.User;
-import web.service.face.user.LoginService;
-import web.service.impl.user.LoginServiceImpl;
+import web.service.face.user.IdFindService;
+import web.service.impl.user.IdFindServiceImpl;
 
-@WebServlet("/login")
-public class LoginController extends HttpServlet {
+@WebServlet("/idFind")
+public class IdFindController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	// 서비스 객체
-	private LoginService loginService = new LoginServiceImpl();
+	private IdFindService idFindService = new IdFindServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/user/idFind.jsp").forward(req, resp);
 		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		// 전달파라미터 로그인 정보 얻어오기
-		User user = loginService.getLoginUser(req);
+		// 전달파라미터 아이디 정보 얻어오기
+		User user = idFindService.getIdFindUser(req);
 		
-		// 로그인 인증
-		boolean isLogin = loginService.login(user);
+		// 아이디 찾기 인증
+		boolean isIdFind = idFindService.idFind(user);
 		
 		// 포워딩 URL
 		String url = null;
 		
-		// 로그인 인증 성공
-		if( isLogin ) {
-			System.out.println("LoginController doPost() - 로그인 성공" + user);
+		// 아이디 찾기 인증 성공
+		if( isIdFind ) {
 			
 			// 로그인 사용자 정보 조회
-			user = loginService.info(user);
+			user = idFindService.info(user);
 			
 			// 세션 정보 객체
 			HttpSession session = req.getSession();
 			
-			session.setAttribute("login", isLogin);
+			session.setAttribute("idFind", isIdFind);
+			session.setAttribute("username", user.getUsername());
 			session.setAttribute("userid", user.getUserid());
-			session.setAttribute("usernick", user.getUsernick());
 			
-			url = "/WEB-INF/views/main.jsp";
+			url = "/WEB-INF/views/user/idFindSuccess.jsp";
 			
 		} else {
-			System.out.println("LoginController doPost() - 로그인 실패" + user);
 			
-			url = "/WEB-INF/views/user/loginFail.jsp";
+			url = "/WEB-INF/views/user/idFindFail.jsp";
 			
 		}
 		

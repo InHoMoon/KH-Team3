@@ -29,6 +29,9 @@ public class JoinController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		// 전달 파라미터에 대한 한글 인코딩 설정(UTF-8)
+		req.setCharacterEncoding("UTF-8");
+		
 		// 회원가입 전달파라미터 추출하기
 		User user = joinService.getJoinUser(req);
 		

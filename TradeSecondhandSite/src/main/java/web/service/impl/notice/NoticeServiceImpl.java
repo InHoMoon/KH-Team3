@@ -22,6 +22,7 @@ import web.dao.face.notice.NoticeDao;
 import web.dao.impl.notice.NoticeDaoImpl;
 import web.dto.Nfile;
 import web.dto.Notice;
+import web.dto.NoticeImage;
 import web.service.face.notice.NoticeService;
 
 public class NoticeServiceImpl implements NoticeService {
@@ -31,23 +32,35 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeDao noticeDao = new NoticeDaoImpl();
 	
 	
+	//게시글 전체 조회 결과 처리 (페이징X)
 	@Override
 	public List<Notice> getList() {
-		//게시글 전체 조회 결과 처리
 		return noticeDao.selectAll(JDBCTemplate.getConnection());
 	}
 
 	
-	
+	//게시글 전체 조회 결과 처리 (페이징)---
 	@Override
 	public List<Notice> getNoticeList(Paging paging) {
-		
-		//게시글 전체 조회 결과 처리(페이징)
-		
 		return noticeDao.selectAll(JDBCTemplate.getConnection(), paging);
 	}
 
 	
+	//이미지 포함 게시글 전체 조회 (페이징)
+	@Override
+	public List<NoticeImage> getNoticeImageList() {
+		return noticeDao.selectAllImage(JDBCTemplate.getConnection());
+	}
+	
+	
+	
+	//이미지 포함 게시글 전체 조회 (페이징)
+	@Override
+	public List<NoticeImage> getNoticeImageList(Paging paging) {
+		return noticeDao.selectAllImage(JDBCTemplate.getConnection(), paging);
+	}
+
+	//게시글 페이징 객체 생성
 	@Override
 	public Paging getPaging(HttpServletRequest req) {
 		
@@ -463,7 +476,11 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<Notice> getSearch(String keyWord, String searchWord) {
 		return noticeDao.selectAllSearch(JDBCTemplate.getConnection(), keyWord, searchWord);
 	}
-	
+
+	@Override
+	public List<NoticeImage> getImgSearch(String keyWord, String searchWord) {
+		return noticeDao.selectAllImgSearch(JDBCTemplate.getConnection(), keyWord, searchWord);
+	}
 
 	//--------검색 (페이징있)
 	@Override

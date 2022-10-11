@@ -1,11 +1,12 @@
-<%@page import="web.dto.Notice"%>
+<%@page import="web.dto.NoticeImage"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp" %>
 
-<% List<Notice> noticeList = (List) request.getAttribute("noticeList"); %>
+<% List<NoticeImage> noticeList = (List) request.getAttribute("noticeList"); %>
+<%-- List<Notice> noticeList = (List) request.getAttribute("noticeList"); --%>
 <% String keyWord = (String) request.getAttribute("keyWord"); %>    
 <% String searchWord = (String) request.getAttribute("searchWord"); %>    
 
@@ -72,7 +73,8 @@ $(document).ready(function() {
 <tr>
 	<th style="width: 10%">NO</th>
 	<th style="width: 15%">분류</th>
-	<th style="width: 45%">제목</th>
+	<th style="width: 10%">사진</th>
+	<th style="width: 30%">제목</th>
 	<th style="width: 10%">조회수</th>
 	<th style="width: 20%">작성일</th>
 </tr>
@@ -83,6 +85,13 @@ $(document).ready(function() {
 <tr>
 	<td><%= noticeList.get(i).getNno() %></td>
 	<td id="nlist"><%= noticeList.get(i).getNcategory() %></td>
+	<td>
+		<%	if( noticeList.get(i).getNfileoriginname() != null ) { %>  
+			<img object-fit="contain" class="img-responsive img-rounded"  alt="" 
+			src="<%=request.getContextPath() %>/upload/<%=noticeList.get(i).getNfilestoredname() %>"  
+			style="height: 50px">
+		<%	} %>
+	</td>
 	<td  style="text-align: left; padding-left: 20px;">
 		<a href="./view?nno=<%= noticeList.get(i).getNno() %>">
 				<%= noticeList.get(i).getNtitle() %>

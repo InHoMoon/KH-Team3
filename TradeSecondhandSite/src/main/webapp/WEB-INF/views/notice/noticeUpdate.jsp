@@ -58,6 +58,12 @@ $(document).ready(function() {
 		$("#beforeFile").toggle();
 		$("#afterFile").toggle();
 	})
+	
+	
+	
+	if(<%=updateNotice.getNtop() == 1%>) {
+		$("#ntop").attr("checked", "on")
+	}
 })
 
 
@@ -111,6 +117,8 @@ function updateContents() {
 		<%=nFile.getNfileoriginname() %>
 	</a>
 	<span id="delFile" style="color: red; font-weight: bold; cursor: pointer;">X</span>
+	<img class="img-responsive"  alt="" src="<%=request.getContextPath() %>/upload/<%=nFile.getNfilestoredname() %>" width="200px">
+	
 	<%	} %>
 </div>
 

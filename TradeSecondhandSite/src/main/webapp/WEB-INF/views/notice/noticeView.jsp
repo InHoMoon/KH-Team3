@@ -17,15 +17,6 @@ $(document).ready(function() {
 		$(location).attr('href', './list')
 	})
 	
-	//목록버튼
-	$("#btnList").click(function() {
-		$(location).attr('href', './list')
-	})
-	//목록버튼
-	$("#btnList").click(function() {
-		$(location).attr('href', './list')
-	})
-	
 	//수정버튼
 	$("#btnUpdate").click(function() {
 		$(location).attr('href', './update?nno=<%=viewNotice.getNno() %>')

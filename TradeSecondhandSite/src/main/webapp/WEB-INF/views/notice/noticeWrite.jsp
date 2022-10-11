@@ -35,6 +35,56 @@ $(document).ready(function() {
 		history.go(-1)
 	})
 	
+	$("#upload").change(function( e ) {
+		console.log("#upload change")
+		
+		console.log("--- 선택된 파일들 ---")
+		console.log( e.target.files )		//이게 더 어디서 온 기능인지 정확하게 파악가능
+		console.log(this)	//e.target과 똑같이 처리됨
+		console.log(this.files)	//e.target.files와 똑같이 처리됨
+		
+		//---------------------------
+ 
+		var files = e.target.files;
+		
+		//이미지만 처리할 수 있도록 적용
+		if( !files[0].type.includes( "image") ) {
+			alert("이미지가 아닙니다")
+			
+			//선택한 파일 해제하기
+			e.target.value = null;
+			
+			//이벤트 처리 중단시키기
+			return false;
+			
+		}
+		
+		//---------------------------
+		
+		//FileReader 객체 생성
+		var reader = new FileReader();
+		
+		// FileTeader가 파일의 내용을 전부 읽어들여
+		//메모리에 로드 되었을 때 발생하는 이벤트 처리
+		reader.onload = function( ev ) {
+			console.log( ev.target.result )
+			console.log( this.result ) //ev.target.result와 같은 식
+		
+		
+			//이미지를 새롭게 선택할 때마다 #preview의 이전 이미지를 지우고
+			//한 장만 유지되도록 한다
+			$("#preview").html(
+				$("<img>").attr( {
+					"src": ev.target.result
+					,"width" : 200
+				})
+			)
+		}
+		
+		//선택된 파일을 DataURL 형식으로 읽어들이기
+		reader.readAsDataURL( files[0])
+		
+	})	
 	
 })
 
@@ -46,6 +96,9 @@ function updateContents() {
 	oEditors.getById["ncontent"].exec("UPDATE_CONTENTS_FIELD", [])
 	
 }
+
+
+
 </script>
 
 
@@ -77,7 +130,8 @@ function updateContents() {
 <tr> <td colspan="2"><textarea id="ncontent" name="ncontent" style="width:100%"></textarea></td></tr>
 </table>
 
-첨부파일 <input type="file" name="file">
+첨부파일 <input type="file" name="file" id="upload">
+<div id="preview"></div>
 
 </form>
  
@@ -98,6 +152,7 @@ nhn.husky.EZCreator.createInIFrame({
 	fCreator: "createSEditor2"	
 })
 </script>
+
 
 
 

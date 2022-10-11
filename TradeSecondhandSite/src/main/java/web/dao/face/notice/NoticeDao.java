@@ -130,7 +130,22 @@ public interface NoticeDao {
 
 
 	
-	//----검색 기능-----------------------------------
+	//----검색 기능(페이징 없)-----------------------------
+	
+	/**
+	 * Notice 테이블 검색결과 전체 조회 (페이징 없이)
+	 * 
+	 * @param connection - 연결
+	 * @param keyWord - 분류 키워드
+	 * @param searchWord - 검색 키워드
+	 * @return 검색된 테이블 목록 조회 결과
+	 */
+	public List<Notice> selectAllSearch(Connection connection, String keyWord, String searchWord);
+	
+	
+	
+	
+	//----검색 기능(페이징)-----------------------------
 	
 	/** 
 	 * Notice 테이블 검색결과 전체 조회

@@ -26,6 +26,7 @@ import web.service.face.notice.NoticeService;
 
 public class NoticeServiceImpl implements NoticeService {
 
+
 	//DAO 객체
 	private NoticeDao noticeDao = new NoticeDaoImpl();
 	
@@ -36,6 +37,8 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.selectAll(JDBCTemplate.getConnection());
 	}
 
+	
+	
 	@Override
 	public List<Notice> getNoticeList(Paging paging) {
 		
@@ -454,14 +457,15 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 	}
 
+	
+	//-------------검색 (페이징없) -------------------
 	@Override
-	public List<Notice> getNoticeSearchList(Paging paging, String keyWord, String searchWord) {
-		
-		// 검색 게시글 전체 조회 결과 처리(페이징)
-		
-		return noticeDao.selectAllSearch(JDBCTemplate.getConnection(), paging, keyWord, searchWord );
+	public List<Notice> getSearch(String keyWord, String searchWord) {
+		return noticeDao.selectAllSearch(JDBCTemplate.getConnection(), keyWord, searchWord);
 	}
+	
 
+	//--------검색 (페이징있)
 	@Override
 	public Paging getSearchPaging(HttpServletRequest req, String keyWord, String searchWord) {
 		
@@ -485,8 +489,15 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return paging;
 	}
+	
+	@Override
+	public List<Notice> getNoticeSearchList(Paging paging, String keyWord, String searchWord) {
+		
+		// 검색 게시글 전체 조회 결과 처리(페이징)
+		
+		return noticeDao.selectAllSearch(JDBCTemplate.getConnection(), paging, keyWord, searchWord );
+	}
 
 	
-
 
 }

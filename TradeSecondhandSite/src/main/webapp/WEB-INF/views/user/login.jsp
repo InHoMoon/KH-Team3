@@ -22,29 +22,21 @@ $(document).ready(function() {
 	})
 	
 	
-	//------------------------------------------------------------------------
-	
-	//--- 아이디 찾기, 비밀번호 찾기 개발 필요 ---
-	
 	// 취소 버튼
 	$("#btnCancel").click(function() {
-// 		history.go(-1) // 뒤로가기
 		$(location).attr('href', '/') // 메인으로 가기
 	})
 	
 	// 아이디 찾기 버튼
 	$("#btnIdfind").click(function() {
-		
+		$(location).attr('href', '/idFind') // IdFindController으로 가기
 	})
 	
 	
 	// 비밀번호 찾기 버튼
 	$("#btnPwfind").click(function() {
-		
+		$(location).attr('href', '/pwFind') // PwFindController으로 가기		
 	})
-	
-	
-	//------------------------------------------------------------------------
 	
 	
 	// 회원가입 버튼
@@ -63,14 +55,14 @@ $(document).ready(function() {
 
 	<div class="form-group">
 		<label for="userid" class="col-xs-2 col-xs-offset-2 control-label">아이디</label>
-		<div class="col-xs-5">
+		<div class="col-xs-4">
 			<input type="text" id="userid" name="userid" class="form-control">
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="userpw" class="col-xs-2 col-xs-offset-2 control-label">비밀번호</label>
-		<div class="col-xs-5">
+		<div class="col-xs-4">
 			<input type="password" id="userpw" name="userpw" class="form-control">
 		</div>
 	</div>
@@ -82,6 +74,8 @@ $(document).ready(function() {
 	</div>
 
 	<div class="text-center">
+		<input type="hidden" id="er_id" name="er_id" value="<strong>아이디</strong>를 입력하세요.">
+		<input type="hidden" id="er_pw" name="er_pw" value="<strong>비밀번호</strong>를 입력하세요.">
 		<button type="button" class="btn btn-primary" id="btnLogin">로그인</button>
 		<button type="button" class="btn btn-danger" id="btnCancel">취소</button>
 	</div>

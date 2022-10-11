@@ -16,7 +16,6 @@ $(document).ready(function() {
 	
 	// 취소 버튼
 	$("#btnCancel").click(function() {
-// 		history.go(-1) // 뒤로가기
 		$(location).attr('href', '/') // 메인으로 가기
 	})
 	

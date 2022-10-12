@@ -23,10 +23,10 @@ public class JoinServiceImpl implements JoinService {
 		user.setUserid( req.getParameter("userid") );
 		user.setUserpw( req.getParameter("userpw") );
 		user.setUsername( req.getParameter("username") );
-		user.setUseremail( req.getParameter("useremail") );
-		user.setUserphone( req.getParameter("userphone") );
+		user.setUseremail( req.getParameter("email_id") + "@" + req.getParameter("email_domain") );
+		user.setUserphone( req.getParameter("phone1") + "-" + req.getParameter("phone2") + "-" + req.getParameter("phone3") );
 		user.setUsergender( req.getParameter("usergender") );
-//		user.setUserbirth( req.getParameter("userbirth") ); // DATE 값으로 받아야하는데...
+		user.setUserbirth( req.getParameter("year") + "-" + req.getParameter("month") + "-" + req.getParameter("day") );
 		user.setUseraddr( req.getParameter("useraddr") );
 		user.setUsernick( req.getParameter("usernick") );
 		

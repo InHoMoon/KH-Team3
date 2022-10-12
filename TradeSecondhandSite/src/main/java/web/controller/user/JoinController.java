@@ -40,6 +40,9 @@ public class JoinController extends HttpServlet {
 		
 		System.out.println("JoinController doPost() - 회원가입 성공" + user);
 		
+		// DB에 입력된 값을 JSP View에 전달하기 - HttpServletRequest 객체 이용
+		req.setAttribute("user", user);
+		
 		// 회원가입 성공 페이지로 이동
 		req.getRequestDispatcher("/WEB-INF/views/user/joinSuccess.jsp").forward(req, resp);
 		

@@ -50,7 +50,7 @@ public class LoginDaoImpl implements LoginDao {
 	public User selectUserByUserid(Connection conn, User user) {
 		
 		String sql = "";
-		sql += "SELECT userid, userpw, usernick FROM tuser";
+		sql += "SELECT userid, userpw, usernick, usergrade, useraddr FROM tuser";
 		sql += " WHERE userid = ?";
 		
 		User result = null;
@@ -67,6 +67,8 @@ public class LoginDaoImpl implements LoginDao {
 				result.setUserid( rs.getString("userid") );
 				result.setUserpw( rs.getString("userpw") );
 				result.setUsernick( rs.getString("usernick") );
+				result.setUsergrade( rs.getString("usergrade"));
+				result.setUseraddr( rs.getString("useraddr"));
 			}
 			
 		} catch (SQLException e) {

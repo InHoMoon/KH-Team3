@@ -3,7 +3,9 @@
 
 <%@ include file="../layout/header.jsp" %>
 
-<h1>기본 템플릿</h1>
+<h1>비밀번호 찾기 성공</h1>
 <hr>
+
+이메일을 보내고 싶은데 어떻게 해야 할까요....
 
 <%@ include file="../layout/footer.jsp" %>

@@ -15,6 +15,14 @@ th, td {
 	text-align: center;
 }
 
+.table>tbody>tr>td {
+	vertical-align: middle;
+}
+
+.table>tbody>tr>th {
+	vertical-align: middle;
+}
+
 /* td:nth-child(2) {
 	text-align: justify;
 } */
@@ -82,26 +90,30 @@ $(document).ready(function() {
 
 <% for(int i=0; i<noticeList.size(); i++ ) { %>
 
-<tr>
-	<td><%= noticeList.get(i).getNno() %></td>
-	<td id="nlist"><%= noticeList.get(i).getNcategory() %></td>
-	<td>
-		<%	if( noticeList.get(i).getNfileoriginname() != null ) { %>  
-			<img object-fit="contain" class="img-responsive img-rounded"  alt="" 
-			src="<%=request.getContextPath() %>/upload/<%=noticeList.get(i).getNfilestoredname() %>"  
-			style="height: 50px">
+	<tr style="height : 20px;">
+	
+		<%	if( noticeList.get(i).getNtop() == 1 ) { %>  
+			<td><span class="label label-success">공지</span></td>
+		<%	} else {%>
+			<td><%= noticeList.get(i).getNno() %></td>
 		<%	} %>
-	</td>
-	<td  style="text-align: left; padding-left: 20px;">
-		<a href="./view?nno=<%= noticeList.get(i).getNno() %>">
-				<%= noticeList.get(i).getNtitle() %>
-		</a>
-	</td>
-	<td><%= noticeList.get(i).getNhit() %></td>
-	<td><%= noticeList.get(i).getNwritedate() %></td>
-
-</tr>
-
+		<td id="nlist"><%= noticeList.get(i).getNcategory() %></td>
+		<td>
+			<%	if( noticeList.get(i).getNfileoriginname() != null ) { %>  
+				<img object-fit="contain" class="img-responsive img-rounded"  alt="" 
+				src="<%=request.getContextPath() %>/upload/<%=noticeList.get(i).getNfilestoredname() %>"  
+				style="height: 50px">
+			<%	} %>
+		</td>
+		<td  style="text-align: left; padding-left: 20px;">
+			<a href="./view?nno=<%= noticeList.get(i).getNno() %>">
+					<%= noticeList.get(i).getNtitle() %>
+			</a>
+		</td>
+		<td><%= noticeList.get(i).getNhit() %></td>
+		<td><%= noticeList.get(i).getNwritedate() %></td>
+	
+	</tr>
 
 <% } %>
 </table>

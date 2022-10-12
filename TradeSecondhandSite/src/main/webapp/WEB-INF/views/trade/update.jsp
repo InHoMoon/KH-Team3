@@ -1,7 +1,16 @@
+<%@page import="web.dto.TradeImg"%>
+<%@page import="web.dto.Trade"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp" %>
+
+<!-- 거래글 상세보기 조회결과 값  -->
+<% Trade updateTrade = (Trade) request.getAttribute("updateTrade"); %>
+
+<!-- 첨부파일 상세보기 조회 결과 값 -->
+<% TradeImg tradeImg = (TradeImg) request.getAttribute("tradeImg"); %>
+
 
 <!-- 스마트에디터 2 -->
 <script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js"></script>
@@ -29,6 +38,24 @@ $(document).ready(function(){
 		history.go(-1)
 	})
 	
+	//파일이 없을 경우
+	if(<%=tradeImg != null %>) {
+		$("#beforeImg").show();
+		$("#afterImg").hide();
+	}
+	
+	//파일이 있을 경우
+	if(<%=tradeImg == null %>) {
+		$("#beforeImg").hide();
+		$("#afterImg").show();
+	}
+	
+	//파일 삭제 버튼(X) 처리
+	$("#delImg").click(function() {
+		$("#beforeImg").toggle();
+		$("#afterImg").toggle();
+	})
+	
 	
 	
 function updateContents() {
@@ -49,20 +76,22 @@ function updateContents() {
 
 
 
-<h1>거래글 작성</h1>
+<h1>거래글 수정</h1>
 
 <form action="./write" method="post" enctype="multipart/form-data">
-
-	<!-- 판매상태 정보 전달 -->
+	
+	<input type="hidden" name="boardno" value="<%=updateTrade.getTradeno() %>">
+	
 	<input type="hidden" name="saleState" value="판매중">
 	
 	<table  class="table table-bordered">
 		<tr>
 			<td class="text-center">제목</td>
-			<td colspan="2"><input type="text" name="title" style="width: 100%;" placeholder="제목을 입력하세요" ></td>
+			<td colspan="2"><input type="text" name="title" style="width: 100%;" placeholder="제목을 입력하세요" value="<%=updateTrade.getTitle() %>"></td>
 			<td>
-				<select class="form-control text-center" name="category"  id="category">
-					<option>카테고리 선택</option>
+				<select class="form-control text-center" name="category"  id="category" >
+					<option><%=updateTrade.getCategory() %></option>
+					<option disabled>=======================</option>
 					<option>가전·TV</option>
 					<option>컴퓨터·태블릿·모바일</option>
 					<option>자동차 용품</option>
@@ -73,28 +102,48 @@ function updateContents() {
 			</td>
 			<td>
 				<select class="form-control text-center" name="productState" >
-					<option>상품 상태 선택</option>
+					<option><%=updateTrade.getProductState() %></option>
+					<option disabled>=================</option>
 					<option>미개봉</option>
 					<option>거의 새 것</option>
 					<option>사용감 있음</option>
 				</select>
 			</td>
+			<td>
+				<select class="form-control text-center" name="saleState" >
+					<option><%=updateTrade.getSaleState() %></option>
+					<option disabled>=================</option>
+					<option>판매중</option>
+					<option>예약중</option>
+					<option>판매완료</option>
+				</select>
+			</td>
 		</tr>
 		
 		<tr>
-			<td class="text-center">판매자 정보</td>
+			<td class="text-center" colspan="2">판매자 정보</td>
 			<td class="text-center"><%=session.getAttribute("userid") %></td>
 			<td class="text-center"><%=session.getAttribute("userphone") %></td>
 			<td class="text-center">판매가격</td>
-			<td class="text-right"><input type="number" name="price" placeholder="가격을 입력하세요" >원</td>
+			<td class="text-right"><input type="number" name="price" placeholder="가격을 입력하세요"  value="<%=updateTrade.getPrice() %>">원</td>
 		</tr>
 		<tr>
-			<td colspan="5"><textarea id="content" name="content" style="width: 100%;" placeholder="내용을 입력하세요"></textarea></td>
+			<td colspan="6"><textarea id="content" name="content" style="width: 100%;" placeholder="내용을 입력하세요" ><%=updateTrade.getContent() %></textarea></td>
 		</tr>
 	</table>
-	
-대표 상품 사진 <input type="file" name="file" accept="image/*" >
+<div id="beforeImg">
+	<%	if( tradeImg != null ) { %>
+	<a href="<%=request.getContextPath() %>/upload/<%=tradeImg.getStoredName() %>"
+	 download="<%=tradeImg.getOriginName() %>">
+		<%=tradeImg.getOriginName() %>
+	</a>
+	<span id="delImg" style="color: red; font-weight: bold; cursor: pointer;">X</span>
+	<%	} %>
+</div>
 
+<div id="afterImg">
+	새 대표 상품 이미지 <input type="file" name="file" accept="image/*">
+</div>
 </form>
 
 

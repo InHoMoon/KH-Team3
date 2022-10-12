@@ -56,7 +56,7 @@ $(document).ready(function(){
 <%	for(int i=0; i<searchList.size(); i++) { %>
 <tr>
 	<td><%=searchList.get(i).getTradeno() %></td>
-	<td><%=searchList.get(i).getProductState() %></td>
+	<td><%=searchList.get(i).getSaleState() %></td>
 	<td>
 		<a href="./view?tradeno=<%=searchList.get(i).getTradeno() %>">
 			<%=searchList.get(i).getTitle() %>

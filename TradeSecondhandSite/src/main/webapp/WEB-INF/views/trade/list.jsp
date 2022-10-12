@@ -24,7 +24,7 @@ $(document).ready(function(){
 })
 </script>
 
-<h1>게시글 목록</h1>
+<h1>거래글 목록</h1>
 <hr>
 <div>
 <form action="/trade/list" method="post" name="search" >
@@ -56,7 +56,7 @@ $(document).ready(function(){
 <%	for(int i=0; i<tradeList.size(); i++) { %>
 <tr>
 	<td><%=tradeList.get(i).getTradeno() %></td>
-	<td><%=tradeList.get(i).getProductState() %></td>
+	<td><%=tradeList.get(i).getSaleState() %></td>
 	<td>
 		<a href="./view?tradeno=<%=tradeList.get(i).getTradeno() %>">
 			<%=tradeList.get(i).getTitle() %>

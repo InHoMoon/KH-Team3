@@ -19,7 +19,7 @@ public class IdFindServiceImpl implements IdFindService {
 		User user = new User();
 		
 		user.setUsername( req.getParameter("username") );
-		user.setUseremail( req.getParameter("useremail") );
+		user.setUseremail( req.getParameter("email_id") + "@" + req.getParameter("email_domain") );
 		
 		return user;
 	}

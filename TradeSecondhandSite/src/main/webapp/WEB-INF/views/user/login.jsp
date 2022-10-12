@@ -25,11 +25,15 @@ $(document).ready(function() {
 			$("#er_id").css("display", "")
 			$("#er_pw").css("display", "none")
 			
+			$("input").eq(0).focus()
+			
 		} else if ( $("#userpw").val() == "" ) {
 			
 			// 비밀번호 미 입력시 로그인버튼 클릭하면 알림문구 출력
 			$("#er_id").css("display", "none")
 			$("#er_pw").css("display", "")
+			
+			$("input").eq(1).focus()
 		
 		} else {
 			

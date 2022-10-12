@@ -27,7 +27,7 @@ public class JoinServiceImpl implements JoinService {
 		user.setUserphone( req.getParameter("phone1") + "-" + req.getParameter("phone2") + "-" + req.getParameter("phone3") );
 		user.setUsergender( req.getParameter("usergender") );
 		user.setUserbirth( req.getParameter("year") + "-" + req.getParameter("month") + "-" + req.getParameter("day") );
-		user.setUseraddr( req.getParameter("useraddr") );
+		user.setUseraddr( "(" + req.getParameter("addrnum") + ")" + req.getParameter("addr") + " " + req.getParameter("detailAddr") );
 		user.setUsernick( req.getParameter("usernick") );
 		
 		return user;

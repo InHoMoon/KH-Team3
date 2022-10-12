@@ -16,8 +16,8 @@ public class JoinDaoImpl implements JoinDao {
 	public int insert(Connection conn, User user) {
 		
 		String sql = "";
-		sql += "INSERT INTO tuser ( userno, userid, userpw, username, useremail, userphone, usergender, userbirth, useraddr, usernick )";
-		sql += " VALUES ( tuser_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+		sql += "INSERT INTO tuser ( userno, userid, userpw, username, useremail, userphone, usergender, userbirth, useraddr, usernick, usergrade )";
+		sql += " VALUES ( tuser_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, '일반회원' )";
 		
 		int res = 0;
 		

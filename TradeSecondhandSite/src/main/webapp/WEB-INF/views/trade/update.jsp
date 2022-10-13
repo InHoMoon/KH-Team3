@@ -78,15 +78,15 @@ function updateContents() {
 
 <h1>거래글 수정</h1>
 
-<form action="./write" method="post" enctype="multipart/form-data">
+<form action="./update" method="post" enctype="multipart/form-data">
 	
-	<input type="hidden" name="boardno" value="<%=updateTrade.getTradeno() %>">
+	<input type="hidden" name="tradeno" value="<%=updateTrade.getTradeno() %>">
 	
 	<input type="hidden" name="saleState" value="판매중">
 	
 	<table  class="table table-bordered">
 		<tr>
-			<td class="text-center">제목</td>
+			<td class="text-center active">제목</td>
 			<td colspan="2"><input type="text" name="title" style="width: 100%;" placeholder="제목을 입력하세요" value="<%=updateTrade.getTitle() %>"></td>
 			<td>
 				<select class="form-control text-center" name="category"  id="category" >
@@ -121,11 +121,11 @@ function updateContents() {
 		</tr>
 		
 		<tr>
-			<td class="text-center" colspan="2">판매자 정보</td>
+			<td class="text-center active" colspan="2">판매자 정보</td>
 			<td class="text-center"><%=session.getAttribute("userid") %></td>
 			<td class="text-center"><%=session.getAttribute("userphone") %></td>
-			<td class="text-center">판매가격</td>
-			<td class="text-right"><input type="number" name="price" placeholder="가격을 입력하세요"  value="<%=updateTrade.getPrice() %>">원</td>
+			<td class="text-center active">판매가격</td>
+			<td class="text-right"><input type="number" name="price" placeholder="가격을 입력하세요"  value="<%=updateTrade.getPrice() %>"> 원</td>
 		</tr>
 		<tr>
 			<td colspan="6"><textarea id="content" name="content" style="width: 100%;" placeholder="내용을 입력하세요" ><%=updateTrade.getContent() %></textarea></td>

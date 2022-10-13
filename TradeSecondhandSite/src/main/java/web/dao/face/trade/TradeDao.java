@@ -100,4 +100,20 @@ public interface TradeDao {
 	 */
 	public int updateImg(Connection conn, TradeImg tradeImg);
 
+	/**
+	 * 거래글 첨부 이미지 삭제
+	 * @param conn
+	 * @param tradeno
+	 * @return
+	 */
+	public int deleteImg(Connection conn, Trade tradeno);
+
+	/**
+	 * 거래글 삭제
+	 * @param conn
+	 * @param tradeno
+	 * @return
+	 */
+	public int delete(Connection conn, Trade tradeno);
+
 }

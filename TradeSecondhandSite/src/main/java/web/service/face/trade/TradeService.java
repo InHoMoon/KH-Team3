@@ -77,6 +77,12 @@ public interface TradeService {
 	 */
 	public void update(HttpServletRequest req);
 
+	/**
+	 * 게시물 삭제
+	 * @param tradeno 삭제할 게시물 번호
+	 */
+	public void delete(Trade tradeno);
+
 
 
 }

@@ -33,6 +33,7 @@ public class TradeUpdateController extends HttpServlet {
 		//거래글 상세보기 조회결과 값 전달
 		req.setAttribute("updateTrade", updateTrade);
 		
+		
 		//첨부파일 정보 조회
 		TradeImg tradeImg = tradeService.viewImg(tradeno);
 		

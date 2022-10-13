@@ -39,9 +39,6 @@ public class PwFindController extends HttpServlet {
 		// 비밀번호 찾기 인증
 		boolean isPwFind = pwFindService.pwFind(user);
 		
-		// 포워딩 URL
-		String url = null;
-		
 		// 아이디 찾기 인증 성공
 		if( isPwFind ) {
 			
@@ -53,16 +50,14 @@ public class PwFindController extends HttpServlet {
 			session.setAttribute("username", user.getUsername());
 			session.setAttribute("useremail", user.getUseremail());
 			
-			url = "/WEB-INF/views/user/pwFindSuccess.jsp";
+			// 비밀번호 수정 페이지로 리다이렉트
+			resp.sendRedirect("/pw/update");
 			
 		} else {
 			
-			url = "/WEB-INF/views/user/pwFindFail.jsp";
+			req.getRequestDispatcher("/WEB-INF/views/user/pwFindFail.jsp").forward(req, resp);
 			
 		}
-		
-		// 포워드 
-		req.getRequestDispatcher(url).forward(req, resp);
 		
 	}
 	

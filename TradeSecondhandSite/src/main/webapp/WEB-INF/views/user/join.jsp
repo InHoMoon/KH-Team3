@@ -3,7 +3,103 @@
 
 <%@ include file="../layout/header.jsp" %>
 
+<!-- ajax 쿼리 설치 ---수정 필요 -->
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/httpRequest.js"></script>
+
+
+<!-- 다음 주소 검색 js 설치 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
+<!-- 필수입력항목 공백시 경고문구 출력 -->
 <script type="text/javascript">
+$(document).ready(function() {
+	
+	// 아이디 공백
+	$("#userid").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#required_id").css("display", "")
+		} else {
+			$("#required_id").css("display", "none")
+		}
+	})
+	
+	// 비밀번호 공백
+	$("#userpw").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#info_pw").css("display", "none")
+			$("#er_pwlength").css("display", "none")
+			$("#er_pwblank").css("display", "none")
+			$("#er_pwtext").css("display", "none")
+			$("#required_pw").css("display", "")
+		} else {
+			$("#required_pw").css("display", "none")
+		}
+	})
+
+	// 비밀번호 확인 공백
+	$("#userpwck").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#er_pwsame").css("display", "none")
+			$("#ok_pwck").css("display", "none")
+			$("#required_pwck").css("display", "")
+		} else {
+			$("#required_pwck").css("display", "none")
+		}
+	})
+
+	// 이름 공백
+	$("#username").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#required_name").css("display", "")
+		} else {
+			$("#required_name").css("display", "none")
+		}
+	})
+
+	// 이메일 공백
+	$("#useremail").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#required_email").css("display", "")
+		} else {
+			$("#required_email").css("display", "none")
+		}
+	})
+
+	// 전화번호 공백
+	$("#userphone").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#required_phone").css("display", "")
+		} else {
+			$("#required_phone").css("display", "none")
+		}
+	})
+
+	// 주소(addr1) 공백
+	$("#useraddr1").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#required_addr").css("display", "")
+		} else {
+			$("#required_addr").css("display", "none")
+		}
+	})
+
+	// 주소(addr2) 공백
+	$("#useraddr2").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#required_addr").css("display", "")
+		} else {
+			$("#required_addr").css("display", "none")
+		}
+	})
+
+})
+</script>
+
+
+<!-- 지정 문자 입력 기능 -->
+<script type="text/javascript">
+
 // 숫자만 입력 가능
 $(document).ready(function(){
 	$("input:text[numberOnly]").keyup(function() {
@@ -11,21 +107,21 @@ $(document).ready(function(){
 	})
 });
 
-// 영어+숫자만 입력 가능 
+// 영어+숫자 입력 가능 
 $(document).ready(function() {
 	$("input:text[engnum]").keyup(function() {
 		$(this).val( $(this).val().replace(/[^a-z0-9_.]/gi,"") )
 	})
 })
 
-// 영어+한글만 입력 가능 
+// 영어+한글 입력 가능 
 $(document).ready(function() {
 	$("input:text[engkor]").keyup(function() {
 		$(this).val( $(this).val().replace(/[^ㄱ-힣a-z]/gi,"") )
 	})
 })
 
-// 영어+숫자+특수문자만 입력 가능 
+// 영어+숫자+특수문자 입력 가능 --- 수정 필요
 $(document).ready(function() {
 	$("input:text[engkor]").keyup(function() {
 		$(this).val( $(this).val().replace(/[^ㄱ-힣a-z]/gi,"") )
@@ -34,102 +130,134 @@ $(document).ready(function() {
 
 </script>
 
+
+<!-- 아이디, 닉네임 중복확인 ajax   --- 수정 필요 -->
 <script type="text/javascript">
-// 비밀번호 유효성 검사
+
+window.onload = function() {
+	
+	btnIdck.onclick = function() {
+		console.log("#btnIdck click")
+		
+		// AJAX 요청 보내기
+		sendRequest("POST", "/id/check", "", callback)	
+	}
+	
+}
+
+// AJAX 응답 처리 콜백
+function callback() {
+	if(httpRequest.readyState ==4) {
+		if(httpRequest.status == 200) {
+			console.log("정상적인 AJAX 요청/응답 완료")
+			
+			// 결과 처리 함수 호출하기
+			printData();
+			
+		} else {
+			console.log("AJAX 요청/응답 실패")			
+		}
+	}
+}
+
+// 응답 결과를 처리하는 함수
+function printData() {
+	console.log("printData called")
+	
+	// AJAX 응답 데이터
+	var respText = httpRequest.responseText;
+	console.log("--- respText ---")
+	console.log( respText )
+	
+	// 언마샬링, JSON Text -> JS Data
+	var jsData = JSON.parse( respText )
+	console.log("--- jsData ---")
+	console.log( jsData )
+	
+	// 응답 데이터 div#result에 반영하기
+// 	result.innerHTML = jsData
+// 	result.innerHTML = '<p> key : ' + jsData.key + '</p>'
+	
+	// 응답 데이터 JSON을 HTML코드로 작성하여 div#result에 반영하기
+	//	-> jsData 이용
+	
+	var html = ""
+	for( var i=0; i<jsData.length; i++ ) {
+		html += "<h3>" + jsData[i].id + ":" + jsData[i].pw + "</h3>" 	
+	}
+	
+	result.innerHTML = html
+	
+}
+
+</script>
+
+
+
+<!-- 비밀번호 유효성 검사, 비밀번호 확인 -->
+<script type="text/javascript">
 $(document).ready(function() {
 	$("#userpw").keyup(function() {
-		
 		 var pw = $("#userpw").val()
 		 var num = pw.search(/[0-9]/g)
 		 var eng = pw.search(/[a-z]/gi)
 		 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi)
 		 
+		// 6자리 미만일 경우
 		 if( pw.length < 6 ) {
-			 
-			// 6자리 미만일 경우 알림문구 출력
 			$("#info_pw").css("display", "none")
 			$("#er_pwlength").css("display", "")
 			$("#er_pwblank").css("display", "none")
 			$("#er_pwtext").css("display", "none")
+			$("#required_pw").css("display", "none")
 			
+		// 공백이 존재할 경우
 		 } else if ( pw.search(/\s/) != -1 ) {
-			 
-			// 공백이 존재할 경우 알림문구 출력
 			$("#info_pw").css("display", "none")
 			$("#er_pwlength").css("display", "none")
 			$("#er_pwblank").css("display", "")
 			$("#er_pwtext").css("display", "none")
+			$("#required_pw").css("display", "none")
 			 
+		// 영어+숫자+특수문자 조합이 아닐 경우
 		 } else if ( num < 0 || eng < 0 || spe < 0 ) {
-			 
-			// 영어+숫자+특수문자 조합이 아닐 경우 알림문구 출력
 			$("#info_pw").css("display", "none")
 			$("#er_pwlength").css("display", "none")
 			$("#er_pwblank").css("display", "none")
 			$("#er_pwtext").css("display", "")
+			$("#required_pw").css("display", "none")
 			 
 		 } else {
-			 
 			$("#info_pw").css("display", "none")
 			$("#er_pwlength").css("display", "none")
 			$("#er_pwblank").css("display", "none")
 			$("#er_pwtext").css("display", "none")
-			 
+			$("#required_pw").css("display", "none")
 		 }
-		
 	})
 	
-	// 비밀번호 == 비밀번호 확인 검사
+	// 비밀번호 == 비밀번호 확인
 	$("#userpwck").keyup(function() {
+
+		// 비밀번호 확인 불일치
 		if( $("#userpw").val() != $("#userpwck").val()) {
-			
-			// 비밀번호 확인 불일치시 알림문구 출력
 			$("#er_pwsame").css("display", "")
 			$("#ok_pwck").css("display", "none")
+			$("#required_pwck").css("display", "none")
 			
+		// 비밀번호 확인 일치
 		} else {
-			
-			// 비밀번호 확인 일치시 알림문구 출력
 			$("#er_pwsame").css("display", "none")
 			$("#ok_pwck").css("display", "")
-			
+			$("#required_pwck").css("display", "none")
 		}
 	})
 })
 </script>
 
+
+<!-- 카카오 주소 검색 기능 -->
 <script type="text/javascript">
-// 이메일 도메인 select
-$(document).ready(function() {
-	$("#email_select").change(function() {
-		if( $(this).val() == "1" ) { // 직접입력의 경우
-			$("#email_domain").val("")
-			$("#email_domain").attr("disabled", false)
-		} else { // 선택입력의 경우
-			$("#email_domain").val( $(this).val() )
-			$("#email_domain").attr("disabled", true)
-		}
-	})
-})
-
-// 전화번호 select
-$(document).ready(function() {
-	$("#phone_select").change(function() {
-		if( $(this).val() == "1" ) { // 직접입력의 경우
-			$("#phone1").val("")
-			$("#phone1").attr("disabled", false)
-		} else { // 선택입력의 경우
-			$("#phone1").val( $(this).val() )
-			$("#phone1").attr("disabled", true)			
-		}
-	})
-})
-</script>
-
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-<script type="text/javascript">
-// 카카오 우편번호 검색
 function DaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -164,21 +292,74 @@ function DaumPostcode() {
 
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('addrnum').value = data.zonecode;
-            document.getElementById("addr").value = addr;
+            document.getElementById("useraddr1").value = data.zonecode;
+            document.getElementById("useraddr2").value = addr;
             // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("detailAddr").focus();
+            document.getElementById("useraddr3").focus();
         }
     }).open();
 }
 </script>
 
 
+<!-- 프로필 사진    ---- 수정 필요 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#profile").change(function( e ) {
+		console.log("#profile change")
+		
+		console.log("--- 선택된 파일들 ---")
+		console.log( e.target.files )		// 이게 더 어디서 온 기능인지 정확하게 파악가능
+		console.log(this)	// e.target과 똑같이 처리됨
+		console.log(this.files)	// e.target.files와 똑같이 처리됨
+		
+		//---------------------------
+ 
+		var files = e.target.files;
+		
+		// 이미지만 처리할 수 있도록 적용
+		if( !files[0].type.includes( "image" ) ) {
+			alert("이미지가 아닙니다")
+			
+			// 선택한 파일 해제하기
+			e.target.value = null;
+			
+			// 이벤트 처리 중단시키기
+			return false;
+			
+		}
+		
+		//---------------------------
+		
+		// FileReader 객체 생성
+		var reader = new FileReader();
+		
+		// FileTeader가 파일의 내용을 전부 읽어들여
+		// 메모리에 로드 되었을 때 발생하는 이벤트 처리
+		reader.onload = function( ev ) {
+			console.log( ev.target.result )
+			console.log( this.result ) //ev.target.result와 같은 식
+		
+		
+			// 이미지를 새롭게 선택할 때마다 #preview의 이전 이미지를 지우고
+			// 한 장만 유지되도록 한다
+			$("#preview").html(
+				$("<img>").attr( {
+					"src": ev.target.result
+					,"width" : 200
+				})
+			)
+		}
+		
+		// 선택된 파일을 DataURL 형식으로 읽어들이기
+		reader.readAsDataURL( files[0] )
+		
+	})
+})
+</script>
 
 
-
-
-
+<!-- button -->
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -189,120 +370,39 @@ $(document).ready(function() {
 	$("#btnJoin").click(function() {
 		
 		if( $("#userid").val() == "" ) {
-			
-			// 아이디 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "")
-			$("#er_pw").css("display", "none")
-			$("#er_pwck").css("display", "none")
-			$("#er_name").css("display", "none")
-			$("#er_email").css("display", "none")
-			$("#er_phone").css("display", "none")
-			
+			alert("아이디를 입력하세요");
 			$("input").eq(0).focus()
 			
 		} else if ( $("#userpw").val() == "" ) {
-			
-			// 비밀번호 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "")
-			$("#er_pwck").css("display", "none")
-			$("#er_name").css("display", "none")
-			$("#er_email").css("display", "none")
-			$("#er_phone").css("display", "none")
-			
+			alert("비밀번호를 입력하세요");
 			$("input").eq(1).focus()
 
 		} else if ( $("#userpwck").val() == "" ) {
-			
-			// 비밀번호 확인 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "none")
-			$("#er_pwck").css("display", "")
-			$("#er_name").css("display", "none")
-			$("#er_email").css("display", "none")
-			$("#er_phone").css("display", "none")
-			
+			alert("비밀번호를 확인하세요");
 			$("input").eq(2).focus()
 		
 		} else if ( $("#username").val() == "" ) {
-		
-			// 이름 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "none")
-			$("#er_pwck").css("display", "none")
-			$("#er_name").css("display", "")
-			$("#er_email").css("display", "none")
-			$("#er_phone").css("display", "none")
-		
+			alert("이름을 입력하세요");
 			$("input").eq(3).focus()
 			
-		} else if ( $("#email_id").val() == "" ) {
-		
-			// 이메일(email_id) 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "none")
-			$("#er_pwck").css("display", "none")
-			$("#er_name").css("display", "none")
-			$("#er_email").css("display", "")
-			$("#er_phone").css("display", "none")
-			
+		} else if ( $("#useremail").val() == "" ) {
+			alert("이메일을 입력하세요");
 			$("input").eq(4).focus()
 		
-		} else if ( $("#email_domain").val() == "" ) {
-		
-			// 이메일(email_domain) 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "none")
-			$("#er_pwck").css("display", "none")
-			$("#er_name").css("display", "none")
-			$("#er_email").css("display", "")
-			$("#er_phone").css("display", "none")
+		} else if ( $("#userphone").val() == "" ) {
+			alert("전화번호를 입력하세요");
+			$("input").eq(5).focus()
 			
-			$("select").eq(0).focus()
-		
-		} else if ( $("#phone1").val() == "" ) {
-		
-			// 전화번호(phone1) 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "none")
-			$("#er_pwck").css("display", "none")
-			$("#er_name").css("display", "none")
-			$("#er_email").css("display", "none")
-			$("#er_phone").css("display", "")
-		
-			$("select").eq(1).focus()
+		} else if ( $("#useraddr1").val() == "" ) {
+			alert("주소를 입력하세요");
+			$("input").eq(6).focus()
 			
-		} else if ( $("#phone2").val() == "" ) {
-		
-			// 전화번호(phone2) 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "none")
-			$("#er_pwck").css("display", "none")
-			$("#er_name").css("display", "none")
-			$("#er_email").css("display", "none")
-			$("#er_phone").css("display", "")
-		
+		} else if ( $("#useraddr2").val() == "" ) {
+			alert("주소를 입력하세요");
 			$("input").eq(7).focus()
 			
-		} else if ( $("#phone3").val() == "" ) {
-		
-			// 전화번호(phone3) 미 입력시 회원가입 버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "none")
-			$("#er_pwck").css("display", "none")
-			$("#er_name").css("display", "none")
-			$("#er_email").css("display", "none")
-			$("#er_phone").css("display", "")
-		
-			$("input").eq(8).focus()
-			
 		} else {
-			
-			$("#email_domain").removeAttr("disabled") // select disabled 삭제
-			$("#phone1").removeAttr("disabled") // select disabled 삭제
-			
 			$(this).parents("form").submit() // 회원가입 폼 제출
-			
 		}
 		
 	})
@@ -315,10 +415,6 @@ $(document).ready(function() {
 })
 </script>
 
-<!-- 아이디, 닉네임 중복확인 -->
-<!-- 프로필 사진 등록 -->
-<!-- css -->
-
 <h1 style="text-align: center;">회원가입</h1>
 <hr>
 
@@ -329,12 +425,12 @@ $(document).ready(function() {
 		<label for="userid" class="col-xs-2 col-xs-offset-2 control-label">아이디</label>
 		<div class="col-xs-4">
 			<input type="text" id="userid" name="userid" class="form-control" engnum>
-			
-			<span class="error_box" id="er_id" style="display: none; color: red;">아이디를 입력하세요</span>
+			<span class="required_box" id="required_id" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 		<div class="col-xs-2">
-			<button type="button" class="btn btn-default" id="btnId">중복확인</button>
+			<button type="button" class="btn btn-default" id="btnIdck">중복확인</button>
 		</div>
+		<div id="result"></div>
 	</div>
 
 	<div class="form-group">
@@ -342,82 +438,68 @@ $(document).ready(function() {
 		<div class="col-xs-4">
 			<input type="password" id="userpw" name="userpw" class="form-control">
 			
-			<span class="info_box" id="info_pw" style="display: ''; color: blue;">영문, 숫자, 특수문자가 모두 포함된 6자리 이상</span>
+			<span class="info_box" id="info_pw" style="display: ''; color: blue;">영문, 숫자, 특수문자가 모두 포함된 6자리 이상의 조합</span>
+			
 			<span class="error_box" id="er_pwlength" style="display: none; color: red;">6자리 이상 입력해주세요</span>
 			<span class="error_box" id="er_pwblank" style="display: none; color: red;">빈칸없이 입력해주세요</span>
 			<span class="error_box" id="er_pwtext" style="display: none; color: red;">영문, 숫자, 특수문자를 혼합하여 입력해주세요</span>
+			
+			<span class="required_box" id="required_pw" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="userpwchk" class="col-xs-2 col-xs-offset-2 control-label">비밀번호 확인</label>
+		<label for="userpwck" class="col-xs-2 col-xs-offset-2 control-label">비밀번호 확인</label>
 		<div class="col-xs-4">
 			<input type="password" id="userpwck" name="userpwck" class="form-control">
 			
-			<span class="error_box" id="er_pwck" style="display: none; color: red;">비밀번호 확인을 입력하세요</span>
 			<span class="error_box" id="er_pwsame" style="display: none; color: red;">비밀번호가 일치하지 않습니다</span>
 			<span class="info_box" id="ok_pwck" style="display: none; color: green;">비밀번호 확인 완료</span>
+			
+			<span class="required_box" id="required_pwck" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="username" class="col-xs-2 col-xs-offset-2 control-label">이름</label>
-		<span class="error_box" id="er_name" style="display: none; color: red;">이름을 입력하세요</span>
 		<div class="col-xs-4">
 			<input type="text" id="username" name="username" class="form-control" engkor>
+			<span class="required_box" id="required_name" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="email_id" class="col-xs-2 col-xs-offset-2 control-label">이메일</label>
-		<div class="col-xs-2">
-			<input type="text" id="email_id" name="email_id" class="form-control" engnum>
-			<span class="error_box" id="er_email" style="display: none; color: red;">이메일을 입력하세요</span>
+		<label for="useremail" class="col-xs-2 col-xs-offset-2 control-label">이메일</label>
+		<div class="col-xs-4">
+			<input type="email" id="useremail" name="useremail" class="form-control" engnum>
+			<span class="required_box" id="required_email" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>	
-		<div class="col-xs-2">
-			<input type="text" id="email_domain" name="email_domain" class="form-control" engnum disabled>
-		</div>
-		<div class="col-xs-2">
-			<select class="form-control" id="email_select" name="email_select">
-			    <option value="">선택하세요</option>
-			    <option value="naver.com">naver.com</option>
-			    <option value="gmail.com">gmail.com</option>
-			    <option value="hanmail.com">hanmail.com</option>
-			    <option value="nate.com">nate.com</option>
-			    <option value="1">직접입력</option>
-			</select>
+	</div>
+
+	<div class="form-group">
+		<label for="userphone" class="col-xs-2 col-xs-offset-2 control-label">전화번호</label>
+		<div class="col-xs-4">
+			<input type="text" id="userphone" name="userphone" class="form-control" maxlength="11" placeholder="ex) 01012345678" numberOnly>
+			<span class="required_box" id="required_phone" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="phone1" class="col-xs-2 col-xs-offset-2 control-label">전화번호</label>
-			
-		<div class="col-xs-1">
-			<select class="form-control" id="phone_select" name="phone_select">
-			    <option value="">선택하세요</option>
-			    <option value="010">010</option>
-			    <option value="011">011</option>
-			    <option value="016">016</option>
-			    <option value="017">017</option>
-			    <option value="019">019</option>
-			    <option value="1">직접입력</option>
-			</select>
+		<label for="useraddr1" class="col-xs-2 col-xs-offset-2 control-label">주소</label>
+		<div class="col-xs-4">
+			<input type="text" id="useraddr1" name="useraddr1" class="form-control" placeholder="우편번호">
 		</div>
-
-		<div class="col-xs-1">
-			<input type="text" id="phone1" name="phone1" class="form-control" maxlength="3" numberOnly disabled>
+		<div class="col-xs-4">
+			<input type="button" class="btn btn-default" onclick="DaumPostcode()" value="우편번호 찾기">
 		</div>
-		<div class="col-xs-1">
-			<input type="text" id="phone2" name="phone2" class="form-control" maxlength="4" numberOnly>
-		</div>
-		<div class="col-xs-1">
-			<input type="text" id="phone3" name="phone3" class="form-control" maxlength="4" numberOnly>
-		</div>
-
 		<div class="clearfix"></div>
-
-		<div class="text-center">
-			<span class="error_box" id="er_phone" style="display: none; color: red;">전화번호를 입력하세요</span>
+		<div class="col-xs-4 col-xs-offset-4">
+			<input type="text" id="useraddr2" name="useraddr2" class="form-control" placeholder="주소">
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-xs-4 col-xs-offset-4">
+			<input type="text" id="useraddr3" name="useraddr3" class="form-control" placeholder="상세주소 (선택입력)">
+			<span class="required_box" id="required_addr" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 	</div>
 
@@ -433,47 +515,9 @@ $(document).ready(function() {
 	</div>
 
 	<div class="form-group">
-		<label for="year" class="col-xs-2 col-xs-offset-2 control-label">생년월일</label>
-		<div class="col-xs-2">
-			<input type="text" id="year" name="year" class="form-control" maxlength="4" placeholder="년(4자)" numberOnly>
-		</div>
-		<div class="col-xs-1">
-			<select class="form-control" id="month" name="month">
-			    <option value="">선택하세요</option>
-			    <option value="01">01</option>
-			    <option value="02">02</option>
-			    <option value="03">03</option>
-			    <option value="04">04</option>
-			    <option value="05">05</option>
-			    <option value="06">06</option>
-			    <option value="07">07</option>
-			    <option value="08">08</option>
-			    <option value="09">09</option>
-			    <option value="10">10</option>
-			    <option value="11">11</option>
-			    <option value="12">12</option>
-			</select>
-		</div>
-		<div class="col-xs-1">
-			<input type="text" id="day" name="day" class="form-control" maxlength="2" placeholder="일" numberOnly>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label for="addrnum" class="col-xs-2 col-xs-offset-2 control-label">주소</label>
+		<label for="userbirth" class="col-xs-2 col-xs-offset-2 control-label">생년월일</label>
 		<div class="col-xs-4">
-			<input type="text" id="addrnum" name="addrnum" class="form-control" placeholder="우편번호">
-		</div>
-		<div class="col-xs-4">
-			<input type="button" class="btn btn-default" onclick="DaumPostcode()" value="우편번호 찾기">
-		</div>
-		<div class="clearfix"></div>
-		<div class="col-xs-4 col-xs-offset-4">
-			<input type="text" id="addr" name="addr" class="form-control" placeholder="주소">
-		</div>
-		<div class="clearfix"></div>
-		<div class="col-xs-4 col-xs-offset-4">
-			<input type="text" id="detailAddr" name="detailAddr" class="form-control" placeholder="상세주소">
+			<input type="text" id="userbirth" name="userbirth" class="form-control" maxlength="8" placeholder="선택입력  ex) 19950101" numberOnly>
 		</div>
 	</div>
 
@@ -481,25 +525,23 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="usernick" class="col-xs-2 col-xs-offset-2 control-label">닉네임</label>
 		<div class="col-xs-4">
-			<input type="text" id="usernick" name="usernick" class="form-control">
+			<input type="text" id="usernick" name="usernick" class="form-control" placeholder="선택입력">
 		</div>
 		<div class="col-xs-2">
 			<button type="button" class="btn btn-default" id="btnNick">중복확인</button>
 		</div>
 	</div>
 	
-	<!-- 프로필 사진 구현 필요 -->
-	
-	
-
-
-
-
-
+	<!-- 프로필 사진 등록 수정 필요 -->
+	<div class="form-group">
+		<label for="file" class="col-xs-2 col-xs-offset-2 control-label">프로필 사진</label>
+		<input type="file" name="file" id="profile">
+		<div id="preview"></div>
+	</div>
 
 	<div class="text-center">
-		<button type="button" class="btn btn-primary" id="btnJoin">회원가입</button>
-		<button type="button" class="btn btn-danger" id="btnCancel">취소</button>
+		<button type="button" class="btn btn-default" id="btnJoin">회원가입</button>
+		<button type="button" class="btn btn-default" id="btnCancel">취소</button>
 	</div>
 
 </form>

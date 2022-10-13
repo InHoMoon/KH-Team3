@@ -70,10 +70,12 @@ $(document).ready(function(){
 <%	} %>
 </table>
 
+<% if(session.getAttribute("login") != null){ %>
 <div id="btnBox" class="pull-right"> 
 	<button id="btnWrite" class="btn btn-primary">글쓰기</button>
 </div>
 <div class="clearfix"></div>
+<%} %>
 
 <%@ include file="../layout/paging.jsp" %>
 

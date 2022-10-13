@@ -145,6 +145,7 @@ function updateContents() {
 <div id="afterImg">
 	새 대표 상품 이미지 <input type="file" name="file" accept="image/*">
 </div>
+
 </form>
 
 

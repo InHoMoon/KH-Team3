@@ -29,13 +29,20 @@ $(document).ready(function() {
 		$(location).attr('href', './delete?tradeno=<%=viewTrade.getTradeno() %>')
 	})
 	
+	//관심버튼
+	$("#btnCalt").click(function() {
+		$(location).attr('href', './cart?userid=<%=session.getAttribute("userid") %>')
+	})
+	
 	
 
 })
 </script>
 
+
 <h1>거래글 상세보기</h1>
 <hr>
+
 
 <table class="table table-bordered">
 
@@ -59,13 +66,18 @@ $(document).ready(function() {
 <td class="active text-center">전화번호</td><td><%=viewTrade.getUserphone() %></td>
 <td class="active text-center">조회수</td><td><%=viewTrade.getHit() %></td>
 </tr>
+<tr>
+<td class="active" colspan="6">대표 사진</td>
+</tr>
+<tr>
+<td colspan="6"><img alt="이미지가 없습니다" style="width: 100%; height: 300px;"  src="<%=request.getContextPath() %>/upload/<%=tradeImg.getStoredName() %>"></td>
+</tr>
 
 <tr>
 <td class="active" colspan="6">본문</td>
 </tr>
 <tr>
 	<td colspan="6">
-		<img alt="대표 이미지 X" style="width: 50%; height: 300px;"  src="<%=request.getContextPath() %>/upload/<%=tradeImg.getStoredName() %>">
 		<%=viewTrade.getContent() %>
 	</td>
 </tr>
@@ -76,11 +88,13 @@ $(document).ready(function() {
 
 
 
-
 <div class="text-center">
 	<button id="btnList" class="btn btn-primary">목록</button>
+<%if(session.getAttribute("login") != null && session.getAttribute("userid").equals(viewTrade.getUserid()) ) {%>
 	<button id="btnUpdate" class="btn btn-info">수정</button>
 	<button id="btnDelete" class="btn btn-danger">삭제</button>
+	<button id="btnCart" class="btn btn-warning">관심</button>
+<%} %>
 </div>
 
 <%@ include file="../layout/footer.jsp" %>

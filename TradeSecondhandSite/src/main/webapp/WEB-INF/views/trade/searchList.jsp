@@ -21,7 +21,15 @@ $(document).ready(function(){
 	$("#btnWrite").click(function(){
 		location.href="./write"
 	})
+	
+	
+	//목록 버튼
+	$("#btnList").click(function() {
+		$(location).attr('href', './list')
+	})
 })
+
+
 </script>
 
 <h1>게시글 목록</h1>
@@ -69,8 +77,11 @@ $(document).ready(function(){
 <%	} %>
 </table>
 
-<div id="btnBox" class="pull-right"> <!-- 오른쪽으로 붙게 하는듯? -->
+<div id="btnBox" class="pull-right">
+<% if(session.getAttribute("login") != null){ %>
 	<button id="btnWrite" class="btn btn-primary">글쓰기</button>
+<%} %>
+<button id="btnList" class="btn btn-primary">목록</button>
 </div>
 <div class="clearfix"></div>
 

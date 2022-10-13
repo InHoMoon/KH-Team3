@@ -52,8 +52,8 @@ public class IdFindController extends HttpServlet {
 			HttpSession session = req.getSession();
 			
 			session.setAttribute("idFind", isIdFind);
-			session.setAttribute("username", user.getUsername());
 			session.setAttribute("userid", user.getUserid());
+			session.setAttribute("username", user.getUsername());
 			
 			url = "/WEB-INF/views/user/idFindSuccess.jsp";
 			

@@ -20,7 +20,7 @@ public class PwFindServiceImpl implements PwFindService {
 		
 		user.setUserid( req.getParameter("userid") );
 		user.setUsername( req.getParameter("username") );
-		user.setUseremail( req.getParameter("email_id") + "@" + req.getParameter("email_domain") );
+		user.setUseremail( req.getParameter("useremail") );
 		
 		return user;
 		

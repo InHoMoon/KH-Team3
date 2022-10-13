@@ -48,9 +48,16 @@ public class LoginController extends HttpServlet {
 			
 			session.setAttribute("login", isLogin);
 			session.setAttribute("userid", user.getUserid());
+			session.setAttribute("username", user.getUsername());
+			session.setAttribute("useremail", user.getUseremail());
+			session.setAttribute("userphone", user.getUserphone());
+			session.setAttribute("useraddr1", user.getUseraddr1());
+			session.setAttribute("useraddr2", user.getUseraddr2());
+			session.setAttribute("useraddr3", user.getUseraddr3());
+			session.setAttribute("usergender", user.getUsergender());
+			session.setAttribute("userbirth", user.getUserbirth());
 			session.setAttribute("usernick", user.getUsernick());
 			session.setAttribute("usergrade", user.getUsergrade());
-			session.setAttribute("useraddr", user.getUseraddr());
 			
 			System.out.println("LoginController doPost() - 세션 정보 객체 확인" + user);
 			

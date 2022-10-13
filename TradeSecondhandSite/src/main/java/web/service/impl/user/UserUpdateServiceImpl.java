@@ -22,12 +22,13 @@ public class UserUpdateServiceImpl implements UserUpdateService {
 		
 		user.setUserid( req.getParameter("userid") );
 		user.setUserpw( req.getParameter("userpw") );
-		user.setUsername( req.getParameter("username") );
 		user.setUseremail( req.getParameter("useremail") );
 		user.setUserphone( req.getParameter("userphone") );
+		user.setUseraddr1( req.getParameter("useraddr1") );
+		user.setUseraddr2( req.getParameter("useraddr2") );
+		user.setUseraddr3( req.getParameter("useraddr3") );
 		user.setUsergender( req.getParameter("usergender") );
-//		user.setUserbirth( req.getParameter("userbirth") ); // DATE 값으로 받아야하는데...
-		user.setUseraddr( req.getParameter("useraddr") );
+		user.setUserbirth( Integer.parseInt( req.getParameter("userbirth") ) );
 		user.setUsernick( req.getParameter("usernick") );
 		
 		return user;

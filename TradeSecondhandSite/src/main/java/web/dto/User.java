@@ -10,9 +10,11 @@ public class User {
 	private String username;
 	private String useremail;
 	private String userphone;
+	private String useraddr1;
+	private String useraddr2;
+	private String useraddr3;
 	private String usergender;
-	private String userbirth;
-	private String useraddr;
+	private int userbirth;
 	private String usernick;
 	private String usergrade;
 	private Date userjoindate;
@@ -22,8 +24,8 @@ public class User {
 	public User() {}
 
 	public User(int userno, String userid, String userpw, String username, String useremail, String userphone,
-			String usergender, String userbirth, String useraddr, String usernick, String usergrade, Date userjoindate,
-			Date userupdate, int reportcount) {
+			String useraddr1, String useraddr2, String useraddr3, String usergender, int userbirth, String usernick,
+			String usergrade, Date userjoindate, Date userupdate, int reportcount) {
 		super();
 		this.userno = userno;
 		this.userid = userid;
@@ -31,9 +33,11 @@ public class User {
 		this.username = username;
 		this.useremail = useremail;
 		this.userphone = userphone;
+		this.useraddr1 = useraddr1;
+		this.useraddr2 = useraddr2;
+		this.useraddr3 = useraddr3;
 		this.usergender = usergender;
 		this.userbirth = userbirth;
-		this.useraddr = useraddr;
 		this.usernick = usernick;
 		this.usergrade = usergrade;
 		this.userjoindate = userjoindate;
@@ -44,10 +48,10 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userno=" + userno + ", userid=" + userid + ", userpw=" + userpw + ", username=" + username
-				+ ", useremail=" + useremail + ", userphone=" + userphone + ", usergender=" + usergender
-				+ ", userbirth=" + userbirth + ", useraddr=" + useraddr + ", usernick=" + usernick + ", usergrade="
-				+ usergrade + ", userjoindate=" + userjoindate + ", userupdate=" + userupdate + ", reportcount="
-				+ reportcount + "]";
+				+ ", useremail=" + useremail + ", userphone=" + userphone + ", useraddr1=" + useraddr1 + ", useraddr2="
+				+ useraddr2 + ", useraddr3=" + useraddr3 + ", usergender=" + usergender + ", userbirth=" + userbirth
+				+ ", usernick=" + usernick + ", usergrade=" + usergrade + ", userjoindate=" + userjoindate
+				+ ", userupdate=" + userupdate + ", reportcount=" + reportcount + "]";
 	}
 
 	public int getUserno() {
@@ -98,6 +102,30 @@ public class User {
 		this.userphone = userphone;
 	}
 
+	public String getUseraddr1() {
+		return useraddr1;
+	}
+
+	public void setUseraddr1(String useraddr1) {
+		this.useraddr1 = useraddr1;
+	}
+
+	public String getUseraddr2() {
+		return useraddr2;
+	}
+
+	public void setUseraddr2(String useraddr2) {
+		this.useraddr2 = useraddr2;
+	}
+
+	public String getUseraddr3() {
+		return useraddr3;
+	}
+
+	public void setUseraddr3(String useraddr3) {
+		this.useraddr3 = useraddr3;
+	}
+
 	public String getUsergender() {
 		return usergender;
 	}
@@ -106,20 +134,12 @@ public class User {
 		this.usergender = usergender;
 	}
 
-	public String getUserbirth() {
+	public int getUserbirth() {
 		return userbirth;
 	}
 
-	public void setUserbirth(String userbirth) {
+	public void setUserbirth(int userbirth) {
 		this.userbirth = userbirth;
-	}
-
-	public String getUseraddr() {
-		return useraddr;
-	}
-
-	public void setUseraddr(String useraddr) {
-		this.useraddr = useraddr;
 	}
 
 	public String getUsernick() {

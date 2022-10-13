@@ -23,7 +23,7 @@ $(document).ready(function() {
 <h3 style="text-align: center;"><%=user.getUserid() %>님, 가입을 축하합니다</h3>
 
 <div class="text-center">
-	<button type="button" class="btn btn-primary" id="btnLogin">로그인</button>
+	<button type="button" class="btn btn-default" id="btnLogin">로그인</button>
 </div>
 
 <%@ include file="../layout/footer.jsp" %>

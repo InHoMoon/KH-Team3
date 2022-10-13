@@ -21,6 +21,7 @@ $(document).ready(function(){
 	$("#btnWrite").click(function(){
 		location.href="./write"
 	})
+	
 })
 </script>
 

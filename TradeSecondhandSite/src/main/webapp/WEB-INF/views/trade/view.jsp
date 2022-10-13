@@ -40,30 +40,31 @@ $(document).ready(function() {
 <table class="table table-bordered">
 
 <tr>
-<td class="active text-center">제목</td><td ><%=viewTrade.getTitle() %></td>
+<td class="active text-center">제목</td><td colspan="3"><%=viewTrade.getTitle() %></td>
 <td class="active text-center">작성일</td><td><%=viewTrade.getInsertDate() %></td>
 </tr>
 
 <tr>
-<td class="active text-center">카테고리</td><td><%=viewTrade.getCategory() %></td>
-<td class="active text-center">아이디</td><td><%=viewTrade.getUserid() %></td>
+<td class="active text-center">카테고리</td><td colspan="3"><%=viewTrade.getCategory() %></td>
+<td class="active text-center">제품 상태</td><td ><%=viewTrade.getProductState() %></td>
 </tr>
 
 <tr>
-<td class="active text-center">제품 상태</td><td><%=viewTrade.getProductState() %></td>
+<td class="active text-center">판매 상태</td><td colspan="3"><%=viewTrade.getSaleState() %></td>
 <td class="active text-center">가격</td><td><%=viewTrade.getPrice() %>원</td>
 </tr>
 
 <tr>
-<td class="active text-center">판매 상태</td><td><%=viewTrade.getSaleState() %></td>
+<td class="active text-center">아이디</td><td><%=viewTrade.getUserid() %></td>
+<td class="active text-center">전화번호</td><td><%=viewTrade.getUserphone() %></td>
 <td class="active text-center">조회수</td><td><%=viewTrade.getHit() %></td>
 </tr>
 
 <tr>
-<td class="active" colspan="4">본문</td>
+<td class="active" colspan="6">본문</td>
 </tr>
 <tr>
-	<td colspan="4">
+	<td colspan="6">
 		<img alt="대표 이미지 X" style="width: 50%; height: 300px;"  src="<%=request.getContextPath() %>/upload/<%=tradeImg.getStoredName() %>">
 		<%=viewTrade.getContent() %>
 	</td>

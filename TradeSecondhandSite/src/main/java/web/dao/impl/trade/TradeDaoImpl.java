@@ -268,6 +268,7 @@ public class TradeDaoImpl implements TradeDao {
 				trade.setHit(rs.getInt("hit"));
 				trade.setCategory(rs.getString("category"));
 				trade.setInsertDate(rs.getDate("insert_date"));
+				trade.setUserphone(rs.getString("userphone"));
 
 			}
 		} catch (SQLException e) {
@@ -313,8 +314,8 @@ public class TradeDaoImpl implements TradeDao {
 	public int insert(Connection conn, Trade trade) {
 
 		String sql = "";
-		sql += "INSERT INTO trade ( tradeno, title, userid, content, product_state, price, sale_state, category, hit )";
-		sql += " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?,  0 )";
+		sql += "INSERT INTO trade ( tradeno, title, userid, content, product_state, price, sale_state, category, userphone, hit )";
+		sql += " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?,  0 )";
 
 		int res = 0;
 
@@ -329,6 +330,7 @@ public class TradeDaoImpl implements TradeDao {
 			ps.setInt(6, trade.getPrice());
 			ps.setString(7, trade.getSaleState());
 			ps.setString(8, trade.getCategory());
+			ps.setString(9, trade.getUserphone());
 
 			res = ps.executeUpdate();
 
@@ -415,7 +417,7 @@ public class TradeDaoImpl implements TradeDao {
 		sql += "UPDATE trade ";
 		sql += " SET";
 		sql += "	title = ? , category = ?, product_state = ?, sale_state = ?, price = ? ";
-		sql += "	, content = ?";
+		sql += "	, content = ?, userphone = ?";
 		sql += " WHERE tradeno = ?";
 		
 		int res = 0;
@@ -429,7 +431,8 @@ public class TradeDaoImpl implements TradeDao {
 			ps.setString(4, trade.getSaleState());
 			ps.setInt(5, trade.getPrice());
 			ps.setString(6, trade.getContent());
-			ps.setInt(7, trade.getTradeno());
+			ps.setString(7, trade.getUserphone());
+			ps.setInt(8, trade.getTradeno());
 			
 			res = ps.executeUpdate();
 			

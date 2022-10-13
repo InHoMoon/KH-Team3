@@ -207,6 +207,10 @@ public class TradeServiceImpl implements TradeService {
 				if( "category".equals(key) ) {
 					trade.setCategory(value);
 				}
+				//전화번호
+				if( "userphone".equals(key) ) {
+					trade.setUserphone(value);
+				}
 						
 			} // if( item.isFormField() ) end
 					
@@ -389,6 +393,10 @@ public class TradeServiceImpl implements TradeService {
 				//카테고리
 				if( "category".equals(key) ) {
 					trade.setCategory(value);
+				}
+				//전화번호
+				if( "userphone".equals(key) ) {
+					trade.setUserphone(value);
 				}
 				
 						

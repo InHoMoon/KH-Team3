@@ -59,7 +59,7 @@ function updateContents() {
 	<table  class="table table-bordered">
 		<tr>
 			<td class="text-center active">제목</td>
-			<td colspan="2"><input type="text" name="title" style="width: 100%;" placeholder="제목을 입력하세요" ></td>
+			<td colspan="3"><input type="text" name="title" style="width: 100%;" placeholder="제목을 입력하세요" ></td>
 			<td>
 				<select class="form-control text-center" name="category"  id="category">
 					<option>카테고리 선택</option>
@@ -82,14 +82,15 @@ function updateContents() {
 		</tr>
 		
 		<tr>
-			<td class="text-center active">판매자 정보</td>
+			<td class="text-center active">아이디</td>
 			<td class="text-center"><%=session.getAttribute("userid") %></td>
-			<td class="text-center"><%=session.getAttribute("userphone") %></td>
+			<td class="text-center active">전화번호</td>
+			<td class="text-center"><input type="text" name="userphone" value="<%=session.getAttribute("userphone") %>"></td>
 			<td class="text-center active">판매가격</td>
 			<td class="text-right"><input type="number" name="price" style="width: 90%;" placeholder="가격을 입력하세요" > 원</td>
 		</tr>
 		<tr>
-			<td colspan="5"><textarea id="content" name="content" style="width: 100%;" placeholder="내용을 입력하세요"></textarea></td>
+			<td colspan="6"><textarea id="content" name="content" style="width: 100%;" placeholder="내용을 입력하세요"></textarea></td>
 		</tr>
 	</table>
 	

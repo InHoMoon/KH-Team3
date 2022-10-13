@@ -11,6 +11,11 @@
 <% String searchWord = (String) request.getAttribute("searchWord"); %>    
 
 <style type="text/css">
+
+.noticepage {
+width: 1000px
+}
+
 th, td {
 	text-align: center;
 }
@@ -63,10 +68,10 @@ $(document).ready(function() {
 })
 </script>
 
+<div class="container noticepage">
 
 <h1><a href="/notice/list">공지사항</a></h1>
 <hr>
-<br><br>
 
 <%--- 검색 시 검색어 관련 안내문 출력 --%>
 <% if( keyWord !=null ) { %>
@@ -80,8 +85,8 @@ $(document).ready(function() {
 
 <tr>
 	<th style="width: 10%">NO</th>
-	<th style="width: 15%">분류</th>
-	<th style="width: 10%">사진</th>
+	<th style="width: 10%">분류</th>
+	<th style="width: 15%">사진</th>
 	<th style="width: 30%">제목</th>
 	<th style="width: 10%">조회수</th>
 	<th style="width: 20%">작성일</th>
@@ -120,10 +125,11 @@ $(document).ready(function() {
 
 
 <%-- 관리자 로그인상태 --%>
-
+<% if(session.getAttribute("login") != null && session.getAttribute("userid").equals("id1"))  { %>
 <div id="btnBox" class="pull-right">
 	<button id="btnWrite" class="btn" onclick="location.href='/notice/write'" >글쓰기</button><br>
 </div>
+<% } %>
 
 
 <div class="clearfix"></div>
@@ -144,6 +150,6 @@ $(document).ready(function() {
 	 <button id="btnSearch"type="button" class="btn btn-primary">검색</button>
 	 </form>
  </div>
-
+</div>
 
  <%@ include file="../layout/footer.jsp" %>

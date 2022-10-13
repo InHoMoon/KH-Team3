@@ -101,7 +101,18 @@ function updateContents() {
 
 </script>
 
+</script>
 
+<style type="text/css">
+
+.noticepage {
+width: 1000px
+}
+
+</style>
+ 
+ 
+ <div class="container noticepage">
  
 <h1>글쓰기</h1>
 <hr>
@@ -141,7 +152,7 @@ function updateContents() {
 	<button id="btnCancel" class="btn btn-danger">취소</button>
 </div>
 
-
+</div>
 
 <script type="text/javascript">
 var oEditors = [];

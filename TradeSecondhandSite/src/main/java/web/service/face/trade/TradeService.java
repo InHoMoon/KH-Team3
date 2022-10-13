@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import util.Paging;
 import web.dto.Trade;
+import web.dto.TradeImg;
 
 
 
@@ -61,6 +62,26 @@ public interface TradeService {
 	 * @param req - 요청정보 객체
 	 */
 	public void write(HttpServletRequest req);
+
+	
+	/**
+	 * 첨부 이미지 정보 조회하기
+	 * @param tradeno 이미지파일과 연결된 게시글번호
+	 * @return 첨부 이미지 파일 정보 DTO객체
+	 */
+	public TradeImg viewImg(Trade tradeno);
+
+	/**
+	 * 게시물 수정
+	 * @param req 요청 파라미터
+	 */
+	public void update(HttpServletRequest req);
+
+	/**
+	 * 게시물 삭제
+	 * @param tradeno 삭제할 게시물 번호
+	 */
+	public void delete(Trade tradeno);
 
 
 

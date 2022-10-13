@@ -75,4 +75,45 @@ public interface TradeDao {
 	 */
 	public int insertImg(Connection conn, TradeImg tradeImg);
 
+	
+	/**
+	 * 거래글 번호로 첨부 이미지 정보 조회
+	 * @param conn db연결 객체
+	 * @param tradeno 거래글 번호
+	 * @return 이미지 정보 조회 결과
+	 */
+	public TradeImg selectImg(Connection conn, Trade tradeno);
+	
+	/**
+	 * 거래글 수정
+	 * @param conn db연결 객체
+	 * @param trade 수정 내용 객체
+	 * @return 거래글 수정 결과
+	 */
+	public int update(Connection conn, Trade trade);
+
+	/**
+	 * 거래글 이미지 수정
+	 * @param conn
+	 * @param tradeImg
+	 * @return
+	 */
+	public int updateImg(Connection conn, TradeImg tradeImg);
+
+	/**
+	 * 거래글 첨부 이미지 삭제
+	 * @param conn
+	 * @param tradeno
+	 * @return
+	 */
+	public int deleteImg(Connection conn, Trade tradeno);
+
+	/**
+	 * 거래글 삭제
+	 * @param conn
+	 * @param tradeno
+	 * @return
+	 */
+	public int delete(Connection conn, Trade tradeno);
+
 }

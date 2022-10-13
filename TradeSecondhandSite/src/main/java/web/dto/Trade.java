@@ -14,11 +14,12 @@ public class Trade {
 	private String productState;
 	private String saleState;
 	private String category;
+	private String userphone;
 	
 	public Trade() {}
-	
+
 	public Trade(int tradeno, String title, String userid, String content, int hit, Date insertDate, int price,
-			String productState, String saleState, String category) {
+			String productState, String saleState, String category, String userphone) {
 		super();
 		this.tradeno = tradeno;
 		this.title = title;
@@ -30,15 +31,14 @@ public class Trade {
 		this.productState = productState;
 		this.saleState = saleState;
 		this.category = category;
+		this.userphone = userphone;
 	}
-	
-	
 
 	@Override
 	public String toString() {
 		return "Trade [tradeno=" + tradeno + ", title=" + title + ", userid=" + userid + ", content=" + content
 				+ ", hit=" + hit + ", insertDate=" + insertDate + ", price=" + price + ", productState=" + productState
-				+ ", saleState=" + saleState + ", category=" + category + "]";
+				+ ", saleState=" + saleState + ", category=" + category + ", userphone=" + userphone + "]";
 	}
 
 	public int getTradeno() {
@@ -120,6 +120,15 @@ public class Trade {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+	public String getUserphone() {
+		return userphone;
+	}
+
+	public void setUserphone(String userphone) {
+		this.userphone = userphone;
+	}
+	
 	
 	
 	

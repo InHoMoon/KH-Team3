@@ -24,7 +24,7 @@ $(document).ready(function(){
 })
 </script>
 
-<h1>게시글 목록</h1>
+<h1>거래글 목록</h1>
 <hr>
 <div>
 <form action="/trade/list" method="post" name="search" >
@@ -33,7 +33,7 @@ $(document).ready(function(){
 			<td><select class="form-control" name="searchField">
 					<option value="0">선택</option>
 					<option value="title">제목</option>
-					<option value="userid">작성자</option>
+					<option value="userid">아이디</option>
 			</select></td>
 			<td><input type="text" class="form-control"
 				placeholder="검색어 입력" name="searchText" maxlength="100"></td>
@@ -46,15 +46,17 @@ $(document).ready(function(){
 <table class="table table-striped table-hover table-condensed">
 <tr>
 	<th style="width: 15%">글번호</th>
+	<th style="width: 15%">판매 상태</th>
 	<th style="width: 30%">제목</th>
-	<th style="width: 20%">아이디</th>
-	<th style="width: 15%">조회수</th>
-	<th style="width: 20%">작성일</th>
+	<th style="width: 15%">아이디</th>
+	<th style="width: 10%">조회수</th>
+	<th style="width: 25%">작성일</th>
 </tr>
 
 <%	for(int i=0; i<tradeList.size(); i++) { %>
 <tr>
 	<td><%=tradeList.get(i).getTradeno() %></td>
+	<td><%=tradeList.get(i).getSaleState() %></td>
 	<td>
 		<a href="./view?tradeno=<%=tradeList.get(i).getTradeno() %>">
 			<%=tradeList.get(i).getTitle() %>

@@ -3,7 +3,7 @@
 
 <%@ include file="../layout/header.jsp" %>
 
-<h1>기본 템플릿</h1>
+<h1>회원 정보 수정</h1>
 <hr>
 
 <%@ include file="../layout/footer.jsp" %>

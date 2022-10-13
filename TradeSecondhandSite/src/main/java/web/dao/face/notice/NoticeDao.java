@@ -6,9 +6,11 @@ import java.util.List;
 import util.Paging;
 import web.dto.Nfile;
 import web.dto.Notice;
+import web.dto.NoticeImage;
 
 public interface NoticeDao {
 
+	// --------------목록 게시판--------------------
 	/** 
 	 * 테이블 전체 조회
 	 * 
@@ -28,6 +30,27 @@ public interface NoticeDao {
 	 */
 	public List<Notice> selectAll(Connection conn, Paging paging);
 	
+	
+	// --------------이미지 게시판--------------------	
+	/** 
+	 * 테이블 전체 조회
+	 * 
+	 * @param conn - DB연결 객체
+	 * @return List<NoticeImage> -  Notice 테이블의 전체 조회 결과 목록을 List로 반환한다
+	 */
+	public List<NoticeImage> selectAllImage(Connection conn);
+	
+	
+	
+	/** 
+	 * Notice 테이블 전체 조회
+	 * 	->페이징 처리 추가 & 이미지정보까지
+	 * 
+	 * @param conn - DB연결 객체
+	 * @param paging - 페이징 정보 객체
+	 * @return List<Notice> -  테이블 페이징 목록 조회 결과
+	 */
+	public List<NoticeImage> selectAllImage(Connection conn, Paging paging);
 	
 	/** 
 	 * 총 게시글 수 조회
@@ -142,7 +165,17 @@ public interface NoticeDao {
 	 */
 	public List<Notice> selectAllSearch(Connection connection, String keyWord, String searchWord);
 	
+	/**
+	 * Notice 테이블 검색결과 전체 조회( 이미지 포함)
+	 * 
+	 * @param connection - 연결
+	 * @param keyWord - 분류 키워드
+	 * @param searchWordd - 검색 키워드
+	 * @return 검색된 테이블 목록 조회 결과
+	 */
+	public List<NoticeImage> selectAllImgSearch(Connection connection, String keyWord, String searchWord);
 	
+		
 	
 	
 	//----검색 기능(페이징)-----------------------------

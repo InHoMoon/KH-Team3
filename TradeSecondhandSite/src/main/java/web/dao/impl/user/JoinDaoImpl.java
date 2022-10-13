@@ -2,7 +2,6 @@ package web.dao.impl.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import common.JDBCTemplate;
@@ -12,14 +11,13 @@ import web.dto.User;
 public class JoinDaoImpl implements JoinDao {
 
 	private PreparedStatement ps;
-	private ResultSet rs;
 	
 	@Override
 	public int insert(Connection conn, User user) {
 		
 		String sql = "";
-		sql += "INSERT INTO tuser ( userno, userid, userpw, username, useremail, userphone, usergender, useraddr, usernick )";
-		sql += " VALUES ( tuser_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ? )";
+		sql += "INSERT INTO tuser ( userno, userid, userpw, username, useremail, userphone, usergender, userbirth, useraddr, usernick, usergrade )";
+		sql += " VALUES ( tuser_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, '일반회원' )";
 		
 		int res = 0;
 		
@@ -32,9 +30,9 @@ public class JoinDaoImpl implements JoinDao {
 			ps.setString(4, user.getUseremail());
 			ps.setString(5, user.getUserphone());
 			ps.setString(6, user.getUsergender());
-			ps.setString(7, user.getUseraddr());
-			ps.setString(8, user.getUsernick());
-//			ps.setDate(7, user.getUserbirth());
+			ps.setString(7, user.getUserbirth());
+			ps.setString(8, user.getUseraddr());
+			ps.setString(9, user.getUsernick());
 			
 			res = ps.executeUpdate();
 			

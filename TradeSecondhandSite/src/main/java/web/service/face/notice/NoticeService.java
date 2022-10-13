@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import util.Paging;
 import web.dto.Nfile;
 import web.dto.Notice;
+import web.dto.NoticeImage;
 
 public interface NoticeService {
 	
@@ -20,13 +21,31 @@ public interface NoticeService {
 	
 	
 	/** 
-	 * 게시글 전체 조회
+	 * 게시글 전체 조회(페이징 O)
 	 * 
 	 * @param paging - 페이징 정보 객체
 	 * @return List<Notice> - 게시글 전체 조회 결과 목록
 	 */
 	public List<Notice> getNoticeList(Paging paging);
+
 	
+	/** 
+	 * 이미지 포함 게시글 전체 조회
+	 * 
+	 * @return List<Notice> - 게시글 전체 조회 결과 목록
+	 */
+	public List<NoticeImage> getNoticeImageList();
+	
+	
+	/** 
+	 * 이미지 포함 게시글 전체 조회
+	 * 
+	 * @param paging - 페이징 정보 객체
+	 * @return List<Notice> - 게시글 전체 조회 결과 목록
+	 */
+	public List<NoticeImage> getNoticeImageList(Paging paging);
+	
+
 	
 	
 	/** 
@@ -108,6 +127,14 @@ public interface NoticeService {
 	 */
 	public List<Notice> getSearch(String keyWord, String searchWord);
 	
+	/**
+	 * 검색 게시글 전체 조회
+	 * 
+	 * @param keyWord - 분류 키워드
+	 * @param searchWord - 제목/내용 검색어
+	 * @return List<NoticeImage>
+	 */
+	public List<NoticeImage> getImgSearch(String keyWord, String searchWord);
 	
 	
 	

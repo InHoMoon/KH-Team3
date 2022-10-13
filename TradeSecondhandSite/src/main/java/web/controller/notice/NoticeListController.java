@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import util.Paging;
 import web.dto.Notice;
+import web.dto.NoticeImage;
 import web.service.face.notice.NoticeService;
 import web.service.impl.notice.NoticeServiceImpl;
 
@@ -31,16 +32,16 @@ public class NoticeListController extends HttpServlet {
 			Paging paging = noticeService.getPaging(req);
 			System.out.println(paging);
 			
-			List<Notice> list = null;
+			List<NoticeImage> list = null;	//이미지포함 게시글
 			
 			if(paging.getTotalPage() < 2 ) {
 				
-				list = noticeService.getList();
+				list = noticeService.getNoticeImageList();
 				
 			} else {
 				
 				//게시글 페이징 목록 조회
-				list = noticeService.getNoticeList( paging );
+				list = noticeService.getNoticeImageList( paging );
 				
 			}
 			
@@ -67,7 +68,7 @@ public class NoticeListController extends HttpServlet {
 			
 			
 			//-----페이징 없이 전달--------------
-			List<Notice> searchlist = noticeService.getSearch(keyWord, searchWord);
+			List<NoticeImage> searchlist = noticeService.getImgSearch(keyWord, searchWord);
 			
 			
 			//---------검색(페이징 있) -----------------
@@ -86,6 +87,10 @@ public class NoticeListController extends HttpServlet {
 			
 			//조회된 결과(MODEL값)를 "noticeList"라는 이름으로 JSP코드에 list객체를 전달한다
 			req.setAttribute("noticeList", searchlist);
+			
+			//키워드랑 검색어를 JSP에 전달
+			req.setAttribute("keyWord", keyWord);
+			req.setAttribute("searchWord", searchWord);
 			
 			//페이징 객체 MODEL값 전달
 			//req.setAttribute("paging", paging);

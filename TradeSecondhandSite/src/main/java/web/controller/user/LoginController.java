@@ -36,9 +36,6 @@ public class LoginController extends HttpServlet {
 		// 로그인 인증
 		boolean isLogin = loginService.login(user);
 		
-		// 포워딩 URL
-		String url = null;
-		
 		// 로그인 인증 성공
 		if( isLogin ) {
 			System.out.println("LoginController doPost() - 로그인 성공" + user);
@@ -57,17 +54,15 @@ public class LoginController extends HttpServlet {
 			
 			System.out.println("LoginController doPost() - 세션 정보 객체 확인" + user);
 			
-			url = "/WEB-INF/views/main.jsp";
+			// 메인페이지로 리다이렉트
+			resp.sendRedirect("/");
 			
 		} else {
 			System.out.println("LoginController doPost() - 로그인 실패" + user);
 			
-			url = "/WEB-INF/views/user/loginFail.jsp";
+			req.getRequestDispatcher("/WEB-INF/views/user/loginFail.jsp").forward(req, resp);
 			
 		}
-		
-		// 포워드 
-		req.getRequestDispatcher(url).forward(req, resp);
 		
 	}
 	

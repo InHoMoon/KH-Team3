@@ -24,7 +24,7 @@ public class MainDaoImpl implements MainDao {
 		String sql = "";
 		sql += "SELECT * FROM (";
 		sql += "	SELECT rownum rnum, T.* FROM (";
-		sql += "		SELECT tradeno, title, insert_date, price, state, category";
+		sql += "		SELECT tradeno, title, insert_date, price, sale_state, category";
 		sql += "		FROM trade";
 		sql += "		ORDER BY tradeno DESC";
 		sql += "	 	) T";
@@ -40,7 +40,6 @@ public class MainDaoImpl implements MainDao {
 			
 			//SQL 수행 및 결과 저장
 			rs = ps.executeQuery();
-			System.out.println("21");
 			
 			//조회 결과 처리
 			while(rs.next() ) {
@@ -49,17 +48,13 @@ public class MainDaoImpl implements MainDao {
 				
 				t.setTradeno(rs.getInt("tradeno"));
 				t.setTitle(rs.getString("title"));
-				System.out.println("22");
 				t.setPrice(rs.getInt("price"));
 				t.setInsertDate(rs.getDate("insert_date"));
-				System.out.println("23");
-				t.setSaleState(rs.getString("state"));
+				t.setSaleState(rs.getString("sale_state"));
 				t.setCategory(rs.getString("category"));
 				
 				//리스트에 결과값 저장
 				newList.add(t);
-				System.out.println("24");
-				System.out.println(newList);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

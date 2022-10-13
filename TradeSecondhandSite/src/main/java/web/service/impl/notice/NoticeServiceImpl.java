@@ -432,6 +432,12 @@ public class NoticeServiceImpl implements NoticeService {
 			JDBCTemplate.rollback(conn);
 		}
 
+		//첨부 파일 전부 삭제
+		if(noticeDao.deleteFile(conn, notice) > 0 ) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
 		
 		//첨부파일 정보 삽입
 		if( nFile.getNfilesize() != 0 ) { //첨부 파일이 존재할 때에만 동작

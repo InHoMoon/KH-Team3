@@ -75,12 +75,19 @@ function updateContents() {
 }
 </script>
 
+<style type="text/css">
 
+.noticepage {
+width: 1000px
+}
+
+</style>
  
 <h1>글수정</h1>
 <hr>
 <br>
- 
+
+<div class="container noticepage"> 
  
 <form action="./update" method="post" enctype="multipart/form-data">
 
@@ -136,7 +143,7 @@ function updateContents() {
 	<button id="btnCancel" class="btn btn-danger">취소</button>
 </div>
 
-
+</div>
 
 <script type="text/javascript">
 var oEditors = [];

@@ -30,6 +30,19 @@ $(document).ready(function() {
 
 </script>
 
+<style type="text/css">
+
+.noticepage {
+	width: 1000px
+}
+
+
+#noticecontent {
+	min-height:250px;
+}
+</style>
+
+<div class="container noticepage">
 
 <h3>공지사항</h3><br>
 	<div class="col-xs-6">
@@ -80,12 +93,16 @@ $(document).ready(function() {
 </div>
 
 
-<div class="text-right">
-	<button id="btnUpdate" class="btn btn-info">글수정</button>
-	<button id="btnDelete" class="btn btn-danger">글삭제</button>
+<%-- 관리자 로그인상태 --%>
+<% if(session.getAttribute("login") != null && session.getAttribute("userid").equals("id1"))  { %>
+	<div class="text-right">
+		<button id="btnUpdate" class="btn btn-info">글수정</button>
+		<button id="btnDelete" class="btn btn-danger">글삭제</button>
+	</div>
+<% } %>
+
+<br>
 </div>
 
-<br><br>
-
-
+<br><br><br>
  <%@ include file="../layout/footer.jsp" %>

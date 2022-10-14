@@ -5,6 +5,7 @@
 <%@ include file="./layout/header.jsp" %>
 
 <% List<Trade> newlist = (List) request.getAttribute("newlist"); %>
+<% int newPostCnt = (int) request.getAttribute("newPostCnt"); %>
 
 <style type="text/css">
 
@@ -15,26 +16,42 @@
         margin-right: auto;
 }
 
+
+#mainSearchbtn {
+	width: 60px; 
+	height: 46px; 
+	background-color:#fad703;
+	color: #104138;
+
+}
+
 </style>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	
+	
+})
+</script>
 
-
-
-
-<hr>
 
 <div>
-	<form class="navbar-form" role="search" >
+	<form action="/trade/list" method="post" name="search">		
+	        <input  class="form-control" type="hidden" name="searchField" value="title">
             <div class="input-group col-xs-6 centered"  >
-               <input type="text" class="form-control input-lg" placeholder="Search"">
+	           <input type="text" class="form-control input-lg" placeholder="찾으시는 물건을 입력해주세요 :D" name="searchText" id="searchText">
                <div class="input-group-btn">
-                  <button type="submit" class="btn btn-default" style=" width: 60px; height: 46px;"><span class="glyphicon glyphicon-search"></span></button>
+                  <button type="submit" class="btn btn-default" id="mainSearchbtn"><span class="glyphicon glyphicon-search"></span></button>
                </div>
             </div>
     </form>
 </div>
 
-<br><br>
+
+<div class="text-center" style="padding: 20px;">
+	오늘 하루 <sapn style="color: red;"><%= newPostCnt %></sapn>개의 중고거래 글이 새로 등록되었어요!
+</div>
 
 <%@ include file="./mainSlide.jsp" %>
 <br><br>

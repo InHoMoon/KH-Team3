@@ -16,13 +16,11 @@
 <style type="text/css">
 
 .noticepage {
-width: 1000px
+	width: 1000px
 }
 
 .table {
-
-padding-top: 10px;
-
+	padding-top: 10px;
 }
 
 th, td {
@@ -80,10 +78,9 @@ $(document).ready(function() {
 		location.href = "./write"
 	})
 	
-	//셀렉트 옵션값을 인풋 텍스트로 넣기
-	$("#selectoption").change(function() {
-		console.log("값변경테스트: " + $(this).val());
-		$("#keyWord").val($(this).val());
+	
+	$("#keyWord").change(function() {
+		searchinput.focus()
 	})
 	
 	
@@ -92,6 +89,7 @@ $(document).ready(function() {
 		$("form").submit();
 	})
 	
+
 	
 })
 </script>
@@ -101,23 +99,23 @@ $(document).ready(function() {
 <h1><a href="/notice/list">공지사항</a></h1>
 <hr>
 
+	<%--- 검색 시 검색어 관련 안내문 출력 --%>
 	<div class="pull-left">
-		<%--- 검색 시 검색어 관련 안내문 출력 --%>
 		<% if( keyWord !=null ) { %>
-			<div>
-			[<%= keyWord %>] <%= searchWord %>의 검색 결과
+			<div style="font-size: initial;">
+			[<%= keyWord %>] '<%= searchWord %>' 을/를 포함하는 글입니다.
 			</div>
 		<% } %>
 	</div>
+	
 	<div class="pull-right">
 		 <form action="./list" method="post" class="form-inline">
-		 <input type="hidden" name="keyWord" id="keyWord"/>
-			<select id="selectoption" class="form-control">
-				<option value="">선택하세요</option>
-				<option value="공지">공지</option>
-				<option value="이벤트">이벤트</option>
+			<select class="form-control"  name="keyWord" id="keyWord">
+				<option>선택하세요</option>
+				<option>공지</option>
+				<option>이벤트</option>
 			</select>
-		 <input type="text" name="searchWord" class="form-control">
+		 <input type="text" name="searchWord" class="form-control" id="searchinput">
 		 <button id="btnSearch"type="button" class="btn" style="background-color:#fad703">검색</button>
 		 </form>
  </div>
@@ -125,7 +123,7 @@ $(document).ready(function() {
 
 <br><br><br>
 
-<table class="table table-striped table-hover table-condensed">
+<table class="table table-hover table-condensed">
 
 <tr class="active" style="border-bottom: 1px solid; border-top: 2px solid;">
 	<th style="width: 10%">NO</th>

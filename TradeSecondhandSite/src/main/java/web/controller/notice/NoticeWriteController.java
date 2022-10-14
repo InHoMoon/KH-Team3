@@ -33,7 +33,7 @@ public class NoticeWriteController extends HttpServlet {
 		noticeService.write(req);
 		
 		//목록으로 리다이렉트
-		resp.sendRedirect("/33/notice/list");
+		resp.sendRedirect("/notice/list");
 	
 	}
 	

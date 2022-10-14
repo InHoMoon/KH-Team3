@@ -30,7 +30,7 @@ public class NoticeDeleteController extends HttpServlet {
 		noticeService.delete( notice );
 		
 		//목록으로 리다이렉트
-		resp.sendRedirect("/33/notice/list");
+		resp.sendRedirect("/notice/list");
 				
 	}
 	

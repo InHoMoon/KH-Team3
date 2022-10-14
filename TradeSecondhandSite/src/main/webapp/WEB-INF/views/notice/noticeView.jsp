@@ -1,3 +1,4 @@
+
 <%@page import="web.dto.Nfile"%>
 <%@page import="web.dto.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -33,7 +34,8 @@ $(document).ready(function() {
 <style type="text/css">
 
 .noticepage {
-	width: 1000px
+	max-width: 1000px;
+	min-width: 500px;
 }
 
 
@@ -44,9 +46,9 @@ $(document).ready(function() {
 
 <div class="container noticepage">
 
-<h3>공지사항</h3><br>
+<h1>공지사항</h1><br>
 	<div class="col-xs-6">
-		<button id="btnList" class="btn btn-default" >목록으로</button>
+		<button id="btnList" class="btn" style="background-color:#fad703">목록으로</button>
 	</div>
 	<div class="col-xs-6 text-right">
 		<button id="btnPrePost" class="btn btn-default ">이전글</button>
@@ -71,12 +73,14 @@ $(document).ready(function() {
 	
 	<tr>
 	<td colspan="4">
+	<div id="noticecontent" style="border-bottom: 1px solid #ddd">
 	<div>
 		<%	if( nFile != null ) { %>  
 			<img class="img-responsive center-block"  alt="" src="<%=request.getContextPath() %>/upload/<%=nFile.getNfilestoredname() %>" width="600px">
 		<%	} %>
 	</div><br>
 	<%=viewNotice.getNcontent() %>
+	</div>
 	</td>
 	</tr>
 </table>
@@ -96,13 +100,15 @@ $(document).ready(function() {
 <%-- 관리자 로그인상태 --%>
 <% if(session.getAttribute("login") != null && session.getAttribute("userid").equals("id1"))  { %>
 	<div class="text-right">
-		<button id="btnUpdate" class="btn btn-info">글수정</button>
-		<button id="btnDelete" class="btn btn-danger">글삭제</button>
+		<button id="btnUpdate" class="btn" style="background-color:#104138; color: white;">글수정</button>
+		<button id="btnDelete" class="btn" style="background-color:#e5e3e3">글삭제</button>
 	</div>
 <% } %>
 
 <br>
 </div>
+
+<%@ include file="./ncmtWrite.jsp" %>
 
 <br><br><br>
  <%@ include file="../layout/footer.jsp" %>

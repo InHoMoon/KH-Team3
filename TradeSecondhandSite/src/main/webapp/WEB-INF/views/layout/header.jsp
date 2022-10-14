@@ -89,11 +89,11 @@ font-size: 17px;
       <ul class="nav navbar-nav" id="navbar-nav">
         <li><a href="/notice/list" id="notice">공지사항</a></li>
         <li><a href="/trade/list" id="trade">중고거래</a></li>
-        <li><a href="/">마이페이지</a></li>
+        <li><a href="/mypage">마이페이지</a></li>
       </ul>
 
 		<div class="nav navbar-form navbar-btn navbar-right" >
-	      	<button class="btn btn-link" ><a href="/notice/list" style="color: #fad703;"><span class="glyphicon glyphicon-heart"></span> 관심상품</a></button>
+	      	<button class="btn btn-link" ><a href="/mypage/wishlist" style="color: #fad703;"><span class="glyphicon glyphicon-heart"></span> 관심상품</a></button>
 	      	<%-- 비로그인상태 --%>
 			<% if(session.getAttribute("login") == null )  { %>
 	      	<button class="btn btn-default"><a href="/login">로그인</a></button>

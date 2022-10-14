@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import web.dto.User;
-import web.service.face.user.UserUpdateService;
-import web.service.impl.user.UserUpdateServiceImpl;
+import web.service.face.user.UpdateService;
+import web.service.impl.user.UpdateServiceImpl;
 
-@WebServlet("/user/update")
-public class UserUpdateController extends HttpServlet {
+@WebServlet("/update/user")
+public class UpdateUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	// 서비스 객체
-	private UserUpdateService userUpdateService = new UserUpdateServiceImpl();
+	private UpdateService updateService = new UpdateServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,10 +33,10 @@ public class UserUpdateController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		// 회원수정 전달파라미터 추출하기
-		User user = userUpdateService.getUpdateUser(req);
+		User user = updateService.getUpdateUser(req);
 		
 		// 회원수정 처리
-		userUpdateService.update(user);
+		updateService.update(user);
 		
 		System.out.println("UserUpdateController doPost() - 회원수정 성공" + user);
 		

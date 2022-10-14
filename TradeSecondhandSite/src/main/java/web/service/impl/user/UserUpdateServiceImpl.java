@@ -28,7 +28,7 @@ public class UserUpdateServiceImpl implements UserUpdateService {
 		user.setUseraddr2( req.getParameter("useraddr2") );
 		user.setUseraddr3( req.getParameter("useraddr3") );
 		user.setUsergender( req.getParameter("usergender") );
-		user.setUserbirth( Integer.parseInt( req.getParameter("userbirth") ) );
+		user.setUserbirth( req.getParameter("userbirth") );
 		user.setUsernick( req.getParameter("usernick") );
 		
 		return user;

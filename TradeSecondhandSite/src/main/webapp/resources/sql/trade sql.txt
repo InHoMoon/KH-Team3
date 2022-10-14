@@ -10,7 +10,8 @@ create table trade (
     price NUMBER,
     product_state VARCHAR2(200),
     sale_state VARCHAR2(200),
-    category VARCHAR2(200)
+    category VARCHAR2(200),
+    userphone VARCHAR2(200)
 );
 
 drop SEQUENCE trade_seq;

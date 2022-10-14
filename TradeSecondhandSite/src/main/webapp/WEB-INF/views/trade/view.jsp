@@ -34,6 +34,11 @@ $(document).ready(function() {
 		$(location).attr('href', './cart?userid=<%=session.getAttribute("userid") %>')
 	})
 	
+	//작성버튼
+	$("#btnWrite").click(function() {
+		
+		$("form").submit();
+	})
 	
 
 })
@@ -96,6 +101,26 @@ $(document).ready(function() {
 	<button id="btnCart" class="btn btn-warning">관심</button>
 <%} %>
 </div>
+
+<br>
+<br>
+
+<form action='./view' method="post">
+
+	<input type="hidden" name="userid" value="<%=session.getAttribute("userid") %>">
+	
+	<table class="table">
+		<tr>
+			<th style="text-align:left; width:90%;">
+				<label for="cmt">댓글 : </label>
+        		<textarea class="form-control" rows="3" id="cmt" name="cmt"></textarea>
+        	</th>
+			<th class="text-center" style="line-height:20px;">
+				<button id="btnWrite" class="btn ">작성</button>
+			</th>
+		</tr>
+	</table>
+</form>
 
 <%@ include file="../layout/footer.jsp" %>
 

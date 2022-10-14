@@ -480,6 +480,18 @@ public class TradeServiceImpl implements TradeService {
 		
 	}
 
+	@Override
+	public void writeCmt(HttpServletRequest req) {
+		
+		//DB연결 객체
+		Connection conn = JDBCTemplate.getConnection();
+						
+		//게시글 번호 생성
+		int cmtno = tradeDao.selectNextCmtno(conn);
+		
+		
+	}
+
 
 
 }

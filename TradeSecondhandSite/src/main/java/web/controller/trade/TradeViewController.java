@@ -43,5 +43,12 @@ public class TradeViewController extends HttpServlet {
 				
 		req.getRequestDispatcher("/WEB-INF/views/trade/view.jsp").forward(req, resp);
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		tradeService.writeCmt(req);
+		
+		resp.sendRedirect("/trade/list");
+	}
 
 }

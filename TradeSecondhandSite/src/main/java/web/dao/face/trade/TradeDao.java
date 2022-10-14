@@ -116,4 +116,11 @@ public interface TradeDao {
 	 */
 	public int delete(Connection conn, Trade tradeno);
 
+	/**
+	 * 시퀀스를 통해 다음 댓글번호 조회
+	 * @param conn
+	 * @return
+	 */
+	public int selectNextCmtno(Connection conn);
+
 }

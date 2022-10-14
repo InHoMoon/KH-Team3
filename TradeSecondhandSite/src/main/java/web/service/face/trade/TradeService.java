@@ -83,6 +83,12 @@ public interface TradeService {
 	 */
 	public void delete(Trade tradeno);
 
+	/**
+	 * 댓글 입력
+	 * @param req
+	 */
+	public void writeCmt(HttpServletRequest req);
+
 
 
 }

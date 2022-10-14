@@ -238,6 +238,22 @@ $(document).ready(function() {
 </script>
 
 
+<!-- 전화번호, 생년월일 하이픈 자동입력 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("#userphone").keyup(function() {
+		$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+	})
+
+	$("#userbirth").keyup(function() {
+		$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^1[0-9]{3}|^2[0-9]{3})([0-9]+)?([0-9]{2})$/,"$1-$2-$3").replace("--", "-") );
+	})
+	
+})
+</script>
+
+
 <!-- 카카오 주소 검색 기능 -->
 <script type="text/javascript">
 function DaumPostcode() {
@@ -281,6 +297,16 @@ function DaumPostcode() {
         }
     }).open();
 }
+</script>
+
+
+<!-- 성별 DB값 받아와서 selected -->
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("#usergender").val('<%=session.getAttribute("usergender") %>').prop("selected",true);
+	
+})
 </script>
 
 
@@ -392,6 +418,19 @@ $(document).ready(function() {
 <h1 style="text-align: center;">회원정보 수정</h1>
 <hr>
 
+<%-- 비로그인 상태 --%>
+<%	if( session.getAttribute("login") == null ) { %>
+<h3 style="color: red; text-align: center;">로그인이 필요합니다</h3>
+
+<div class="text-center">
+	<button class="btn btn-default" onclick="location.href='/login'">로그인</button>
+	<button class="btn btn-default" onclick="location.href='/join'">회원가입</button>
+</div>
+<%	} %>
+
+
+<%-- 로그인 상태 --%>
+<%	if( session.getAttribute("login") != null && (boolean) session.getAttribute("login") ) { %>
 <form action="/user/update" method="post" class="form-horizontal">
 
 	<div class="form-group">
@@ -446,7 +485,7 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="userphone" class="col-xs-2 col-xs-offset-2 control-label">전화번호</label>
 		<div class="col-xs-4">
-			<input type="text" id="userphone" name="userphone" class="form-control" value="<%=session.getAttribute("userphone") %>" maxlength="11" placeholder="ex) 01012345678" numberOnly>
+			<input type="text" id="userphone" name="userphone" class="form-control" value="<%=session.getAttribute("userphone") %>" maxlength="13" placeholder="'-' 제외하고 입력">
 			<span class="required_box" id="required_phone" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 	</div>
@@ -475,15 +514,6 @@ $(document).ready(function() {
 		<div class="col-xs-4">
 			<select class="form-control" id="usergender" name="usergender">
 			    <option value="">선택하세요</option>
-			    <option value="<%=session.getAttribute("usergender") %>">
-			    	<%	if( session.getAttribute("usergender") == "M" ) { %>
-			    		남성
-			    	<% } else if( session.getAttribute("usergender") == "F" ) { %>
-			    		여성
-			    	<% } else { %>
-			    		선택하세요
-			    	<% } %>
-			    </option>
 			    <option value="M">남성</option>
 			    <option value="F">여성</option>
 			</select>
@@ -493,7 +523,7 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="userbirth" class="col-xs-2 col-xs-offset-2 control-label">생년월일</label>
 		<div class="col-xs-4">
-			<input type="text" id="userbirth" name="userbirth" class="form-control" value="<%=session.getAttribute("userbirth") %>" maxlength="8" placeholder="선택입력  ex) 19950101" numberOnly>
+			<input type="text" id="userbirth" name="userbirth" class="form-control" value="<%=session.getAttribute("userbirth") %>" maxlength="10" placeholder="선택입력 ('-' 제외하고 8자리 입력)  ex) 1995-01-01">
 		</div>
 	</div>
 
@@ -521,5 +551,7 @@ $(document).ready(function() {
 	</div>
 
 </form>
+
+<%	} %>
 
 <%@ include file="../layout/footer.jsp" %>

@@ -14,7 +14,7 @@ public class User {
 	private String useraddr2;
 	private String useraddr3;
 	private String usergender;
-	private int userbirth;
+	private String userbirth;
 	private String usernick;
 	private String usergrade;
 	private Date userjoindate;
@@ -24,7 +24,7 @@ public class User {
 	public User() {}
 
 	public User(int userno, String userid, String userpw, String username, String useremail, String userphone,
-			String useraddr1, String useraddr2, String useraddr3, String usergender, int userbirth, String usernick,
+			String useraddr1, String useraddr2, String useraddr3, String usergender, String userbirth, String usernick,
 			String usergrade, Date userjoindate, Date userupdate, int reportcount) {
 		super();
 		this.userno = userno;
@@ -134,11 +134,11 @@ public class User {
 		this.usergender = usergender;
 	}
 
-	public int getUserbirth() {
+	public String getUserbirth() {
 		return userbirth;
 	}
 
-	public void setUserbirth(int userbirth) {
+	public void setUserbirth(String userbirth) {
 		this.userbirth = userbirth;
 	}
 

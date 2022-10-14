@@ -37,7 +37,7 @@ public class UserUpdateDaoImpl implements UserUpdateDao {
 			ps.setString(5, user.getUseraddr2());
 			ps.setString(6, user.getUseraddr3());
 			ps.setString(7, user.getUsergender());
-			ps.setInt(8, user.getUserbirth());
+			ps.setString(8, user.getUserbirth());
 			ps.setString(9, user.getUsernick());
 			ps.setString(10, user.getUserid());
 			

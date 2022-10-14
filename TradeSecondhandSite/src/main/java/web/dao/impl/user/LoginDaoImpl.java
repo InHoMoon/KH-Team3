@@ -73,7 +73,7 @@ public class LoginDaoImpl implements LoginDao {
 				result.setUseraddr2( rs.getString("useraddr2"));
 				result.setUseraddr3( rs.getString("useraddr3"));
 				result.setUsergender( rs.getString("usergender") );
-				result.setUserbirth( rs.getInt("userbirth") );
+				result.setUserbirth( rs.getString("userbirth") );
 				result.setUsernick( rs.getString("usernick") );
 				result.setUsergrade( rs.getString("usergrade"));
 				

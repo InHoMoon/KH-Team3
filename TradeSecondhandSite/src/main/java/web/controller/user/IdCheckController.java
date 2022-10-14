@@ -18,7 +18,7 @@ public class IdCheckController extends HttpServlet {
 		
 		System.out.println("/id/check [GET]");
 		
-		req.getRequestDispatcher("/WEB-INF/views/user/join.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/user/idCheck.jsp").forward(req, resp);
 		
 	}
 	

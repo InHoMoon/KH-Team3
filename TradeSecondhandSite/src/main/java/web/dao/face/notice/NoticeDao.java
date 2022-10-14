@@ -11,14 +11,6 @@ import web.dto.NoticeImage;
 public interface NoticeDao {
 
 	// --------------목록 게시판--------------------
-	/** 
-	 * 테이블 전체 조회
-	 * 
-	 * @param conn - DB연결 객체
-	 * @return List<Notice> -  Notice 테이블의 전체 조회 결과 목록을 List로 반환한다
-	 */
-	public List<Notice> selectAll(Connection conn);
-
 	
 	/** 
 	 * Notice 테이블 전체 조회
@@ -32,15 +24,6 @@ public interface NoticeDao {
 	
 	
 	// --------------이미지 게시판--------------------	
-	/** 
-	 * 테이블 전체 조회
-	 * 
-	 * @param conn - DB연결 객체
-	 * @return List<NoticeImage> -  Notice 테이블의 전체 조회 결과 목록을 List로 반환한다
-	 */
-	public List<NoticeImage> selectAllImage(Connection conn);
-	
-	
 	
 	/** 
 	 * Notice 테이블 전체 조회
@@ -188,7 +171,7 @@ public interface NoticeDao {
 	 * @param paging - 페이징 정보 객체
 	 * @return List<Notice> -  테이블 페이징 목록 조회 결과
 	 */
-	public List<Notice> selectAllSearch(Connection conn, Paging paging, String keyWord, String searchWord);
+	public List<NoticeImage> selectAllSearch(Connection conn, Paging paging, String keyWord, String searchWord);
 	
 	
 	/** 

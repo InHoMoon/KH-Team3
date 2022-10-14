@@ -16,8 +16,12 @@ public class JoinDaoImpl implements JoinDao {
 	public int insert(Connection conn, User user) {
 		
 		String sql = "";
-		sql += "INSERT INTO tuser ( userno, userid, userpw, username, useremail, userphone, usergender, userbirth, useraddr, usernick, usergrade )";
-		sql += " VALUES ( tuser_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, '일반회원' )";
+		sql += "INSERT INTO tuser (";
+		sql += "	userno, userid, userpw, username, useremail";
+		sql += "	, userphone, useraddr1, useraddr2, useraddr3";
+		sql += "	, usergender, userbirth, usernick, usergrade";
+		sql += " )";
+		sql += " VALUES ( tuser_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '일반회원' )";
 		
 		int res = 0;
 		
@@ -29,10 +33,12 @@ public class JoinDaoImpl implements JoinDao {
 			ps.setString(3, user.getUsername());
 			ps.setString(4, user.getUseremail());
 			ps.setString(5, user.getUserphone());
-			ps.setString(6, user.getUsergender());
-			ps.setString(7, user.getUserbirth());
-			ps.setString(8, user.getUseraddr());
-			ps.setString(9, user.getUsernick());
+			ps.setString(6, user.getUseraddr1());
+			ps.setString(7, user.getUseraddr2());
+			ps.setString(8, user.getUseraddr3());
+			ps.setString(9, user.getUsergender());
+			ps.setInt(10, user.getUserbirth());
+			ps.setString(11, user.getUsernick());
 			
 			res = ps.executeUpdate();
 			

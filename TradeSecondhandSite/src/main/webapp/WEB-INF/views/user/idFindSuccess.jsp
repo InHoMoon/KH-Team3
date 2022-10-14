@@ -25,8 +25,8 @@ $(document).ready(function() {
 <h3 style="text-align: center;"><%=session.getAttribute("username") %>님의 아이디는 <strong style="color: blue;"><%=session.getAttribute("userid") %></strong>입니다</h3>
 
 <div class="text-center">
-	<button type="button" class="btn btn-primary" id="btnLogin">로그인</button>
-	<button type="button" class="btn btn-primary" id="btnPwfind">비밀번호 찾기</button>
+	<button type="button" class="btn btn-default" id="btnLogin">로그인</button>
+	<button type="button" class="btn btn-default" id="btnPwfind">비밀번호 찾기</button>
 </div>
 
 <%@ include file="../layout/footer.jsp" %>

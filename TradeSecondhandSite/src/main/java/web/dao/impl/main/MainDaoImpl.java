@@ -66,4 +66,37 @@ public class MainDaoImpl implements MainDao {
 		return newList;
 	}
 
+
+	@Override
+	public int countNewPost(Connection conn) {
+		
+		//SQL작성
+		String sql = "";
+		sql += "SELECT count (*) cnt FROM (";
+		sql += "	SELECT * FROM trade";
+		sql += "	WHERE TO_CHAR(SYSDATE, 'YY/MM/DD')";
+		sql += "	= TO_CHAR(INSERT_DATE, 'YY/MM/DD')";
+		sql += " )";
+	
+		//총 게시글 수
+		int count = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while( rs.next() ) {
+				count = rs.getInt("cnt");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return count;
+	}
+
 }

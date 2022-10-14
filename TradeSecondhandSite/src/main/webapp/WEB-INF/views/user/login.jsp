@@ -3,6 +3,7 @@
 
 <%@ include file="../layout/header.jsp" %>
 
+<!-- button -->
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -20,25 +21,15 @@ $(document).ready(function() {
 	$("#btnLogin").click(function() {
 		
 		if( $("#userid").val() == "" ) {
-			
-			// 아이디 미 입력시 로그인버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "")
-			$("#er_pw").css("display", "none")
-			
+			alert("아이디를 입력하세요");
 			$("input").eq(0).focus()
 			
 		} else if ( $("#userpw").val() == "" ) {
-			
-			// 비밀번호 미 입력시 로그인버튼 클릭하면 알림문구 출력
-			$("#er_id").css("display", "none")
-			$("#er_pw").css("display", "")
-			
+			alert("비밀번호를 입력하세요");
 			$("input").eq(1).focus()
 		
 		} else {
-			
 			$(this).parents("form").submit(); // 로그인 폼 제출
-			
 		}
 		
 	})
@@ -61,6 +52,76 @@ $(document).ready(function() {
 })
 </script>
 
+
+<!-- 필수입력항목 공백시 경고문구 출력 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	// 아이디 공백
+	$("#userid").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#required_id").css("display", "")
+		} else {
+			$("#required_id").css("display", "none")
+		}
+	})
+	
+	// 비밀번호 공백
+	$("#userpw").blur(function() {
+		if( $(this).val() == "" ) {
+			$("#required_pw").css("display", "")
+		} else {
+			$("#required_pw").css("display", "none")
+		}
+	})
+})
+</script>
+
+<h1 style="text-align: center;">로그인</h1>
+<hr>
+
+<form action="/login" method="post" class="form-horizontal">
+
+	<div class="form-group">
+		<label for="userid" class="col-xs-2 col-xs-offset-3 control-label">아이디</label>
+		<div class="col-xs-3">
+			<input type="text" id="userid" name="userid" class="form-control" >
+			<span class="required_box" id="required_id" style="display: none; color: red;">필수 입력 사항입니다</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="userpw" class="col-xs-2 col-xs-offset-3 control-label">비밀번호</label>
+		<div class="col-xs-3">
+			<input type="password" id="userpw" name="userpw" class="form-control">
+			<span class="required_box" id="required_pw" style="display: none; color: red;">필수 입력 사항입니다</span>
+		</div>
+	</div>
+
+	<div class="checkbox" style="text-align: center;">
+		<label>
+			<input type="checkbox" id="saveid" name="saveid"> 아이디 저장
+		</label>
+	</div>
+		
+	<div class="clearfix"></div>
+
+	<div class="text-center">
+		<button type="button" class="btn btn-default btn-lg col-xs-4 col-xs-offset-4" id="btnLogin">로그인</button>
+	</div>
+	
+	<div class="clearfix"></div>
+
+	<div class="text-center">
+		<button type="button" class="btn btn-default" id="btnIdfind">아이디 찾기</button>
+		<button type="button" class="btn btn-default" id="btnPwfind">비밀번호 찾기</button>
+		<button type="button" class="btn btn-default" id="btnJoin">회원가입</button>
+	</div>
+
+</form>
+
+
+<!-- 아이디 저장 쿠키 -->
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -126,52 +187,6 @@ function getCookie(cookieName) {
 }
 </script>
 
-<h1 style="text-align: center;">로그인</h1>
-<hr>
-
-<form action="/login" method="post" class="form-horizontal">
-
-	<div class="form-group">
-		<label for="userid" class="col-xs-2 col-xs-offset-3 control-label">아이디</label>
-		<div class="col-xs-3">
-			<input type="text" id="userid" name="userid" class="form-control">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label for="userpw" class="col-xs-2 col-xs-offset-3 control-label">비밀번호</label>
-		<div class="col-xs-3">
-			<input type="password" id="userpw" name="userpw" class="form-control">
-		</div>
-	</div>
-	
-	<div class="text-center">
-		<input type="checkbox" id="saveid" name="saveid"><label for="saveid">아이디 저장</label>
-		<input type="checkbox" id="autologin" name="autologin"><label for="autologin">자동로그인</label>
-	</div>
-
-	<div class="clearfix"></div>
-	
-	<div class="text-center">
-		<span class="error_box" id="er_id" style="display: none; color: red;">아이디를 입력하세요</span>
-		<span class="error_box" id="er_pw" style="display: none; color: red;">비밀번호를 입력하세요</span>
-	</div>	
-		
-	<div class="clearfix"></div>
-
-	<div class="text-center">
-		<button type="button" class="btn btn-default btn-lg col-xs-4 col-xs-offset-4" id="btnLogin">로그인</button>
-	</div>
-	
-	<div class="clearfix"></div>
-
-	<div class="text-center">
-		<button type="button" class="btn btn-default" id="btnIdfind">아이디 찾기</button>
-		<button type="button" class="btn btn-default" id="btnPwfind">비밀번호 찾기</button>
-		<button type="button" class="btn btn-default" id="btnJoin">회원가입</button>
-	</div>
-
-</form>
 
 <%@ include file="../layout/footer.jsp" %>
  

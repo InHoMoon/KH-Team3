@@ -15,4 +15,13 @@ public interface MainDao {
 	 */
 	List<Trade> selectNewPost(Connection conn);
 
+	
+	/**
+	 * trade테이블 오늘날짜의 게시글 수 조회
+	 * 
+	 * @param connection
+	 * @return int - Trade 테이블의 오늘 오늘날짜의 게시글 수 결과
+	 */
+	int countNewPost(Connection conn);
+
 }

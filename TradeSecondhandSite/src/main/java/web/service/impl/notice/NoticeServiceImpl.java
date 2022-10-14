@@ -32,34 +32,13 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeDao noticeDao = new NoticeDaoImpl();
 	
 	
-	//게시글 전체 조회 결과 처리 (페이징X)
-	@Override
-	public List<Notice> getList() {
-		return noticeDao.selectAll(JDBCTemplate.getConnection());
-	}
-
-	
-	//게시글 전체 조회 결과 처리 (페이징)---
-	@Override
-	public List<Notice> getNoticeList(Paging paging) {
-		return noticeDao.selectAll(JDBCTemplate.getConnection(), paging);
-	}
-
-	
-	//이미지 포함 게시글 전체 조회 (페이징)
-	@Override
-	public List<NoticeImage> getNoticeImageList() {
-		return noticeDao.selectAllImage(JDBCTemplate.getConnection());
-	}
-	
-	
-	
 	//이미지 포함 게시글 전체 조회 (페이징)
 	@Override
 	public List<NoticeImage> getNoticeImageList(Paging paging) {
 		return noticeDao.selectAllImage(JDBCTemplate.getConnection(), paging);
 	}
-
+	
+	
 	//게시글 페이징 객체 생성
 	@Override
 	public Paging getPaging(HttpServletRequest req) {
@@ -488,7 +467,8 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.selectAllImgSearch(JDBCTemplate.getConnection(), keyWord, searchWord);
 	}
 
-	//--------검색 (페이징있)
+	
+	//--------검색 (페이징있)---
 	@Override
 	public Paging getSearchPaging(HttpServletRequest req, String keyWord, String searchWord) {
 		
@@ -513,14 +493,25 @@ public class NoticeServiceImpl implements NoticeService {
 		return paging;
 	}
 	
+	
+	
+	
+	
+	
+	
 	@Override
-	public List<Notice> getNoticeSearchList(Paging paging, String keyWord, String searchWord) {
+	public List<NoticeImage> getNoticeSearchList(Paging paging, String keyWord, String searchWord) {
 		
 		// 검색 게시글 전체 조회 결과 처리(페이징)
-		
 		return noticeDao.selectAllSearch(JDBCTemplate.getConnection(), paging, keyWord, searchWord );
 	}
 
-	
 
+	
+	//게시글 전체 조회 결과 처리 (페이징)
+	@Override
+	public List<Notice> getNoticeList(Paging paging) {
+		return noticeDao.selectAll(JDBCTemplate.getConnection(), paging);
+	}
+	
 }

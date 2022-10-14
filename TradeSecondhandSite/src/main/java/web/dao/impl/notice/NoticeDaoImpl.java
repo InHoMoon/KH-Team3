@@ -20,55 +20,72 @@ public class NoticeDaoImpl implements NoticeDao {
 	private ResultSet rs = null; //조회 결과 객체
 	
 	
+
+	//----------- 이미지 포함 객체 전체 게시글 객체 전송 --------------
+
 	
-	// 총 게시글 조회 (페이징 처리X)
+	// 총 게시글 조회 (이미지&페이징)
 	@Override
-	public List<Notice> selectAll(Connection conn) {
+	public List<NoticeImage> selectAllImage(Connection conn, Paging paging) {
 		
 		//SQL작성
 		String sql = "";
-		sql += "SELECT * FROM notice";
-		sql += " ORDER BY nno DESC";
+		sql += "SELECT * FROM (";
+		sql += "	SELECT rownum rnum, N.* FROM (";
+		sql += "	        SELECT";
+		sql += "			  notice.nno, notice.ncategory, notice.ntitle";
+		sql += "	          , notice.nwritedate, notice.ntop, notice.nhit";
+		sql += "	          , nfile.nfileoriginname, nfile.nfilestoredname";
+		sql += "			FROM notice, nfile";
+		sql += "			WHERE notice.nno = nfile.nno(+)";
+		sql += "	        ORDER BY notice.ntop DESC, notice.nno DESC";
+		sql += " 	) N";
+		sql += " ) NOTICE";
+		sql += " WHERE rnum BETWEEN ? AND ?";
+		
 		
 		//결과 저장할 List
-		List<Notice> noticeList = new ArrayList<>();
+		List<NoticeImage> noticeImageList = new ArrayList<>();
 		
 		try {
-			//SQL 수행 객체 생성               
+			//SQL 수행 객체 생성
 			ps = conn.prepareStatement(sql);
+			
+			ps.setInt( 1, paging.getStartNo() );
+			ps.setInt( 2, paging.getEndNo() );
 			
 			//SQL 수행 및 결과 저장
 			rs = ps.executeQuery();
 			
 			//조회 결과 처리
 			while(rs.next() ) {
-				Notice n = new Notice(); //결과값 저장 객체
+				NoticeImage n = new NoticeImage();	 //결과값 저장 객체
 				
-				//결과값 한 행씩 처리
 				n.setNno(rs.getInt("nno"));
 				n.setNcategory(rs.getString("ncategory"));
 				n.setNtitle(rs.getString("ntitle"));
 				n.setNwritedate(rs.getDate("nwritedate"));
 				n.setNhit(rs.getInt("nhit"));
+				n.setNtop(rs.getInt("ntop"));
+				n.setNfileoriginname(rs.getString("nfileoriginname"));
+				n.setNfilestoredname(rs.getString("nfilestoredname"));
 				
 				//리스트에 결과값 저장
-				noticeList.add(n);
+				noticeImageList.add(n);
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {  //DB객체 닫기
+		}finally {
 			JDBCTemplate.close(rs);
 			JDBCTemplate.close(ps);
 		}
-		
-		return noticeList;	
+
+		return noticeImageList;
 	}
 
+
 	
-	
-	
-	// 총 게시글 조회 (페이징)
+	// 총 게시글 조회 (사진없,페이징O)
 	@Override
 	public List<Notice> selectAll(Connection conn, Paging paging) {
 		//SQL작성
@@ -508,7 +525,8 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 
-public List<NoticeImage> selectAllImgSearch(Connection conn, String keyWord, String searchWord) {
+	//검색 페이징 없 (미완)
+	public List<NoticeImage> selectAllImgSearch(Connection conn, String keyWord, String searchWord) {
 		
 		//SQL작성
 		String sql = "";
@@ -570,14 +588,14 @@ public List<NoticeImage> selectAllImgSearch(Connection conn, String keyWord, Str
 	//-----------검색 (페이징 있) ---------------
 
 	@Override
-	public List<Notice> selectAllSearch(Connection conn, Paging paging, String keyWord, String searchWord) {
+	public List<NoticeImage> selectAllSearch(Connection conn, Paging paging, String keyWord, String searchWord) {
 	
 		//SQL작성
 		String sql = "";
 		sql += "SELECT * FROM (";
 		sql += "	SELECT rownum rnum, N.* FROM (";
 		sql += "	        SELECT";
-		sql += "			  nno, ncategory, ntitle, nhit, nwritedate";
+		sql += "			  nno, ncategory, ntitle, nhit, nwritedate, ntop";
 		sql += "			FROM notice";
 		sql += "			WHERE ncategory LIKE ?";
 		sql += "			AND (ncontent LIKE ? OR ntitle LIKE ? )";
@@ -588,7 +606,7 @@ public List<NoticeImage> selectAllImgSearch(Connection conn, String keyWord, Str
 		
 		
 		//결과 저장할 List
-		List<Notice> noticeSerchList = new ArrayList<>();
+		List<NoticeImage> noticeSerchList = new ArrayList<>();
 		
 		System.out.println("nDAOimpl : "+paging);
 		
@@ -607,13 +625,14 @@ public List<NoticeImage> selectAllImgSearch(Connection conn, String keyWord, Str
 			
 			//조회 결과 처리
 			while(rs.next() ) {
-				Notice n = new Notice();	 //결과값 저장 객체
+				NoticeImage n = new NoticeImage();	 //결과값 저장 객체
 				
 				n.setNno(rs.getInt("nno"));
 				n.setNcategory(rs.getString("ncategory"));
 				n.setNtitle(rs.getString("ntitle"));
 				n.setNwritedate(rs.getDate("nwritedate"));
 				n.setNhit(rs.getInt("nhit"));
+				n.setNtop(rs.getInt("ntop"));
 				
 				//리스트에 결과값 저장
 				noticeSerchList.add(n);
@@ -663,119 +682,6 @@ public List<NoticeImage> selectAllImgSearch(Connection conn, String keyWord, Str
 		
 		return count;
 	}
-
-	//----------- 이미지 포함 객체 전체 게시글 객체 전송 --------------
-
-		// 총 게시글 조회
-		@Override
-		public List<NoticeImage> selectAllImage(Connection conn) {
-			//SQL작성
-			String sql = "";
-			sql += "SELECT";
-			sql += "	notice.nno, notice.ncategory, notice.ntitle";
-			sql += "	, notice.nwritedate, notice.ntop, notice.nhit";
-			sql += "	, nfile.nfileoriginname, nfile.nfilestoredname";
-			sql += " FROM notice, nfile";
-			sql += " WHERE notice.nno = nfile.nno(+)";
-			sql += " ORDER BY notice.ntop DESC, notice.nno DESC";
-			
-			
-			//결과 저장할 List
-			List<NoticeImage> noticeImageList = new ArrayList<>();
-			
-			try {
-				//SQL 수행 객체 생성
-				ps = conn.prepareStatement(sql);
-
-				//SQL 수행 및 결과 저장
-				rs = ps.executeQuery();
-				
-				//조회 결과 처리
-				while(rs.next() ) {
-					NoticeImage n = new NoticeImage();	 //결과값 저장 객체
-					
-					n.setNno(rs.getInt("nno"));
-					n.setNcategory(rs.getString("ncategory"));
-					n.setNtitle(rs.getString("ntitle"));
-					n.setNwritedate(rs.getDate("nwritedate"));
-					n.setNhit(rs.getInt("nhit"));
-					n.setNtop(rs.getInt("ntop"));
-					n.setNfileoriginname(rs.getString("nfileoriginname"));
-					n.setNfilestoredname(rs.getString("nfilestoredname"));
-					
-					//리스트에 결과값 저장
-					noticeImageList.add(n);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				JDBCTemplate.close(rs);
-				JDBCTemplate.close(ps);
-			}
-
-			return noticeImageList;
-		}
-		
-		
-		
-		// 총 게시글 조회 (이미지&페이징)
-		@Override
-		public List<NoticeImage> selectAllImage(Connection conn, Paging paging) {
-			
-			//SQL작성
-			String sql = "";
-			sql += "SELECT * FROM (";
-			sql += "	SELECT rownum rnum, N.* FROM (";
-			sql += "	        SELECT";
-			sql += "			  notice.nno, notice.ncategory, notice.ntitle";
-			sql += "	          , notice.nwritedate, notice.ntop, notice.nhit";
-			sql += "	          , nfile.nfileoriginname, nfile.nfilestoredname";
-			sql += "			FROM notice, nfile";
-			sql += "			WHERE notice.nno = nfile.nno(+)";
-			sql += "	        ORDER BY notice.ntop DESC, notice.nno DESC";
-			sql += " 	) N";
-			sql += " ) NOTICE";
-			sql += " WHERE rnum BETWEEN ? AND ?";
-			
-			
-			//결과 저장할 List
-			List<NoticeImage> noticeImageList = new ArrayList<>();
-			
-			try {
-				//SQL 수행 객체 생성
-				ps = conn.prepareStatement(sql);
-				
-				ps.setInt( 1, paging.getStartNo() );
-				ps.setInt( 2, paging.getEndNo() );
-				
-				//SQL 수행 및 결과 저장
-				rs = ps.executeQuery();
-				
-				//조회 결과 처리
-				while(rs.next() ) {
-					NoticeImage n = new NoticeImage();	 //결과값 저장 객체
-					
-					n.setNno(rs.getInt("nno"));
-					n.setNcategory(rs.getString("ncategory"));
-					n.setNtitle(rs.getString("ntitle"));
-					n.setNwritedate(rs.getDate("nwritedate"));
-					n.setNhit(rs.getInt("nhit"));
-					n.setNtop(rs.getInt("ntop"));
-					n.setNfileoriginname(rs.getString("nfileoriginname"));
-					n.setNfilestoredname(rs.getString("nfilestoredname"));
-					
-					//리스트에 결과값 저장
-					noticeImageList.add(n);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				JDBCTemplate.close(rs);
-				JDBCTemplate.close(ps);
-			}
-
-			return noticeImageList;
-		}
 
 
 

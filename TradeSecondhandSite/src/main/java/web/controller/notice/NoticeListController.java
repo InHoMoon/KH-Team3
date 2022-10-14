@@ -33,17 +33,10 @@ public class NoticeListController extends HttpServlet {
 			System.out.println(paging);
 			
 			List<NoticeImage> list = null;	//이미지포함 게시글
-			
-			if(paging.getTotalPage() < 2 ) {
 				
-				list = noticeService.getNoticeImageList();
+			//게시글 페이징 목록 조회
+			list = noticeService.getNoticeImageList( paging );
 				
-			} else {
-				
-				//게시글 페이징 목록 조회
-				list = noticeService.getNoticeImageList( paging );
-				
-			}
 			
 			//조회된 결과(MODEL값)를 "noticeList"라는 이름으로 JSP코드에 list객체를 전달한다
 			req.setAttribute("noticeList", list);
@@ -67,22 +60,20 @@ public class NoticeListController extends HttpServlet {
 			System.out.println( "키워드 : " + keyWord + ", 검색어 : " + searchWord );
 			
 			
-			//-----페이징 없이 전달--------------
-			List<NoticeImage> searchlist = noticeService.getImgSearch(keyWord, searchWord);
+			//페이징 없이 전달
+			//List<NoticeImage> searchlist = noticeService.getImgSearch(keyWord, searchWord);
 			
 			
-			//---------검색(페이징 있) -----------------
-/*			
+			//검색(페이징 있)
+		
 			// 전달파라미터에서 현재 페이징 객체 계산하기
 			Paging paging = noticeService.getSearchPaging(req, keyWord, searchWord );
 			System.out.println(paging);
 					
 				
 			//게시글 페이징 목록 조회
-			List<Notice> searchlist = noticeService.getNoticeSearchList( paging, keyWord, searchWord );
+			List<NoticeImage> searchlist = noticeService.getNoticeSearchList( paging, keyWord, searchWord );
 				
-*/			
-			//-------------------------------------------
 			
 			
 			//조회된 결과(MODEL값)를 "noticeList"라는 이름으로 JSP코드에 list객체를 전달한다
@@ -93,7 +84,7 @@ public class NoticeListController extends HttpServlet {
 			req.setAttribute("searchWord", searchWord);
 			
 			//페이징 객체 MODEL값 전달
-			//req.setAttribute("paging", paging);
+			req.setAttribute("paging", paging);
 			
 			//View 지정 및 응답
 			req.getRequestDispatcher("/WEB-INF/views/notice/noticeList.jsp").forward(req, resp);

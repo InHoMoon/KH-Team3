@@ -24,9 +24,19 @@ public class SiteMainController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		//오늘하루 등록된 글 수
+		int newPostCnt = mainService.getNewPostCnt();
+		System.out.println(newPostCnt);
+
+		
+		//글 수 객체 전달
+		req.setAttribute("newPostCnt", newPostCnt);
+		
+		
+		//최신 글 목록
 		List<Trade> newlist = mainService.getNewList();
 		
-		//조회된 결과(MODEL값)를 "newlist"라는 이름으로 JSP코드에 list객체를 전달한다
+		//최신글목록 객체 전달
 		req.setAttribute("newlist", newlist);
 		
 		req.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(req, resp);

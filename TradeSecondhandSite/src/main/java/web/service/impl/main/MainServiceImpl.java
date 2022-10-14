@@ -19,4 +19,11 @@ public class MainServiceImpl implements MainService {
 		return mainDao.selectNewPost(JDBCTemplate.getConnection());
 	}
 
+	
+	@Override
+	public int getNewPostCnt() {
+		
+		return mainDao.countNewPost(JDBCTemplate.getConnection());
+	}
+
 }

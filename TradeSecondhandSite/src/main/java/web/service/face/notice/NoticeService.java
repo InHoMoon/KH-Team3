@@ -11,31 +11,16 @@ import web.dto.NoticeImage;
 
 public interface NoticeService {
 	
-	/** 
-	 * 게시글 전체 조회
-	 * 
-	 * @return List<Notice> - 게시글 전체 조회 결과 목록
-	 */
-	public List<Notice> getList();
 
-	
-	
+
 	/** 
-	 * 게시글 전체 조회(페이징 O)
+	 * 게시글 전체 조회(목록형)
 	 * 
 	 * @param paging - 페이징 정보 객체
 	 * @return List<Notice> - 게시글 전체 조회 결과 목록
 	 */
 	public List<Notice> getNoticeList(Paging paging);
 
-	
-	/** 
-	 * 이미지 포함 게시글 전체 조회
-	 * 
-	 * @return List<Notice> - 게시글 전체 조회 결과 목록
-	 */
-	public List<NoticeImage> getNoticeImageList();
-	
 	
 	/** 
 	 * 이미지 포함 게시글 전체 조회
@@ -156,7 +141,7 @@ public interface NoticeService {
 	 * @param paging - 페이징 정보 객체
 	 * @return List<Notice> - 검색 게시글 전체 조회 결과 목록
 	 */
-	public List<Notice> getNoticeSearchList(Paging paging,String keyWord, String searchWord);
+	public List<NoticeImage> getNoticeSearchList(Paging paging,String keyWord, String searchWord);
 
 
 

@@ -3,8 +3,11 @@ package web.dao.face.trade;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import util.Paging;
 import web.dto.Trade;
+import web.dto.TradeCmt;
 import web.dto.TradeImg;
 
 
@@ -122,5 +125,22 @@ public interface TradeDao {
 	 * @return
 	 */
 	public int selectNextCmtno(Connection conn);
+
+	/**
+	 * 입력 받은 userid로 userno검색
+	 * @param conn db연결 객체
+	 * @param req 전달파라미터 객체
+	 * @return
+	 */
+	public int selectUsernoByUserId(Connection conn, HttpServletRequest req);
+	
+	
+	/**
+	 * 거래글 번호로 댓글 상세 조회
+	 * @param connection
+	 * @param tradeno
+	 * @return
+	 */
+	public List<TradeCmt> selectCmt(Connection conn, Trade tradeno);
 
 }

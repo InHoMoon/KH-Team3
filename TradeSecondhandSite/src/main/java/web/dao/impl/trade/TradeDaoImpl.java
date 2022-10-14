@@ -7,10 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import common.JDBCTemplate;
 import util.Paging;
 import web.dao.face.trade.TradeDao;
 import web.dto.Trade;
+import web.dto.TradeCmt;
 import web.dto.TradeImg;
 
 public class TradeDaoImpl implements TradeDao {
@@ -525,5 +528,108 @@ public class TradeDaoImpl implements TradeDao {
 		
 		return res;
 	}
+
+	@Override
+	public List<TradeCmt> selectCmt(Connection conn, Trade tradeno) {
+		
+		List<TradeCmt> cmtList = new ArrayList<>();
+		
+		String sql="";
+		sql+= "SELECT cmtno, cmt_content, cmt_date, tradeno, cmt_depth, cmt_group, userno";
+		sql+= " FROM tradecmt";
+		sql+= " WHERE tradeno = ?";
+		sql+= " ORDER BY cmtno";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, tradeno.getTradeno());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				TradeCmt c = new TradeCmt();
+				
+				c.setCmtno(rs.getInt("cmtno"));
+				c.setCmtContent(rs.getString("cmt_content"));
+				c.setCmtDate(rs.getDate("cmt_date"));
+				c.setTradeno(rs.getInt("tradeno"));
+				c.setCmtDepth(rs.getInt("cmt_depth"));
+				c.setCmtGroup(rs.getInt("cmt_group"));
+				c.setUserno(rs.getInt("userno"));
+				
+				cmtList.add(c);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		
+		return cmtList;
+	}
+	
+	
+	
+	@Override
+	public int selectNextCmtno(Connection conn) {
+		String sql = "";
+		sql += "SELECT tradecmt_seq.nextval FROM dual";
+
+		int nextCmtno = 0;
+
+		try {
+			ps = conn.prepareStatement(sql);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				nextCmtno = rs.getInt("nextval");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+
+		return nextCmtno;
+	}
+
+	@Override
+	public int selectUsernoByUserId(Connection conn, HttpServletRequest req) {
+		String sql="";
+		sql+="SELECT userno FROM tuser";
+		sql+=" WHERE userid = ?";
+		
+		int userno = 0;
+		
+		try {
+			ps= conn.prepareStatement(sql);
+			
+			ps.setString(1, req.getParameter("userid"));
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				userno=rs.getInt("userno");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		
+		return userno;
+	}
+
 
 }

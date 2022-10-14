@@ -21,6 +21,7 @@ import util.Paging;
 import web.dao.face.trade.TradeDao;
 import web.dao.impl.trade.TradeDaoImpl;
 import web.dto.Trade;
+import web.dto.TradeCmt;
 import web.dto.TradeImg;
 import web.service.face.trade.TradeService;
 
@@ -291,6 +292,7 @@ public class TradeServiceImpl implements TradeService {
 		
 		return tradeDao.selectImg(JDBCTemplate.getConnection(), tradeno);
 	}
+	
 
 	@Override
 	public void update(HttpServletRequest req) {
@@ -481,16 +483,32 @@ public class TradeServiceImpl implements TradeService {
 	}
 
 	@Override
+	public List<TradeCmt> viewCmt(Trade tradeno) {
+		
+		return tradeDao.selectCmt(JDBCTemplate.getConnection(), tradeno);
+	}
+	
+	@Override
 	public void writeCmt(HttpServletRequest req) {
 		
 		//DB연결 객체
 		Connection conn = JDBCTemplate.getConnection();
 						
-		//게시글 번호 생성
+		//댓글 번호 생성
 		int cmtno = tradeDao.selectNextCmtno(conn);
 		
+		//아이디로 유저번호 조회
+		int userno = tradeDao.selectUsernoByUserId(conn, req);
+		
+		TradeCmt tradecmt = new TradeCmt();
+		
+		tradecmt.setCmtno(cmtno);
+		tradecmt.setUserno(userno);
+		tradecmt.setTradeno(Integer.parseInt(req.getParameter("tradeno")));
+		tradecmt.setCmtContent(req.getParameter("cmt"));
 		
 	}
+
 
 
 

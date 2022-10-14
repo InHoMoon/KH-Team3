@@ -1,3 +1,4 @@
+<%@page import="web.dto.TradeCmt"%>
 <%@page import="java.util.List"%>
 <%@page import="web.dto.TradeImg"%>
 <%@page import="web.dto.Trade"%>
@@ -8,6 +9,8 @@
 
 <!-- 첨부파일 상세보기 조회 결과 값 -->
 <% TradeImg tradeImg = (TradeImg) request.getAttribute("tradeImg"); %>
+
+<% List<TradeCmt> cmtList = (List) request.getAttribute("cmtList"); %>
 
 <%@ include file="../layout/header.jsp" %>
 
@@ -105,9 +108,18 @@ $(document).ready(function() {
 <br>
 <br>
 
+<% if(cmtList.size()==0){ %>
+	<div>댓글이 없습니다</div>
+<% }else if (cmtList.size()!=0) { %>
+	<%	for(int i=0; i<cmtList.size(); i++) { %>
+	<div><%= cmtList.get(i).getCmtContent() %></div>
+	<%	} %>
+<%} %>
+
 <form action='./view' method="post">
 
 	<input type="hidden" name="userid" value="<%=session.getAttribute("userid") %>">
+	<input type="hidden" name="tradeno" value="<%=viewTrade.getTradeno() %>">
 	
 	<table class="table">
 		<tr>

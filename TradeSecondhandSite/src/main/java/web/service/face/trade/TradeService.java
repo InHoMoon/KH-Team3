@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import util.Paging;
 import web.dto.Trade;
+import web.dto.TradeCmt;
 import web.dto.TradeImg;
 
 
@@ -82,12 +83,20 @@ public interface TradeService {
 	 * @param tradeno 삭제할 게시물 번호
 	 */
 	public void delete(Trade tradeno);
+	
+	/**
+	 * 게시물 번호로 댓글 목록 상세보기
+	 * @param tradeno
+	 * @return
+	 */
+	public List<TradeCmt> viewCmt(Trade tradeno);
 
 	/**
 	 * 댓글 입력
 	 * @param req
 	 */
 	public void writeCmt(HttpServletRequest req);
+
 
 
 

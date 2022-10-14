@@ -1,7 +1,7 @@
 package web.controller.trade;
 
 import java.io.IOException;
-
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import web.dto.Trade;
+import web.dto.TradeCmt;
 import web.dto.TradeImg;
 import web.service.face.trade.TradeService;
 import web.service.impl.trade.TradeServiceImpl;
@@ -35,10 +36,14 @@ public class TradeViewController extends HttpServlet {
 		
 		//첨부파일 정보 조회
 		TradeImg tradeImg = tradeService.viewImg(tradeno);
+		req.setAttribute("tradeImg", tradeImg);
 		
+		//댓글 상세 조회
+		List<TradeCmt> cmtList = tradeService.viewCmt(tradeno);
+		
+		req.setAttribute("cmtList", cmtList);
 		
 				
-		req.setAttribute("tradeImg", tradeImg);
 				
 				
 		req.getRequestDispatcher("/WEB-INF/views/trade/view.jsp").forward(req, resp);

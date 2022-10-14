@@ -35,13 +35,13 @@ $(document).ready(function() {
 	})
 	
 	// 아이디 찾기 버튼
-	$("#btnIdfind").click(function() {
-		$(location).attr('href', '/idFind') // IdFindController으로 가기
+	$("#btnFindId").click(function() {
+		$(location).attr('href', '/find/id') // FindIdController으로 가기
 	})
 	
 	// 비밀번호 찾기 버튼
-	$("#btnPwfind").click(function() {
-		$(location).attr('href', '/pwFind') // PwFindController으로 가기		
+	$("#btnFindPw").click(function() {
+		$(location).attr('href', '/find/pw') // FindPwController으로 가기		
 	})
 	
 	// 회원가입 버튼
@@ -113,8 +113,8 @@ $(document).ready(function() {
 	<div class="clearfix"></div>
 
 	<div class="text-center">
-		<button type="button" class="btn btn-default" id="btnIdfind">아이디 찾기</button>
-		<button type="button" class="btn btn-default" id="btnPwfind">비밀번호 찾기</button>
+		<button type="button" class="btn btn-default" id="btnFindId">아이디 찾기</button>
+		<button type="button" class="btn btn-default" id="btnFindPw">비밀번호 찾기</button>
 		<button type="button" class="btn btn-default" id="btnJoin">회원가입</button>
 	</div>
 

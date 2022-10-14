@@ -130,8 +130,19 @@ $(document).ready(function() {
 <!-- 아이디, 닉네임 중복확인 ajax   --- 수정 필요 -->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#btnIdck").click(function() {
-		window.open("/id/check", "idwin", "width=500, height=400");
+	$("#btnCheckId").click(function() {
+		
+		//새창을 열어서 페이지를 오픈 후 -> 회원아이디정보를 가지고 중복체크
+		//1. 아이디가 없으면 알림창과 진행x
+		if( $("#userid").val() == "" || $("#userid").val() == "" < 0) {
+			alert("아이디를 입력해주세요")
+			$("#userid").focus();
+		} else {
+			//2. 회원정보아이디를 가지고 있는 지 체크하려면 DB에 접근해야한다.
+			//자바스크립트로 어떻게 DB에 접근할까? => 파라미터로 id값을 가져가서 jsp페이지에서 진행하면 된다.
+			window.open("/check/id?userid="+$("#userid").val(),"","width=500, height=300");
+		}
+		
 	})
 })
 </script>
@@ -402,10 +413,11 @@ $(document).ready(function() {
 		<label for="userid" class="col-xs-2 col-xs-offset-2 control-label">아이디</label>
 		<div class="col-xs-4">
 			<input type="text" id="userid" name="userid" class="form-control" engnum>
+			<input type="hidden" name="decide_id" id="decide_id">
 			<span class="required_box" id="required_id" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 		<div class="col-xs-2">
-			<button type="button" class="btn btn-default" id="btnIdck">중복확인</button>
+			<button type="button" class="btn btn-default" id="btnCheckId">중복확인</button>
 		</div>
 		<div id="result"></div>
 	</div>
@@ -448,7 +460,7 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="useremail" class="col-xs-2 col-xs-offset-2 control-label">이메일</label>
 		<div class="col-xs-4">
-			<input type="email" id="useremail" name="useremail" class="form-control" engnum>
+			<input type="email" id="useremail" name="useremail" class="form-control">
 			<span class="required_box" id="required_email" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>	
 	</div>
@@ -505,11 +517,10 @@ $(document).ready(function() {
 			<input type="text" id="usernick" name="usernick" class="form-control" placeholder="선택입력">
 		</div>
 		<div class="col-xs-2">
-			<button type="button" class="btn btn-default" id="btnNick">중복확인</button>
+			<button type="button" class="btn btn-default" id="btnCheckNick">중복확인</button>
 		</div>
 	</div>
 	
-	<!-- 프로필 사진 등록 수정 필요 -->
 	<div class="form-group">
 		<label for="file" class="col-xs-2 col-xs-offset-2 control-label">프로필 사진</label>
 		<input type="file" name="file" id="upload">

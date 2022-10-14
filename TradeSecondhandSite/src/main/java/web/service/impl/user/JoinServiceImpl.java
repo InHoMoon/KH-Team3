@@ -31,32 +31,6 @@ public class JoinServiceImpl implements JoinService {
 	@Override
 	public void join(HttpServletRequest req) {
 		
-		//--- 첨부파일 없이 회원가입 처리하기 ---
-		
-//		User user = new User();
-//		
-//		user.setUserid( req.getParameter("userid") );
-//		user.setUserpw( req.getParameter("userpw") );
-//		user.setUsername( req.getParameter("username") );
-//		user.setUseremail( req.getParameter("useremail") );
-//		user.setUserphone( req.getParameter("userphone") );
-//		user.setUseraddr1( req.getParameter("useraddr1") );
-//		user.setUseraddr2( req.getParameter("useraddr2") );
-//		user.setUseraddr3( req.getParameter("useraddr3") );
-//		user.setUsergender( req.getParameter("usergender") );
-//		user.setUserbirth( req.getParameter("userbirth") );
-//		user.setUsernick( req.getParameter("usernick") );
-//		
-//		Connection conn = JDBCTemplate.getConnection();
-//		
-//		if( joinDao.insert(conn, user) > 0 ) {
-//			JDBCTemplate.commit(conn);
-//		} else {
-//			JDBCTemplate.rollback(conn);
-//		}
-		
-		//------------------------------------------
-		
 		//--- 첨부파일 추가하여 게시글 작성 처리하기 ---
 		
 		// multipart/form-data 인코딩 확인

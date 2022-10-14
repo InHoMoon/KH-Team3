@@ -115,63 +115,22 @@ $(document).ready(function() {
 
 <!-- 아이디, 닉네임 중복확인 ajax   --- 수정 필요 -->
 <script type="text/javascript">
-
-window.onload = function() {
-	
-	btnIdck.onclick = function() {
-		console.log("#btnIdck click")
+$(document).ready(function() {
+	$("#btnCheckId").click(function() {
 		
-		// AJAX 요청 보내기
-		sendRequest("POST", "/id/check", "", callback)	
-	}
-	
-}
-
-// AJAX 응답 처리 콜백
-function callback() {
-	if(httpRequest.readyState ==4) {
-		if(httpRequest.status == 200) {
-			console.log("정상적인 AJAX 요청/응답 완료")
-			
-			// 결과 처리 함수 호출하기
-			printData();
-			
+		//새창을 열어서 페이지를 오픈 후 -> 회원아이디정보를 가지고 중복체크
+		//1. 아이디가 없으면 알림창과 진행x
+		if( $("#userid").val() == "" || $("#userid").val() == "" < 0) {
+			alert("아이디를 입력해주세요")
+			$("#userid").focus();
 		} else {
-			console.log("AJAX 요청/응답 실패")			
+			//2. 회원정보아이디를 가지고 있는 지 체크하려면 DB에 접근해야한다.
+			//자바스크립트로 어떻게 DB에 접근할까? => 파라미터로 id값을 가져가서 jsp페이지에서 진행하면 된다.
+			window.open("/check/id?userid="+$("#userid").val(),"","width=500, height=300");
 		}
-	}
-}
-
-// 응답 결과를 처리하는 함수
-function printData() {
-	console.log("printData called")
-	
-	// AJAX 응답 데이터
-	var respText = httpRequest.responseText;
-	console.log("--- respText ---")
-	console.log( respText )
-	
-	// 언마샬링, JSON Text -> JS Data
-	var jsData = JSON.parse( respText )
-	console.log("--- jsData ---")
-	console.log( jsData )
-	
-	// 응답 데이터 div#result에 반영하기
-// 	result.innerHTML = jsData
-// 	result.innerHTML = '<p> key : ' + jsData.key + '</p>'
-	
-	// 응답 데이터 JSON을 HTML코드로 작성하여 div#result에 반영하기
-	//	-> jsData 이용
-	
-	var html = ""
-	for( var i=0; i<jsData.length; i++ ) {
-		html += "<h3>" + jsData[i].id + ":" + jsData[i].pw + "</h3>" 	
-	}
-	
-	result.innerHTML = html
-	
-}
-
+		
+	})
+})
 </script>
 
 
@@ -313,16 +272,28 @@ $(document).ready(function() {
 <!-- 프로필 사진    ---- 수정 필요 -->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#profile").change(function( e ) {
-		console.log("#profile change")
+	
+	$("#upload").change(function( e ) {
+		console.log("#upload change")
+		//---------------------------------------------------
+		
+		console.log("--- 이벤트 객체 ---")
+		console.log( e )
+		
+		console.log("--- 이벤트 발생 DOM객체 ---")
+		console.log( e.target )
 		
 		console.log("--- 선택된 파일들 ---")
-		console.log( e.target.files )		// 이게 더 어디서 온 기능인지 정확하게 파악가능
-		console.log(this)	// e.target과 똑같이 처리됨
-		console.log(this.files)	// e.target.files와 똑같이 처리됨
+		console.log( e.target.files )
 		
-		//---------------------------
- 
+		console.log("--- this ---")
+		console.log( this )
+		
+		console.log("--- this.files ---")
+		console.log( this.files )
+		
+		//---------------------------------------------------
+		
 		var files = e.target.files;
 		
 		// 이미지만 처리할 수 있도록 적용
@@ -337,32 +308,32 @@ $(document).ready(function() {
 			
 		}
 		
-		//---------------------------
+		//---------------------------------------------------
 		
 		// FileReader 객체 생성
 		var reader = new FileReader();
 		
-		// FileTeader가 파일의 내용을 전부 읽어들여
+		// FileReader가 파일의 내용을 전부 읽어들여
 		// 메모리에 로드 되었을 때 발생하는 이벤트 처리
 		reader.onload = function( ev ) {
 			console.log( ev.target.result )
-			console.log( this.result ) //ev.target.result와 같은 식
-		
-		
+			
 			// 이미지를 새롭게 선택할 때마다 #preview의 이전 이미지를 지우고
 			// 한 장만 유지되도록 한다
 			$("#preview").html(
-				$("<img>").attr( {
-					"src": ev.target.result
-					,"width" : 200
-				})
+					$("<img>").attr({
+						"src": ev.target.result
+						, "width": 300
+						, "height": 300
+					})
 			)
 		}
-		
+
 		// 선택된 파일을 DataURL 형식으로 읽어들이기
-		reader.readAsDataURL( files[0] )
-		
+		reader.readAsDataURL( files[0] );
+			
 	})
+
 })
 </script>
 
@@ -431,7 +402,7 @@ $(document).ready(function() {
 
 <%-- 로그인 상태 --%>
 <%	if( session.getAttribute("login") != null && (boolean) session.getAttribute("login") ) { %>
-<form action="/user/update" method="post" class="form-horizontal">
+<form action="/update/user" method="post" class="form-horizontal">
 
 	<div class="form-group">
 		<label for="userid" class="col-xs-2 col-xs-offset-2 control-label">아이디</label>
@@ -534,14 +505,14 @@ $(document).ready(function() {
 			<input type="text" id="usernick" name="usernick" class="form-control" value="<%=session.getAttribute("usernick") %>" placeholder="선택입력">
 		</div>
 		<div class="col-xs-2">
-			<button type="button" class="btn btn-default" id="btnNick">중복확인</button>
+			<button type="button" class="btn btn-default" id="btnCheckNick">중복확인</button>
 		</div>
 	</div>
 	
 	<!-- 프로필 사진 등록 수정 필요 -->
 	<div class="form-group">
 		<label for="file" class="col-xs-2 col-xs-offset-2 control-label">프로필 사진</label>
-		<input type="file" name="file" id="profile">
+		<input type="file" name="file" id="upload">
 		<div id="preview"></div>
 	</div>
 

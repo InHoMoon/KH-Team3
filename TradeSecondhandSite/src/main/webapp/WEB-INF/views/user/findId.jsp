@@ -13,12 +13,12 @@ $(document).ready(function() {
 	// 이메일 입력창에 엔터키 입력 시 submit
 	$("input").eq(1).keydown(function(e) {
 		if( e.keyCode == 13 ) { // 엔터키
-			$("#btnIdfind").click();
+			$("#btnFindId").click();
 		}
 	})
 	
 	// 아이디 찾기 버튼
-	$("#btnIdfind").click(function() {
+	$("#btnFindId").click(function() {
 		
 		if( $("#username").val() == "" ) {
 			alert("이름을 입력하세요");
@@ -70,7 +70,7 @@ $(document).ready(function() {
 <h1 style="text-align: center;">아이디 찾기</h1>
 <hr>
 
-<form action="/idFind" method="post" class="form-horizontal">
+<form action="/find/id" method="post" class="form-horizontal">
 
 	<div class="form-group">
 		<label for="username" class="col-xs-2 col-xs-offset-2 control-label">이름</label>
@@ -89,7 +89,7 @@ $(document).ready(function() {
 	</div>
 	
 	<div class="text-center">
-		<button type="button" class="btn btn-default" id="btnIdfind">아이디 찾기</button>
+		<button type="button" class="btn btn-default" id="btnFindId">아이디 찾기</button>
 		<button type="button" class="btn btn-default" id="btnCancel">취소</button>
 	</div>
 

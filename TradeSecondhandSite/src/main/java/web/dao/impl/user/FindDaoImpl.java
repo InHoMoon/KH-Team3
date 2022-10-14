@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import common.JDBCTemplate;
-import web.dao.face.user.IdFindDao;
+import web.dao.face.user.FindDao;
 import web.dto.User;
 
-public class IdFindDaoImpl implements IdFindDao {
+public class FindDaoImpl implements FindDao {
 	
 	private PreparedStatement ps;
 	private ResultSet rs;
@@ -44,7 +44,6 @@ public class IdFindDaoImpl implements IdFindDao {
 		}
 		
 		return cnt;
-		
 	}
 	
 	@Override
@@ -78,7 +77,40 @@ public class IdFindDaoImpl implements IdFindDao {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public int selectCntByUseridUsernameUseremail(Connection conn, User user) {
 		
+		String sql = "";
+		sql += "SELECT count(*) cnt FROM tuser";
+		sql += " WHERE userid = ?";
+		sql += "	AND username = ?";
+		sql += "	AND useremail = ?";
+		
+		int cnt = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, user.getUserid());
+			ps.setString(2, user.getUsername());
+			ps.setString(3, user.getUseremail());
+			
+			rs = ps.executeQuery();
+			
+			while( rs.next() ) {
+				cnt = rs.getInt("cnt");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return cnt;
 	}
 	
 }

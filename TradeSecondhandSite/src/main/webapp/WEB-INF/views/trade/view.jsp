@@ -43,9 +43,16 @@ $(document).ready(function() {
 		$("form").submit();
 	})
 	
+	
+
+
+	
+	
 
 })
 </script>
+
+
 
 
 <h1>거래글 상세보기</h1>
@@ -108,15 +115,22 @@ $(document).ready(function() {
 <br>
 <br>
 
+<table class="table ">
 <% if(cmtList.size()==0){ %>
-	<div>댓글이 없습니다</div>
+	<tr><th>댓글이 없습니다</th></tr>
 <% }else if (cmtList.size()!=0) { %>
 	<%	for(int i=0; i<cmtList.size(); i++) { %>
-	<div><%= cmtList.get(i).getCmtContent() %></div>
-	<%	} %>
-<%} %>
+	<tr>
+		<th style="width: 10%;">ID : <%= cmtList.get(i).getUserid() %>
+		<th style="width: 65%;"><%= cmtList.get(i).getCmtContent() %></th>
+		<th>작성일 : <%= cmtList.get(i).getCmtDate() %>
+		<%} %>
+	</tr>
+	<%} %>
+</table>
 
-<form action='./view' method="post">
+
+<form action='./cmtwrite' method="post">
 
 	<input type="hidden" name="userid" value="<%=session.getAttribute("userid") %>">
 	<input type="hidden" name="tradeno" value="<%=viewTrade.getTradeno() %>">
@@ -125,10 +139,10 @@ $(document).ready(function() {
 		<tr>
 			<th style="text-align:left; width:90%;">
 				<label for="cmt">댓글 : </label>
-        		<textarea class="form-control" rows="3" id="cmt" name="cmt"></textarea>
+        		<textarea class="form-control" rows="3" id="cmt" name="cmt" placeholder="댓글을 입력하세요"></textarea>
         	</th>
 			<th class="text-center" style="line-height:20px;">
-				<button id="btnWrite" class="btn ">작성</button>
+				<button id="btnWrite" class="btn btn-primary" style="height: 100px;">작성</button>
 			</th>
 		</tr>
 	</table>

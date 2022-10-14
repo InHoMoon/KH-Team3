@@ -485,6 +485,7 @@ public class TradeServiceImpl implements TradeService {
 	@Override
 	public List<TradeCmt> viewCmt(Trade tradeno) {
 		
+		
 		return tradeDao.selectCmt(JDBCTemplate.getConnection(), tradeno);
 	}
 	
@@ -500,12 +501,19 @@ public class TradeServiceImpl implements TradeService {
 		//아이디로 유저번호 조회
 		int userno = tradeDao.selectUsernoByUserId(conn, req);
 		
-		TradeCmt tradecmt = new TradeCmt();
+		TradeCmt tradeCmt = new TradeCmt();
 		
-		tradecmt.setCmtno(cmtno);
-		tradecmt.setUserno(userno);
-		tradecmt.setTradeno(Integer.parseInt(req.getParameter("tradeno")));
-		tradecmt.setCmtContent(req.getParameter("cmt"));
+		tradeCmt.setCmtno(cmtno);
+		tradeCmt.setUserno(userno);
+		tradeCmt.setTradeno(Integer.parseInt(req.getParameter("tradeno")));
+		tradeCmt.setCmtContent(req.getParameter("cmt"));
+		tradeCmt.setUserid(req.getParameter("userid"));
+		
+		if(tradeDao.insertCmt(conn, tradeCmt) > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
 		
 	}
 

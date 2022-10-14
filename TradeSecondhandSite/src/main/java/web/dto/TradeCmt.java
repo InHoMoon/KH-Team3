@@ -11,10 +11,12 @@ public class TradeCmt {
 	private int cmtGroup;
 	private Date cmtDate;
 	private String cmtContent;
+	private String userid;
 	
 	public TradeCmt() {}
 
-	public TradeCmt(int cmtno, int userno, int tradeno, int cmtDepth, int cmtGroup, Date cmtDate, String cmtContent) {
+	public TradeCmt(int cmtno, int userno, int tradeno, int cmtDepth, int cmtGroup, Date cmtDate, String cmtContent,
+			String userid) {
 		super();
 		this.cmtno = cmtno;
 		this.userno = userno;
@@ -23,12 +25,14 @@ public class TradeCmt {
 		this.cmtGroup = cmtGroup;
 		this.cmtDate = cmtDate;
 		this.cmtContent = cmtContent;
+		this.userid = userid;
 	}
 
 	@Override
 	public String toString() {
 		return "TradeCmt [cmtno=" + cmtno + ", userno=" + userno + ", tradeno=" + tradeno + ", cmtDepth=" + cmtDepth
-				+ ", cmtGroup=" + cmtGroup + ", cmtDate=" + cmtDate + ", cmtContent=" + cmtContent + "]";
+				+ ", cmtGroup=" + cmtGroup + ", cmtDate=" + cmtDate + ", cmtContent=" + cmtContent + ", userid="
+				+ userid + "]";
 	}
 
 	public int getCmtno() {
@@ -86,7 +90,17 @@ public class TradeCmt {
 	public void setCmtContent(String cmtContent) {
 		this.cmtContent = cmtContent;
 	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
 	
+
 	
 	
 	

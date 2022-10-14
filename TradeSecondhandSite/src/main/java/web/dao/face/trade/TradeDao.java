@@ -137,10 +137,18 @@ public interface TradeDao {
 	
 	/**
 	 * 거래글 번호로 댓글 상세 조회
-	 * @param connection
+	 * @param conn
 	 * @param tradeno
 	 * @return
 	 */
 	public List<TradeCmt> selectCmt(Connection conn, Trade tradeno);
+
+	/**
+	 * 댓글 입력
+	 * @param conn db 연결 객체
+	 * @param tradeCmt
+	 * @return
+	 */
+	public int insertCmt(Connection conn, TradeCmt tradeCmt);
 
 }

@@ -535,7 +535,7 @@ public class TradeDaoImpl implements TradeDao {
 		List<TradeCmt> cmtList = new ArrayList<>();
 		
 		String sql="";
-		sql+= "SELECT cmtno, cmt_content, cmt_date, tradeno, cmt_depth, cmt_group, userno";
+		sql+= "SELECT cmtno, cmt_content, cmt_date, tradeno, cmt_depth, cmt_group, userno, userid";
 		sql+= " FROM tradecmt";
 		sql+= " WHERE tradeno = ?";
 		sql+= " ORDER BY cmtno";
@@ -557,6 +557,7 @@ public class TradeDaoImpl implements TradeDao {
 				c.setCmtDepth(rs.getInt("cmt_depth"));
 				c.setCmtGroup(rs.getInt("cmt_group"));
 				c.setUserno(rs.getInt("userno"));
+				c.setUserid(rs.getString("userid"));
 				
 				cmtList.add(c);
 				
@@ -629,6 +630,34 @@ public class TradeDaoImpl implements TradeDao {
 		
 		
 		return userno;
+	}
+
+	@Override
+	public int insertCmt(Connection conn, TradeCmt tradeCmt) {
+		
+		String sql = "";
+		sql+="INSERT INTO tradecmt (cmtno, userno, tradeno, cmt_content, userid )";
+		sql+=" VALUES (?, ?, ?, ?, ?)";
+		
+		int res= 0;
+		try {
+			ps= conn.prepareStatement(sql);
+			
+			ps.setInt(1, tradeCmt.getCmtno());
+			ps.setInt(2, tradeCmt.getUserno());
+			ps.setInt(3, tradeCmt.getTradeno());
+			ps.setString(4, tradeCmt.getCmtContent());
+			ps.setString(5, tradeCmt.getUserid());
+			
+			res= ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return res;
 	}
 
 

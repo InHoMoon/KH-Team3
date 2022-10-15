@@ -54,6 +54,8 @@ public class CheckIdController extends HttpServlet {
 		resultId.put("checkId", isCheckId);
 		resultId.put("userid", user.getUserid());
 		
+		// JSP(View)를 이용한 AJAX 응답
+		req.setAttribute("map", resultId); // 모델값 전달
 		out.append( new Gson().toJson(resultId) );
 		
 	}

@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import web.dto.Ufile;
-import web.dto.User;
 import web.service.face.user.JoinService;
 import web.service.impl.user.JoinServiceImpl;
 

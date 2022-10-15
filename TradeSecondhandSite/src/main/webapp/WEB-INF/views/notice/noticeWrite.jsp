@@ -10,9 +10,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("#selectoption").change(function() {
-		console.log("값변경테스트: " + $(this).val());
-		$("#ncategory").val($(this).val());
+	
+	$("#ncategory").change(function() {
+		ntitle.focus()
 	})
 	
 	
@@ -37,22 +37,12 @@ $(document).ready(function() {
 	
 	$("#upload").change(function( e ) {
 		console.log("#upload change")
-		
-		console.log("--- 선택된 파일들 ---")
-		console.log( e.target.files )		//이게 더 어디서 온 기능인지 정확하게 파악가능
-		console.log(this)	//e.target과 똑같이 처리됨
-		console.log(this.files)	//e.target.files와 똑같이 처리됨
-		
-		//---------------------------
  
 		var files = e.target.files;
 		
-		//이미지만 처리할 수 있도록 적용
+		//미리보기는 이미지만 처리할 수 있도록 적용
 		if( !files[0].type.includes( "image") ) {
-			alert("이미지가 아닙니다")
-			
-			//선택한 파일 해제하기
-			e.target.value = null;
+		
 			
 			//이벤트 처리 중단시키기
 			return false;
@@ -97,60 +87,54 @@ function updateContents() {
 	
 }
 
-
-
-</script>
-
 </script>
 
 <style type="text/css">
 
 .noticepage {
-width: 1000px
+	max-width: 1000px;
+	min-width: 500px;
 }
 
 </style>
  
  
- <div class="container noticepage">
+<div class="container noticepage">
  
-<h1>글쓰기</h1>
-<hr>
-<br>
- 
- 
-<form action="./write" method="post" enctype="multipart/form-data">
-
-
-<input type="checkbox" id="ntop" name="ntop" value="1">
-<label for="ntop">이 게시물을 상단에 고정</label>
-
-<table class="table table-bordered">
-<tr> 
-	<td class="info">분류</td>
-	<td><input type="hidden" name="ncategory" id="ncategory"/>
-	<select id="selectoption">
-		<option value="">선택하세요</option>
-		<option value="공지">공지</option>
-		<option value="이벤트">이벤트</option>
-	</select>
-	</td> 
-</tr>
-<tr> <td class="info">제목</td><td><input type="text" name="ntitle" style="width:100%"></td> </tr>
-<tr> <td class="info" colspan="2">본문</td></tr>
-<tr> <td colspan="2"><textarea id="ncontent" name="ncontent" style="width:100%"></textarea></td></tr>
-</table>
-
-첨부파일 <input type="file" name="file" id="upload">
-<div id="preview"></div>
-
-</form>
- 
- 
-<div class="text-right">
-	<button id="btnWrite" class="btn btn-primary">작성</button>
-	<button id="btnCancel" class="btn btn-danger">취소</button>
-</div>
+	<h1>글쓰기</h1>
+	<hr>
+	<br>
+	 
+	 
+	<form action="./write" method="post" enctype="multipart/form-data">
+	
+		<input type="checkbox" id="ntop" name="ntop" value="1">
+		<label for="ntop"> 이 게시물을 상단에 고정</label>
+		
+		<table class="table">
+			<tr>
+				<td class="col-xs-3">
+					<select class="form-control text-center" name="ncategory" id="ncategory" required>
+						<option>선택하세요</option>
+						<option>공지</option>
+						<option>이벤트</option>
+					</select>
+				</td> 
+			<td><input class="form-control required " type="text" name="ntitle" id="ntitle" style="width:100%" placeholder="제목을 입력하세요" required></td>
+			</tr>
+			<tr> <td class="info" colspan="2" style="background-color:#f8f3e8">본문</td></tr>
+			<tr> <td colspan="2"><textarea id="ncontent" name="ncontent" style="width:100%" required></textarea></td></tr>
+		</table>
+		
+		첨부파일 <input type="file" name="file" id="upload">
+		<div id="preview"></div>
+		
+	</form>
+		 	 
+	<div class="text-right">
+		<button id="btnWrite" class="btn" style="background-color:#fad703">작성</button>
+		<button id="btnCancel" class="btn" style="background-color:#e5e3e3">취소</button>
+	</div>
 
 </div>
 

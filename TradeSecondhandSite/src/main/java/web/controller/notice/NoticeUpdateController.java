@@ -60,7 +60,7 @@ public class NoticeUpdateController extends HttpServlet {
 		
 		noticeService.update(req);
 		
-		resp.sendRedirect("/33/notice/list");
+		resp.sendRedirect("/notice/list");
 		
 	}
 	

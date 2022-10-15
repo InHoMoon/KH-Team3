@@ -1,3 +1,4 @@
+
 <%@page import="web.dto.Nfile"%>
 <%@page import="web.dto.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -17,12 +18,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("#selectoption").change(function() {
-		console.log("값변경테스트: " + $(this).val());
-		$("#ncategory").val($(this).val());
-	})
-	
-	
 	//수정버튼
 	$("#btnUpdate").click(function() {
 		
@@ -38,6 +33,47 @@ $(document).ready(function() {
 	//취소버튼
 	$("#btnCancel").click(function() {
 		history.go(-1)
+	})
+	
+	$("#upload").change(function( e ) {
+		console.log("#upload change")
+	
+		var files = e.target.files;
+		
+		//미리보기는 이미지만 처리할 수 있도록 적용
+		if( !files[0].type.includes( "image") ) {
+		
+			
+			//이벤트 처리 중단시키기
+			return false;
+			
+		}
+		
+		//---------------------------
+		
+		//FileReader 객체 생성
+		var reader = new FileReader();
+		
+		// FileTeader가 파일의 내용을 전부 읽어들여
+		//메모리에 로드 되었을 때 발생하는 이벤트 처리
+		reader.onload = function( ev ) {
+			console.log( ev.target.result )
+			console.log( this.result ) //ev.target.result와 같은 식
+		
+		
+			//이미지를 새롭게 선택할 때마다 #preview의 이전 이미지를 지우고
+			//한 장만 유지되도록 한다
+			$("#preview").html(
+				$("<img>").attr( {
+					"src": ev.target.result
+					,"width" : 200
+				})
+			)
+		}
+		
+		//선택된 파일을 DataURL 형식으로 읽어들이기
+		reader.readAsDataURL( files[0])
+		
 	})
 	
 	
@@ -67,7 +103,6 @@ $(document).ready(function() {
 })
 
 
-
 function updateContents() {
 	
 	//스마트 에디터에 작성된 내용을 #ncontent에 반영한다
@@ -78,70 +113,72 @@ function updateContents() {
 <style type="text/css">
 
 .noticepage {
-width: 1000px
+	max-width: 1000px;
+	min-width: 500px;
 }
 
 </style>
  
-<h1>글수정</h1>
-<hr>
-<br>
 
 <div class="container noticepage"> 
  
-<form action="./update" method="post" enctype="multipart/form-data">
-
-<input type="hidden" name="nno" value="<%=updateNotice.getNno() %>">
-
-
-<input type="checkbox" id="ntop" name="ntop" value="1">
-<label for="ntop">이 게시물을 상단에 고정</label>
-
-<table class="table table-bordered">
-<tr> 
-	<td class="info">분류</td>
-	<td><input type="text" name="ncategory" id="ncategory" />
-	<select id="selectoption" >
-		<option value="">선택하세요</option>
-		<option value="공지">공지</option>
-		<option value="이벤트">이벤트</option>
-	</select>
-	</td> 
-</tr>
-<tr> <td class="info">제목</td><td><input type="text" name="ntitle" style="width:100%" value="<%=updateNotice.getNtitle() %>"></td> </tr>
-<tr> <td class="info" colspan="2">본문</td></tr>
-<tr> <td colspan="2"><textarea id="ncontent" name="ncontent" style="width:100%"><%=updateNotice.getNcontent() %></textarea></td></tr>
-</table>
-
-<!-- 첨부파일 -->
-
-<div>
-
-<div id="beforeFile">
-	<%	if( nFile != null ) { %>
-	<a href="<%=request.getContextPath() %>/upload/<%=nFile.getNfilestoredname() %>"
-	 download="<%=nFile.getNfileoriginname() %>">
-		<%=nFile.getNfileoriginname() %>
-	</a>
-	<span id="delFile" style="color: red; font-weight: bold; cursor: pointer;">X</span>
-	<img class="img-responsive"  alt="" src="<%=request.getContextPath() %>/upload/<%=nFile.getNfilestoredname() %>" width="200px">
+	<h1>글수정</h1>
+	<hr>
 	
-	<%	} %>
-</div>
-
-<div id="afterFile">
-	새 첨부파일 <input type="file" name="file">
-</div>
-
-</div>
-
-</form>
- 
- 
-<div class="text-center">
-	<button id="btnUpdate" class="btn btn-primary">수정</button>
-	<button id="btnCancel" class="btn btn-danger">취소</button>
-</div>
+	<form action="./update" method="post" enctype="multipart/form-data">
+	
+		<input type="hidden" name="nno" value="<%=updateNotice.getNno() %>">
+	
+		<input type="checkbox" id="ntop" name="ntop" value="1">
+		<label for="ntop"> 이 게시물을 상단에 고정</label>
+	
+		<table class="table">
+			<tr> 
+				<td class="col-xs-3">
+					<select class="form-control text-center" name="ncategory"  id="ncategory" >
+						<option><%=updateNotice.getNcategory() %></option>
+						<option>
+						<% String str = String.valueOf(updateNotice.getNcategory()); %>
+						<% if( str.equals("공지") ) {%>
+							이벤트
+						<% } else {%>
+							공지
+						<% } %>
+						</option>
+					</select>
+				</td> 
+				<td><input class="form-control required " type="text" name="ntitle" style="width:100%" value="<%=updateNotice.getNtitle() %>" ></td>
+			</tr>
+			<tr> <td colspan="2" style="background-color:#f8f3e8">본문</td></tr>
+			<tr> <td colspan="2"><textarea id="ncontent" name="ncontent"  style="width:100%"><%=updateNotice.getNcontent() %></textarea></td></tr>
+		</table>
+	
+		<!-- 첨부파일 -->
+	
+		<div>
+			<div id="beforeFile">
+				<%	if( nFile != null ) { %>
+					<a href="<%=request.getContextPath() %>/upload/<%=nFile.getNfilestoredname() %>"
+					 download="<%=nFile.getNfileoriginname() %>">
+						<%=nFile.getNfileoriginname() %>
+					</a>
+					<span id="delFile" style="color: red; font-weight: bold; cursor: pointer;">X</span>
+					<img class="img-responsive"  alt="" src="<%=request.getContextPath() %>/upload/<%=nFile.getNfilestoredname() %>" width="200px">
+				<%	} %>
+			</div>
+			
+			<div id="afterFile">
+				새 첨부파일 <input type="file" name="file">
+			</div>
+		</div>
+	
+	</form>
+	 
+	 
+	<div class="text-right">
+		<button id="btnUpdate" class="btn" style="background-color:#fad703">수정</button>
+		<button id="btnCancel" class="btn" style="background-color:#e5e3e3">취소</button>
+	</div>
 
 </div>
 

@@ -203,7 +203,7 @@ $(document).ready(function() {
 <h1 style="text-align: center;">비밀번호 재설정</h1>
 <hr>
 
-<form action="/pw/update" method="post" class="form-horizontal">
+<form action="/update/pw" method="post" class="form-horizontal">
 
 	<div class="form-group">
 		<label for="userpw" class="col-xs-2 col-xs-offset-2 control-label">새 비밀번호</label>

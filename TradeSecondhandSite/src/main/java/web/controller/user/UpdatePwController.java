@@ -36,7 +36,7 @@ public class UpdatePwController extends HttpServlet {
 		updateService.updatePw(user);
 		
 		// 로그인 페이지로 리다이렉트
-		resp.sendRedirect("/login");
+		req.getRequestDispatcher("/WEB-INF/views/user/updatePwSuccess.jsp").forward(req, resp);
 		
 	}
 	

@@ -64,6 +64,7 @@ public class LoginDaoImpl implements LoginDao {
 			while( rs.next() ) {
 				result = new User();
 				
+				result.setUserno( rs.getInt("userno") );
 				result.setUserid( rs.getString("userid") );
 				result.setUserpw( rs.getString("userpw") );
 				result.setUsername( rs.getString("username") );

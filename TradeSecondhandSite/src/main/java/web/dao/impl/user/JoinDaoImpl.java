@@ -15,6 +15,7 @@ public class JoinDaoImpl implements JoinDao {
 	private PreparedStatement ps;
 	private ResultSet rs;
 	
+	
 	@Override
 	public int insert(Connection conn, User user) {
 		
@@ -108,6 +109,66 @@ public class JoinDaoImpl implements JoinDao {
 		}
 		
 		return res;
+	}
+	
+	@Override
+	public int checkCntUserByUserid(Connection conn, User user) {
+		
+		String sql = "";
+		sql += "SELECT count(*) cnt FROM tuser";
+		sql += " WHERE userid = ?";
+		
+		int cnt = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, user.getUserid());
+			
+			rs = ps.executeQuery();
+			
+			while( rs.next() ) {
+				cnt = rs.getInt("cnt");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return cnt;
+	}
+	
+	@Override
+	public int checkCntUserByUsernick(Connection conn, User user) {
+		
+		String sql = "";
+		sql += "SELECT count(*) cnt FROM tuser";
+		sql += " WHERE usernick = ?";
+		
+		int cnt = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, user.getUsernick());
+			
+			rs = ps.executeQuery();
+			
+			while( rs.next() ) {
+				cnt = rs.getInt("cnt");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return cnt;
 	}
 	
 }

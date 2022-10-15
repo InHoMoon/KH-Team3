@@ -57,14 +57,14 @@ $(document).ready(function() {
 <br><br>
 
 <div>
-
 <hr>
-	
+	<!-- 최신 글목록 영역 (왼)  -->
 	<div>
 		<div class="col-md-6">
-		<span>최신글</span>
-		<button class="btn btn-link" ><a href="./trade/list">더보기</a></button>
-		
+			<div>
+			<span style="font-size: 25px;">최신글 </span>
+			<a href="./trade/list">더보기</a>
+			</div>
 		<table class="table table-striped table-hover table-condensed">
 		<tr>
 			<th style="width: 10%">NO</th>
@@ -89,9 +89,20 @@ $(document).ready(function() {
 		<% } %>
 		</table>
 		
+	<!-- 최신 글목록 영역 (왼)  -->		
 		</div class="col-md-4">
-		<div>사이트 설명</div>
-	</div>
+			
+		    	<div class="col-md-6">
+		     		<img  class="img-responsive" src="/resources/image/sitepic.jpg" alt=""  >
+			    <div>
+			        <h3>마중마켓</h3>
+			       	<p>마중마켓은. 마음에 쏙 드는 중고거래를 제공하는 온라인 중고거래 플랫폼입니다.
+			       	마중마켓에서 다양한 중고거래 상품을 만나보실 수 있습니다.</p>
+			    </div>
+		   		</div>
+
+
+		</div>
 
 
 </div>

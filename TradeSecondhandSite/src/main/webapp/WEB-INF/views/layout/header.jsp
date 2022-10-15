@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> : : : 사이트 이름 : : :</title>
+<title> 마음에 쏙 중고거래! 마중 마켓</title>
 
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -18,6 +18,20 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap');
+
+@font-face {
+    font-family: 'PyeongChangPeace-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PyeongChang-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChang-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 </style>
 
 <style type="text/css">
@@ -25,6 +39,10 @@
 #menubox {
 
  padding : 20px 30px
+}
+
+.navbar-brand {
+ font-family: 'PyeongChangPeace-Bold';
 }
 
 .navbar-nav > li {
@@ -59,7 +77,7 @@ font-size: 17px;
 
  #body {
  
- padding-top: 120px;
+ padding-top: 130px;
  
  font-family: 'Noto Sans KR', sans-serif;
  
@@ -73,17 +91,21 @@ font-size: 17px;
 
 <nav class="navbar navbar-default navbar-fixed-top"  style="background: #104138;color : white;">
   <div class="container-fluid"  id="menubox">
+    
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+    <div class="navbar-header" >
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/" style="color: #fad703">사이트 로고</a>
+      <a class="navbar-brand" id-="navbar-brand" href="/" style=" color : #fad703; ">
+      <p id="brandname" style="font-size: 40px; margin-bottom: 8px; margin-top: -5px;">마중마켓</p>
+      <p id="brandsub" style="font-size: 15px; font-family: 'PyeongChang-Bold';">마음에 쏙 드는 중고거래</p>
+      </a>
     </div>
-
+	
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav" id="navbar-nav">
@@ -108,8 +130,6 @@ font-size: 17px;
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>  
-
-
 
 
 

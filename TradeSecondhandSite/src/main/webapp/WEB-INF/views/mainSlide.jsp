@@ -21,22 +21,20 @@
     <div class="carousel-inner">
 
       <div class="item active" data-interval="3000">
-        <img src="./resources/image/slide01.jpg" alt="slide01" style="width:100%;">
+        <img src="./resources/image/slide01.png" alt="slide01" style="width:100%;">
         <div class="carousel-caption">
         </div>
       </div>
 
       <div class="item">
-        <img src="./resources/image/slide02.jpg" alt="slide02" style="width:100%;">
+        <img src="./resources/image/slide02.png" alt="slide02" style="width:100%;">
         <div class="carousel-caption">
         </div>
       </div>
     
       <div class="item">
-        <img src="./resources/image/slide03.jpg" alt="slide03" style="width:100%;">
+        <img src="./resources/image/slide03.png" alt="slide03" style="width:100%;">
         <div class="carousel-caption">
-          <h3>New York</h3>
-          <p>We love the Big Apple!</p>
         </div>
       </div>
   

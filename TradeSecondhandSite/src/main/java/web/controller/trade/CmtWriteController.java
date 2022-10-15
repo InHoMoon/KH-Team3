@@ -1,4 +1,4 @@
-package web.controller.trade;
+package web .controller.trade;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ public class CmtWriteController extends HttpServlet {
 		
 		tradeService.writeCmt(req);
 		
-		resp.sendRedirect("/trade/list");
+		resp.sendRedirect("/trade/view?tradeno="+req.getParameter("tradeno"));
 		
 		
 	}

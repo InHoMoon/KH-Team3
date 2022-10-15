@@ -151,4 +151,20 @@ public interface TradeDao {
 	 */
 	public int insertCmt(Connection conn, TradeCmt tradeCmt);
 
+	/**
+	 * 댓글 삭제
+	 * @param conn
+	 * @param req
+	 * @return
+	 */
+	public int deleteCmt(Connection conn, HttpServletRequest req);
+
+	/**
+	 * 댓글 번호로 게시물 번호 조회하기
+	 * @param conn
+	 * @param req
+	 * @return
+	 */
+	public int selectTradenoByCmtno(Connection conn, HttpServletRequest req);
+
 }

@@ -517,6 +517,29 @@ public class TradeServiceImpl implements TradeService {
 		
 	}
 
+	@Override
+	public void deleteCmt(HttpServletRequest req) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		if(tradeDao.deleteCmt(conn, req) >0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		
+		
+	}
+
+	@Override
+	public int getTradenoByCmtno(HttpServletRequest req) {
+		
+		
+		//댓글 번호로 게시물 번호 가저오기
+		return tradeDao.selectTradenoByCmtno(JDBCTemplate.getConnection(), req);
+	}
+
 
 
 

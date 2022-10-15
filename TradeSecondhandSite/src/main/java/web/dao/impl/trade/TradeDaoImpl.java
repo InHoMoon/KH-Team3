@@ -660,5 +660,63 @@ public class TradeDaoImpl implements TradeDao {
 		return res;
 	}
 
+	@Override
+	public int deleteCmt(Connection conn, HttpServletRequest req) {
+		
+		String sql="";
+		sql+="DELETE tradecmt";
+		sql+=" WHERE cmtno= ?";
+		
+		int res = 0;
+		
+		try {
+			ps=conn.prepareStatement(sql);
+			
+			ps.setInt(1, Integer.parseInt(req.getParameter("cmtno")));
+			
+			res=ps.executeUpdate();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		
+		return res;
+	}
+
+	@Override
+	public int selectTradenoByCmtno(Connection conn, HttpServletRequest req) {
+
+
+		String sql= "";
+		sql+="SELECT tradeno FROM tradecmt";
+		sql+=" WHERE cmtno = ?";
+		
+		int tradeno=0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, Integer.parseInt(req.getParameter("cmtno")) );
+			
+			rs = ps.executeQuery();
+			
+			while( rs.next() ){
+				tradeno = rs.getInt("tradeno");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+			
+		}
+		
+		
+		return tradeno;
+	}
+
 
 }

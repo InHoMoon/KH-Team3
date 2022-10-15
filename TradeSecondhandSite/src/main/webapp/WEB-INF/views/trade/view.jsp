@@ -33,8 +33,8 @@ $(document).ready(function() {
 	})
 	
 	//관심버튼
-	$("#btnCalt").click(function() {
-		$(location).attr('href', './cart?userid=<%=session.getAttribute("userid") %>')
+	$("#btnWhish").click(function() {
+		$(location).attr('href', './Whish?userid=<%=session.getAttribute("userid") %>')
 	})
 	
 	//작성버튼
@@ -42,6 +42,20 @@ $(document).ready(function() {
 		
 		$("form").submit();
 	})
+	
+	//댓글 삭제버튼
+	<%	for(int i=0; i<cmtList.size(); i++) { %>
+	$("#btnCmtDel<%=cmtList.get(i).getCmtno() %>").click(function() {
+		$(location).attr('href', './cmtdel?cmtno=<%=cmtList.get(i).getCmtno() %>')
+	})
+	<%} %>
+	
+// 	//댓글 수정버튼
+<%-- 	<%	for(int i=0; i<cmtList.size(); i++) { %> --%>
+<%-- 	$("#btnCmtUp<%=cmtList.get(i).getCmtno() %>").click(function() { --%>
+<%-- 		$(location).attr('href', './cmtup?cmtno=<%=cmtList.get(i).getCmtno() %>') --%>
+// 	})
+<%-- 	<%} %> --%>
 	
 	
 
@@ -108,7 +122,7 @@ $(document).ready(function() {
 <%if(session.getAttribute("login") != null && session.getAttribute("userid").equals(viewTrade.getUserid()) ) {%>
 	<button id="btnUpdate" class="btn btn-info">수정</button>
 	<button id="btnDelete" class="btn btn-danger">삭제</button>
-	<button id="btnCart" class="btn btn-warning">관심</button>
+	<button id="btnWish" class="btn btn-warning">관심</button>
 <%} %>
 </div>
 
@@ -124,9 +138,14 @@ $(document).ready(function() {
 		<th style="width: 10%;">ID : <%= cmtList.get(i).getUserid() %>
 		<th style="width: 65%;"><%= cmtList.get(i).getCmtContent() %></th>
 		<th>작성일 : <%= cmtList.get(i).getCmtDate() %>
+		<!-- 게시물 작성자거나 댓글 작성자 아이디일 경우 삭제 버튼 -->
+		<% if(cmtList.get(i).getUserid().equals(session.getAttribute("userid")) || viewTrade.getUserid().equals(session.getAttribute("userid"))) {%>
+			<button id="btnCmtDel<%=cmtList.get(i).getCmtno() %>" class="btn btn-danger">삭제</button>
+<%-- 			<button id="btnCmtUp<%=cmtList.get(i).getCmtno() %>" class="btn btn-info">수정</button> --%>
 		<%} %>
-	</tr>
 	<%} %>
+	</tr>
+<%} %>
 </table>
 
 
@@ -135,6 +154,7 @@ $(document).ready(function() {
 	<input type="hidden" name="userid" value="<%=session.getAttribute("userid") %>">
 	<input type="hidden" name="tradeno" value="<%=viewTrade.getTradeno() %>">
 	
+        	
 	<table class="table">
 		<tr>
 			<th style="text-align:left; width:90%;">
@@ -142,10 +162,13 @@ $(document).ready(function() {
         		<textarea class="form-control" rows="3" id="cmt" name="cmt" placeholder="댓글을 입력하세요"></textarea>
         	</th>
 			<th class="text-center" style="line-height:20px;">
+			<% if(session.getAttribute("login") != null){ %>
 				<button id="btnWrite" class="btn btn-primary" style="height: 100px;">작성</button>
+			<%} %>
 			</th>
 		</tr>
 	</table>
+
 </form>
 
 <%@ include file="../layout/footer.jsp" %>

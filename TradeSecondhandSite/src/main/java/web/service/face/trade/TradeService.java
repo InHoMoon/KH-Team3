@@ -96,6 +96,20 @@ public interface TradeService {
 	 * @param req
 	 */
 	public void writeCmt(HttpServletRequest req);
+	
+	
+	/**
+	 * 댓글 삭제
+	 * @param req
+	 */
+	public void deleteCmt(HttpServletRequest req);
+
+	/**
+	 * 댓글 번호로 게시물 번호 가저오기
+	 * @param req
+	 * @return
+	 */
+	public int getTradenoByCmtno(HttpServletRequest req);
 
 
 

@@ -10,7 +10,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".updateInfo").click(function() {
-		$(location).attr('href', '/update/user')
+		$(location).attr('href', '/update/user?userno=<%=session.getAttribute("userno") %>')
 	})
 })
 

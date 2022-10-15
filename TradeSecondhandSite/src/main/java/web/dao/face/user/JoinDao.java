@@ -33,4 +33,22 @@ public interface JoinDao {
 	 */
 	public int insertFile(Connection conn, Ufile ufile);
 
+	/**
+	 * 아이디 중복체크 확인
+	 * 
+	 * @param conn - DB 연결 객체
+	 * @param user - 사용자가 입력한 userid
+	 * @return int - 0: 중복 아이디 없음, 1: 중복 아이디 있음
+	 */
+	public int checkCntUserByUserid(Connection conn, User user);
+
+	/**
+	 * 닉네임 중복체크 확인
+	 * 
+	 * @param conn - DB 연결 객체
+	 * @param user - 사용자가 입력한 usernick
+	 * @return int - 0: 중복 아이디 없음, 1: 중복 아이디 있음
+	 */
+	public int checkCntUserByUsernick(Connection conn, User user);
+
 }

@@ -15,6 +15,7 @@ $(document).ready(function() {
 	$("#userid").blur(function() {
 		if( $(this).val() == "" ) {
 			$("#required_id").css("display", "")
+			$("#Check_IdFail").css("display", "none")
 		} else {
 			$("#required_id").css("display", "none")
 		}
@@ -88,7 +89,7 @@ $(document).ready(function() {
 			$("#required_addr").css("display", "none")
 		}
 	})
-
+	
 })
 </script>
 
@@ -127,31 +128,92 @@ $(document).ready(function() {
 </script>
 
 
-<!-- 아이디, 닉네임 중복확인 ajax   --- 수정 필요 -->
+<!-- 아이디 중복확인 ajax -->
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/httpRequest.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#btnCheckId").click(function() {
-		
-		//새창을 열어서 페이지를 오픈 후 -> 회원아이디정보를 가지고 중복체크
-		//1. 아이디가 없으면 알림창과 진행x
-		if( $("#userid").val() == "" || $("#userid").val() == "" < 0) {
-			alert("아이디를 입력해주세요")
-			$("#userid").focus();
+
+		if( $("#userid").val() == "" ) {
+			alert("아이디를 입력하세요");
+			$("#userid").focus()
+			
 		} else {
-			//2. 회원정보아이디를 가지고 있는 지 체크하려면 DB에 접근해야한다.
-			//자바스크립트로 어떻게 DB에 접근할까? => 파라미터로 id값을 가져가서 jsp페이지에서 진행하면 된다.
-			window.open("/check/id?userid="+$("#userid").val(),"","width=500, height=300");
+			console.log("#btnCheckId click")
+			
+			var param = "userid=" + $("#userid").val()
+			
+			// AJAX 요청 보내기
+			sendRequest("POST", "/check/id", param , callback)	
+			
 		}
 		
 	})
 })
+
+// AJAX 응답 처리 콜백
+function callback() {
+	if(httpRequest.readyState ==4) {
+		if(httpRequest.status == 200) {
+			console.log("정상적인 AJAX 요청/응답 완료")
+			
+			// 결과 처리 함수 호출하기
+			printData();
+			
+		} else {
+			console.log("AJAX 요청/응답 실패")			
+		}
+	}
+}
+
+// 응답 결과를 처리하는 함수
+function printData() {
+	console.log("printData called")
+	
+	// AJAX 응답 데이터
+	var respText = httpRequest.responseText;
+	console.log("--- respText ---")
+	console.log( respText )
+	
+	// 언마샬링, JSON Text -> JS Data
+	var jsData = JSON.parse( respText )
+	console.log("--- jsData ---")
+	console.log( jsData )
+	
+	// checkId boolean 값 이용하여 중복확인
+	//	-> true : 사용가능, false : 사용불가
+	
+	if( jsData.checkId == true ) {
+		
+		console.log( "true" )
+		
+		$("#userid").attr("readonly", true)
+		$("#Check_IdOk").css("display", "")
+		$("#Check_IdFail").css("display", "none")
+		
+		$("#btnCheckId").css("display", "none")
+		$("#btnChangeId").css("display", "")
+		
+		
+	} else {
+		
+		console.log( "false" )
+		
+		$("#userid").val("");
+		$("#userid").attr("readonly", false)
+		$("#Check_IdOk").css("display", "none")
+		$("#Check_IdFail").css("display", "")
+		
+		$("#btnCheckId").css("display", "")
+		$("#btnChangeId").css("display", "none")
+		
+		$("#userid").focus()
+		
+	}
+	
+}
 </script>
-
-
-
-
-
-
 
 
 <!-- 비밀번호 유효성 검사, 비밀번호 확인 -->
@@ -278,7 +340,7 @@ function DaumPostcode() {
 </script>
 
 
-<!-- 프로필 사진 -->
+<!-- 프로필 사진 이미지 확인, 썸네일 출력-->
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -399,6 +461,19 @@ $(document).ready(function() {
 	$("#btnCancel").click(function() {
 		$(location).attr('href', '/') // 메인으로 가기
 	})
+
+	// 취소 버튼
+	$("#btnChangeId").click(function() {
+		$("#userid").val("")
+		$("#userid").attr("readonly", false)
+		$("#Check_IdOk").css("display", "none")
+		
+		$("#btnCheckId").css("display", "")
+		$("#btnChangeId").css("display", "none")
+		
+		$("#userid").focus()
+		
+	})
 	
 })
 </script>
@@ -408,18 +483,20 @@ $(document).ready(function() {
 
 <form action="/join" method="post" enctype="multipart/form-data" class="form-horizontal">
 
-	<!-- 중복확인 구현 필요 -->
 	<div class="form-group">
 		<label for="userid" class="col-xs-2 col-xs-offset-2 control-label">아이디</label>
 		<div class="col-xs-4">
 			<input type="text" id="userid" name="userid" class="form-control" engnum>
-			<input type="hidden" name="decide_id" id="decide_id">
 			<span class="required_box" id="required_id" style="display: none; color: red;">필수 입력 사항입니다</span>
+
+			<span class="Check_box" id="Check_IdOk" style="display: none; color: green;">사용가능한 아이디입니다</span>
+			<span class="Check_box" id="Check_IdFail" style="display: none; color: red;">이미 등록된 아이디입니다</span>
+
 		</div>
 		<div class="col-xs-2">
 			<button type="button" class="btn btn-default" id="btnCheckId">중복확인</button>
+			<button type="button" class="btn btn-default" id="btnChangeId" style="display: none;">아이디변경</button>
 		</div>
-		<div id="result"></div>
 	</div>
 
 	<div class="form-group">
@@ -510,14 +587,10 @@ $(document).ready(function() {
 		</div>
 	</div>
 
-	<!-- 중복확인 구현 필요 -->
 	<div class="form-group">
 		<label for="usernick" class="col-xs-2 col-xs-offset-2 control-label">닉네임</label>
 		<div class="col-xs-4">
 			<input type="text" id="usernick" name="usernick" class="form-control" placeholder="선택입력">
-		</div>
-		<div class="col-xs-2">
-			<button type="button" class="btn btn-default" id="btnCheckNick">중복확인</button>
 		</div>
 	</div>
 	

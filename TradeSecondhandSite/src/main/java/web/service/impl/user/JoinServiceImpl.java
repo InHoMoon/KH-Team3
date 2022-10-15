@@ -205,4 +205,50 @@ public class JoinServiceImpl implements JoinService {
 		
 	}
 
+	@Override
+	public User getCheckId(HttpServletRequest req) {
+		
+		User user = new User();
+		
+		user.setUserid( req.getParameter("userid") );
+		
+		return user;
+	}
+	
+	@Override
+	public boolean checkId(User user) {
+		
+		// 아이디 중복체크 실패
+		if( joinDao.checkCntUserByUserid(JDBCTemplate.getConnection(), user) > 0 ) {
+			return false;
+		}
+		
+		// 아이디 중복체크 성공
+		return true;
+		
+	}
+	
+	@Override
+	public User getCheckNick(HttpServletRequest req) {
+		
+		User user = new User();
+		
+		user.setUsernick( req.getParameter("usernick") );
+		
+		return user;
+	}
+	
+	@Override
+	public boolean checkNick(User user) {
+		
+		// 닉네임 중복체크 실패
+		if( joinDao.checkCntUserByUsernick(JDBCTemplate.getConnection(), user) > 0 ) {
+			return false;
+		}
+		
+		// 닉네임 중복체크 성공
+		return true;
+		
+	}
+	
 }

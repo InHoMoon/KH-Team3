@@ -1,11 +1,12 @@
+<%@page import="web.dto.Ufile"%>
+<%@page import="web.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp" %>
 
-<!-- ajax 쿼리 설치 ---수정 필요 -->
-<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/httpRequest.js"></script>
-
+<% User updateUser = (User) request.getAttribute("updateUser"); %>
+<% Ufile ufile = (Ufile) request.getAttribute("ufile"); %>
 
 <!-- 다음 주소 검색 js 설치 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -74,7 +75,7 @@ $(document).ready(function() {
 			$("#required_addr").css("display", "none")
 		}
 	})
-
+	
 })
 </script>
 
@@ -111,28 +112,6 @@ $(document).ready(function() {
 })
 
 </script>
-
-
-<!-- 아이디, 닉네임 중복확인 ajax   --- 수정 필요 -->
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#btnCheckId").click(function() {
-		
-		//새창을 열어서 페이지를 오픈 후 -> 회원아이디정보를 가지고 중복체크
-		//1. 아이디가 없으면 알림창과 진행x
-		if( $("#userid").val() == "" || $("#userid").val() == "" < 0) {
-			alert("아이디를 입력해주세요")
-			$("#userid").focus();
-		} else {
-			//2. 회원정보아이디를 가지고 있는 지 체크하려면 DB에 접근해야한다.
-			//자바스크립트로 어떻게 DB에 접근할까? => 파라미터로 id값을 가져가서 jsp페이지에서 진행하면 된다.
-			window.open("/check/id?userid="+$("#userid").val(),"","width=500, height=300");
-		}
-		
-	})
-})
-</script>
-
 
 
 <!-- 비밀번호 유효성 검사, 비밀번호 확인 -->
@@ -263,75 +242,32 @@ function DaumPostcode() {
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("#usergender").val('<%=session.getAttribute("usergender") %>').prop("selected",true);
+	$("#usergender").val("<%=updateUser.getUsergender() %>").prop("selected",true);
 	
 })
 </script>
 
 
-<!-- 프로필 사진    ---- 수정 필요 -->
+<!-- 프로필 사진 유무 확인 -->
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("#upload").change(function( e ) {
-		console.log("#upload change")
-		//---------------------------------------------------
-		
-		console.log("--- 이벤트 객체 ---")
-		console.log( e )
-		
-		console.log("--- 이벤트 발생 DOM객체 ---")
-		console.log( e.target )
-		
-		console.log("--- 선택된 파일들 ---")
-		console.log( e.target.files )
-		
-		console.log("--- this ---")
-		console.log( this )
-		
-		console.log("--- this.files ---")
-		console.log( this.files )
-		
-		//---------------------------------------------------
-		
-		var files = e.target.files;
-		
-		// 이미지만 처리할 수 있도록 적용
-		if( !files[0].type.includes( "image" ) ) {
-			alert("이미지가 아닙니다")
-			
-			// 선택한 파일 해제하기
-			e.target.value = null;
-			
-			// 이벤트 처리 중단시키기
-			return false;
-			
-		}
-		
-		//---------------------------------------------------
-		
-		// FileReader 객체 생성
-		var reader = new FileReader();
-		
-		// FileReader가 파일의 내용을 전부 읽어들여
-		// 메모리에 로드 되었을 때 발생하는 이벤트 처리
-		reader.onload = function( ev ) {
-			console.log( ev.target.result )
-			
-			// 이미지를 새롭게 선택할 때마다 #preview의 이전 이미지를 지우고
-			// 한 장만 유지되도록 한다
-			$("#preview").html(
-					$("<img>").attr({
-						"src": ev.target.result
-						, "width": 300
-						, "height": 300
-					})
-			)
-		}
-
-		// 선택된 파일을 DataURL 형식으로 읽어들이기
-		reader.readAsDataURL( files[0] );
-			
+	//파일이 없을 경우
+	if(<%=ufile != null %>) {
+		$("#beforeFile").show();
+		$("#afterFile").hide();
+	}
+	
+	//파일이 있을 경우
+	if(<%=ufile == null %>) {
+		$("#beforeFile").hide();
+		$("#afterFile").show();
+	}
+	
+	//파일 삭제 버튼(X) 처리
+	$("#delFile").click(function() {
+		$("#beforeFile").toggle();
+		$("#afterFile").toggle();
 	})
 
 })
@@ -389,25 +325,12 @@ $(document).ready(function() {
 <h1 style="text-align: center;">회원정보 수정</h1>
 <hr>
 
-<%-- 비로그인 상태 --%>
-<%	if( session.getAttribute("login") == null ) { %>
-<h3 style="color: red; text-align: center;">로그인이 필요합니다</h3>
-
-<div class="text-center">
-	<button class="btn btn-default" onclick="location.href='/login'">로그인</button>
-	<button class="btn btn-default" onclick="location.href='/join'">회원가입</button>
-</div>
-<%	} %>
-
-
-<%-- 로그인 상태 --%>
-<%	if( session.getAttribute("login") != null && (boolean) session.getAttribute("login") ) { %>
 <form action="/update/user" method="post" class="form-horizontal">
 
 	<div class="form-group">
 		<label for="userid" class="col-xs-2 col-xs-offset-2 control-label">아이디</label>
 		<div class="col-xs-4">
-			<input type="text" id="userid" name="userid" class="form-control" value="<%=session.getAttribute("userid") %>" readonly>
+			<input type="text" id="userid" name="userid" class="form-control" value="<%=updateUser.getUserid() %>" readonly>
 		</div>
 	</div>
 
@@ -441,14 +364,14 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="username" class="col-xs-2 col-xs-offset-2 control-label">이름</label>
 		<div class="col-xs-4">
-			<input type="text" id="username" name="username" class="form-control" value="<%=session.getAttribute("username") %>" readonly>
+			<input type="text" id="username" name="username" class="form-control" value="<%=updateUser.getUsername() %>" readonly>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="useremail" class="col-xs-2 col-xs-offset-2 control-label">이메일</label>
 		<div class="col-xs-4">
-			<input type="email" id="useremail" name="useremail" class="form-control" value="<%=session.getAttribute("useremail") %>" >
+			<input type="email" id="useremail" name="useremail" class="form-control" value="<%=updateUser.getUseremail() %>">
 			<span class="required_box" id="required_email" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>	
 	</div>
@@ -456,7 +379,7 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="userphone" class="col-xs-2 col-xs-offset-2 control-label">전화번호</label>
 		<div class="col-xs-4">
-			<input type="text" id="userphone" name="userphone" class="form-control" value="<%=session.getAttribute("userphone") %>" maxlength="13" placeholder="'-' 제외하고 입력">
+			<input type="text" id="userphone" name="userphone" class="form-control" value="<%=updateUser.getUserphone() %>" maxlength="13" placeholder="'-' 제외하고 입력">
 			<span class="required_box" id="required_phone" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 	</div>
@@ -464,18 +387,18 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="useraddr1" class="col-xs-2 col-xs-offset-2 control-label">주소</label>
 		<div class="col-xs-4">
-			<input type="text" id="useraddr1" name="useraddr1" class="form-control" value="<%=session.getAttribute("useraddr1") %>" placeholder="우편번호">
+			<input type="text" id="useraddr1" name="useraddr1" class="form-control" value="<%=updateUser.getUseraddr1() %>" placeholder="우편번호">
 		</div>
 		<div class="col-xs-4">
 			<input type="button" class="btn btn-default" onclick="DaumPostcode()" value="우편번호 찾기">
 		</div>
 		<div class="clearfix"></div>
 		<div class="col-xs-4 col-xs-offset-4">
-			<input type="text" id="useraddr2" name="useraddr2" class="form-control" value="<%=session.getAttribute("useraddr2") %>" placeholder="주소">
+			<input type="text" id="useraddr2" name="useraddr2" class="form-control" value="<%=updateUser.getUseraddr2() %>" placeholder="주소">
 		</div>
 		<div class="clearfix"></div>
 		<div class="col-xs-4 col-xs-offset-4">
-			<input type="text" id="useraddr3" name="useraddr3" class="form-control" value="<%=session.getAttribute("useraddr3") %>" placeholder="상세주소 (선택입력)">
+			<input type="text" id="useraddr3" name="useraddr3" class="form-control" value="<%=updateUser.getUseraddr3() %>" placeholder="상세주소 (선택입력)">
 			<span class="required_box" id="required_addr" style="display: none; color: red;">필수 입력 사항입니다</span>
 		</div>
 	</div>
@@ -494,26 +417,34 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="userbirth" class="col-xs-2 col-xs-offset-2 control-label">생년월일</label>
 		<div class="col-xs-4">
-			<input type="text" id="userbirth" name="userbirth" class="form-control" value="<%=session.getAttribute("userbirth") %>" maxlength="10" placeholder="선택입력 ('-' 제외하고 8자리 입력)  ex) 1995-01-01">
+			<input type="text" id="userbirth" name="userbirth" class="form-control" value="<%=updateUser.getUserbirth() %>" maxlength="10" placeholder="선택입력 ('-' 제외하고 8자리 입력)  ex) 1995-01-01">
 		</div>
 	</div>
 
-	<!-- 중복확인 구현 필요 -->
 	<div class="form-group">
 		<label for="usernick" class="col-xs-2 col-xs-offset-2 control-label">닉네임</label>
 		<div class="col-xs-4">
-			<input type="text" id="usernick" name="usernick" class="form-control" value="<%=session.getAttribute("usernick") %>" placeholder="선택입력">
-		</div>
-		<div class="col-xs-2">
-			<button type="button" class="btn btn-default" id="btnCheckNick">중복확인</button>
+			<input type="text" id="usernick" name="usernick" class="form-control" value="<%=updateUser.getUsernick() %>" placeholder="선택입력">
 		</div>
 	</div>
-	
-	<!-- 프로필 사진 등록 수정 필요 -->
-	<div class="form-group">
-		<label for="file" class="col-xs-2 col-xs-offset-2 control-label">프로필 사진</label>
-		<input type="file" name="file" id="upload">
-		<div id="preview"></div>
+
+	<!-- 첨부파일 -->
+	<div>
+		<div id="beforeFile">
+			<%	if( ufile != null ) { %>
+			<a href="<%=request.getContextPath() %>/upload/<%=ufile.getUfilestoredname() %>"
+			 download="<%=ufile.getUfileoriginname() %>">
+				<%=ufile.getUfileoriginname() %>
+			</a>
+			<span id="delFile" style="color: red; font-weight: bold; cursor: pointer;">X</span>
+			<img class="img-responsive"  alt="" src="<%=request.getContextPath() %>/upload/<%=ufile.getUfilestoredname() %>" width="200px">
+			
+			<%	} %>
+		</div>
+		
+		<div id="afterFile">
+			새 첨부파일 <input type="file" name="file">
+		</div>
 	</div>
 
 	<div class="text-center">
@@ -522,7 +453,5 @@ $(document).ready(function() {
 	</div>
 
 </form>
-
-<%	} %>
 
 <%@ include file="../layout/footer.jsp" %>

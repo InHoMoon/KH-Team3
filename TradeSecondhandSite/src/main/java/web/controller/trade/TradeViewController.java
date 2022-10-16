@@ -40,8 +40,13 @@ public class TradeViewController extends HttpServlet {
 		
 		//댓글 상세 조회
 		List<TradeCmt> cmtList = tradeService.viewCmt(tradeno);
-		
 		req.setAttribute("cmtList", cmtList);
+		
+		//관련상품 상세조회
+		List<Trade> relatedList = tradeService.viewRelated(tradeno);
+		req.setAttribute("relatedList", relatedList);
+		
+		
 		
 //		System.out.println(cmtList);
 		

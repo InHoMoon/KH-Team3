@@ -12,6 +12,8 @@
 
 <% List<TradeCmt> cmtList = (List) request.getAttribute("cmtList"); %>
 
+<% List<Trade> relatedList = (List) request.getAttribute("relatedList"); %>
+
 <%@ include file="../layout/header.jsp" %>
 
 <script type="text/javascript">
@@ -35,6 +37,15 @@ $(document).ready(function() {
 	//관심버튼
 	$("#btnWhish").click(function() {
 		$(location).attr('href', './Whish?userid=<%=session.getAttribute("userid") %>')
+	})
+	//이전버튼
+	$("#btnpre").click(function() {
+		$(location).attr('href', './view?tradeno=<%=viewTrade.getTradeno()+1 %>')
+	})
+	//다음버튼
+	$("#btnpost").click(function() {
+<%-- 		<% if(viewTrade.getTradeno()) %> --%>
+		$(location).attr('href', './view?tradeno=<%=viewTrade.getTradeno()-1 %>')
 	})
 	
 	//작성버튼
@@ -118,12 +129,15 @@ $(document).ready(function() {
 
 
 <div class="text-center">
+	<button id="btnpre" class="btn btn-primary pull-left">다음글</button>
+	
 	<button id="btnList" class="btn btn-primary">목록</button>
 <%if(session.getAttribute("login") != null && session.getAttribute("userid").equals(viewTrade.getUserid()) ) {%>
 	<button id="btnUpdate" class="btn btn-info">수정</button>
 	<button id="btnDelete" class="btn btn-danger">삭제</button>
 	<button id="btnWish" class="btn btn-warning">관심</button>
 <%} %>
+	<button id="btnpost" class="btn btn-primary pull-right">이전글</button>
 </div>
 
 <br>
@@ -170,6 +184,31 @@ $(document).ready(function() {
 	</table>
 
 </form>
+
+<div class="text-center" style="font-size: 30px; color: #104138;">관련상품</div>
+<table class="table text-center">
+	<tr class="thema">
+		<th class="text-center">NO</th>
+		<th class="text-center">제목</th>
+		<th class="text-center">판매상태</th>
+		<th class="text-center">제품상태</th>
+		<th class="text-center">가격</th>
+	</tr>
+		<% for(int i=0; i<relatedList.size(); i++){ %>
+	<tr>
+		<td><%=relatedList.get(i).getTradeno() %></td>
+		<td>
+			<a style="color: black;" href="./view?tradeno=<%=relatedList.get(i).getTradeno() %>">
+			<%=relatedList.get(i).getTitle() %>
+			</a>
+		</td>
+		<td><%=relatedList.get(i).getSaleState() %></td>
+		<td><%=relatedList.get(i).getProductState() %></td>
+		<td><%=relatedList.get(i).getPrice() %></td>	
+	</tr>
+		<%} %>
+
+</table>
 
 <%@ include file="../layout/footer.jsp" %>
 

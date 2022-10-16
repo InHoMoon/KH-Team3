@@ -111,6 +111,13 @@ public interface TradeService {
 	 */
 	public int getTradenoByCmtno(HttpServletRequest req);
 
+	/**
+	 * 관련 상품 상세정보 가저오기
+	 * @param tradeno
+	 * @return
+	 */
+	public List<Trade> viewRelated(Trade tradeno);
+
 
 
 

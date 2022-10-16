@@ -167,4 +167,21 @@ public interface TradeDao {
 	 */
 	public int selectTradenoByCmtno(Connection conn, HttpServletRequest req);
 
+	
+	/**
+	 * 게시물 번호로 카테고리 가저오기
+	 * @param conn
+	 * @param tradeno
+	 * @return
+	 */
+	public String selectCategoryByTradeno(Connection conn,Trade tradeno);
+
+	/**
+	 * 카테고리 번호로 관련상품 리스트 가저오기
+	 * @param conn
+	 * @param category
+	 * @return
+	 */
+	public List<Trade> selectListByCategory(Connection conn, String category);
+
 }

@@ -718,5 +718,95 @@ public class TradeDaoImpl implements TradeDao {
 		return tradeno;
 	}
 
+	@Override
+	public String selectCategoryByTradeno(Connection conn, Trade tradeno) {
+		
+		String sql="";
+		sql+="SELECT category FROM trade";
+		sql+=" WHERE tradeno = ?";
+		
+		String category=null;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, tradeno.getTradeno());
+			
+			rs=ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				category = rs.getString("category");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+			
+		}
+		
+		
+		return category;
+	}
+
+	@Override
+	public List<Trade> selectListByCategory(Connection conn, String category) {
+		
+		String sql = "";
+		sql += "SELECT * FROM (";
+		sql += "	SELECT rownum rnum, T.* FROM (";
+		sql += "		SELECT";
+		sql += "			tradeno, title, userid, sale_state";
+		sql += "			, hit, insert_date, product_state, price";
+		sql += "		FROM trade";
+		sql += "        WHERE category= ?";
+		sql += "		ORDER BY tradeno DESC";
+		sql += "	) T";
+		sql += " ) TRADE";
+		sql += " WHERE rnum BETWEEN 1 AND 5";
+		
+		List<Trade> relatedList = new ArrayList<>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, category);
+			
+			rs=ps.executeQuery();
+			
+			while (rs.next()) {
+				Trade t = new Trade(); // 결과값 저장 객체
+
+				// 결과값 처리
+				t.setTradeno(rs.getInt("tradeno"));
+				t.setTitle(rs.getString("title"));
+				t.setUserid(rs.getString("userid"));
+				t.setHit(rs.getInt("hit"));
+				t.setInsertDate(rs.getDate("insert_date"));
+				t.setProductState(rs.getString("product_state"));
+				t.setSaleState(rs.getString("sale_state"));
+				t.setPrice(rs.getInt("price"));
+
+				// 리스트에 결과값 저장
+				relatedList.add(t);
+
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+			
+		}
+		
+		
+		
+		return relatedList;
+	}
+
 
 }

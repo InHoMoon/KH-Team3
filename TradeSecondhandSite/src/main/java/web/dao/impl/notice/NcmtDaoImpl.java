@@ -17,21 +17,24 @@ public class NcmtDaoImpl implements NcmtDao {
 	private PreparedStatement ps = null; //SQL수행 객체
 	private ResultSet rs = null; //조회 결과 객체
 	
+	
+	
+	
 	@Override
-	public List<Ncomment> selectAllNcmt(Connection conn, String nno) {
+	public List<Ncomment> selectAllNcmt(Connection conn, int nno) {
 		
 		//SQL작성
 		String sql = "";
 		sql += "SELECT * FROM ncomment";
 		sql += " WHERE nno=?";
-		sql += " ORDER BY ncmtid";
+		sql += " ORDER BY ncmtid DESC";
 		
 		List<Ncomment> ncmtList = new ArrayList<>();
 		
 		try {
 			ps = conn.prepareStatement(sql);
 
-			ps.setString( 1, nno );
+			ps.setInt( 1, nno );
 			
 			//SQL 수행 및 결과 저장
 			rs = ps.executeQuery();
@@ -46,7 +49,7 @@ public class NcmtDaoImpl implements NcmtDao {
 				ncmt.setNcmtcontent(rs.getString("ncmtcontent"));
 				ncmt.setNcmtwritedate(rs.getDate("ncmtwritedate"));
 				ncmt.setNcmtupdatetime(rs.getDate("ncmtupdatetime"));
-				ncmt.setUserno(rs.getInt("userno"));
+				ncmt.setUserid(rs.getString("userid"));
 				
 				ncmtList.add(ncmt);
 				
@@ -63,13 +66,13 @@ public class NcmtDaoImpl implements NcmtDao {
 	}
 
 	@Override
-	public int insertNcmt(Connection conn, Ncomment ncomment) {
+	public int insertNcmt(Connection conn, Ncomment ncmt) {
 
-		System.out.println(ncomment);
+		System.out.println(ncmt);
 
 		String sql = "";
 		sql += "INSERT INTO ncomment";
-		sql += " ( ncmtid, nno, ncmtcontent, userno)";
+		sql += " ( ncmtid, nno, ncmtcontent, userid)";
 		sql += " VALUES (  ncomment_seq.nextval, ?, ?, ?)";
 		
 		int res = 0;
@@ -77,9 +80,9 @@ public class NcmtDaoImpl implements NcmtDao {
 		try {
 			ps = conn.prepareStatement(sql);
 			
-			ps.setInt(1, ncomment.getNno());
-			ps.setString(2, ncomment.getNcmtcontent());
-			ps.setInt(3, ncomment.getUserno());
+			ps.setInt(1, ncmt.getNno());
+			ps.setString(2, ncmt.getNcmtcontent());
+			ps.setString(3, ncmt.getUserid());
 			
 			res = ps.executeUpdate();
 			
@@ -91,14 +94,40 @@ public class NcmtDaoImpl implements NcmtDao {
 		return res;
 	}
 
+	//수정
 	@Override
-	public int updateNcmt(Connection conn, Ncomment ncomment) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int updateNcmt(Connection conn, Ncomment ncomment, int ncmtid) {
 
+
+		
+		String sql = "";
+		sql += "UPDATE ncomment";
+		sql += " SET";
+		sql += "	ncmtcontent= ?";
+		sql += "	WHERE ncmtid = ?";
+		
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, ncomment.getNcmtcontent());
+			ps.setInt(2, ncmtid);
+			
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(ps);
+		}
+		return res;
+	}
+	
+	
+	//삭제
 	@Override
-	public int deleteNcmt(Connection conn, Ncomment ncomment) {
+	public int deleteNcmt(Connection conn, int ncmtid) {
 		
 		String sql = "";
 		sql += "DELETE ncomment";
@@ -108,7 +137,7 @@ public class NcmtDaoImpl implements NcmtDao {
 
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, ncomment.getNcmtid());
+			ps.setInt(1, ncmtid);
 			
 			res = ps.executeUpdate();
 			

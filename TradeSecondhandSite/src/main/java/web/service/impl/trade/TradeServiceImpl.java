@@ -104,7 +104,7 @@ public class TradeServiceImpl implements TradeService {
 			JDBCTemplate.rollback(null);
 		}
 		
-		//게시글 번호 게시글 조회결과 반환
+		//게시글 번호로 게시글 조회결과 반환
 		return tradeDao.selectTradeByTradeNo(conn, tradeno);
 	}
 
@@ -538,6 +538,20 @@ public class TradeServiceImpl implements TradeService {
 		
 		//댓글 번호로 게시물 번호 가저오기
 		return tradeDao.selectTradenoByCmtno(JDBCTemplate.getConnection(), req);
+	}
+
+	@Override
+	public List<Trade> viewRelated(Trade tradeno) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//게시물 번호로 카테고리 가저오기
+		String category = tradeDao.selectCategoryByTradeno(conn,tradeno);
+		
+		//관련 상품 가저오기
+		List<Trade> relatedList = tradeDao.selectListByCategory(conn, category);
+		
+		return relatedList;
 	}
 
 

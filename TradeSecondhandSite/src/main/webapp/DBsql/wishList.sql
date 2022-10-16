@@ -33,3 +33,12 @@ DROP SEQUENCE wishlist_seq;
 SELECT * FROM wishlist;
 
 DELETE wishlist;
+
+-- trade테이블의 wishlist등록 속성값 복사
+INSERT INTO wishlist ( wishlistno, tradeno, title, userid, content, hit, insert_date, price, product_state, sale_state, category, userphone )
+SELECT wishlist_seq.nextval, tradeno, title, userid, content, hit, insert_date, price, product_state, sale_state, category, userphone FROM trade
+WHERE wish_ckeck = '1';
+
+INSERT INTO test1 ( testno, title , content ) VALUES ( test1_seq.nextval, '테스트 두번째', '테스트내용 두번째' );
+
+INSERT INTO test2 ( testno, title , content ) SELECT testno, title , content FROM test1 WHERE testno = 1;

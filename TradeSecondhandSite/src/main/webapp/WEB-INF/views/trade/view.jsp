@@ -195,17 +195,14 @@ $(document).ready(function() {
 
 </form>
 
-
-<table class="table">
-	<tr>
-		<th class="text-center" colspan="5">관련상품</th>
-	</tr>
-	<tr>
-		<th>NO</th>
-		<th>제목</th>
-		<th>판매상태</th>
-		<th>제품상태</th>
-		<th>가격</th>
+<div class="text-center" style="font-size: 30px; color: #104138;">관련상품</div>
+<table class="table text-center">
+	<tr class="thema">
+		<th class="text-center">NO</th>
+		<th class="text-center">제목</th>
+		<th class="text-center">판매상태</th>
+		<th class="text-center">제품상태</th>
+		<th class="text-center">가격</th>
 	</tr>
 		<% for(int i=0; i<relatedList.size(); i++){ %>
 	<tr>

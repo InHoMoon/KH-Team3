@@ -66,51 +66,56 @@ $(document).ready(function() {
 })
 </script>
 
+<style>
+	.thema {
+	background-color: #104138; 
+	color: white;
+	}
+</style>
 
 
 
-<h1>거래글 상세보기</h1>
+<h1><%=viewTrade.getTitle() %></h1>
 <hr>
 
 
 <table class="table table-bordered">
+	<tr>
+		<td class="thema text-center">NO</td>
+		<td ><%=viewTrade.getTradeno() %></td>
+		<td class="thema text-center">조회수</td>
+		<td><%=viewTrade.getHit() %></td>
+		<td class="thema text-center">작성일</td>
+		<td><%=viewTrade.getInsertDate() %></td>
+		<td class="thema text-center" colspan="4">대표 사진</td>
+	</tr>
 
-<tr>
-<td class="active text-center">제목</td><td colspan="3"><%=viewTrade.getTitle() %></td>
-<td class="active text-center">작성일</td><td><%=viewTrade.getInsertDate() %></td>
-</tr>
+	<tr>
+		<td class="thema text-center">카테고리</td>
+		<td colspan="3"><%=viewTrade.getCategory() %></td>
+		<td class="thema text-center">제품 상태</td>
+		<td ><%=viewTrade.getProductState() %></td>
+		<td rowspan="3"><img alt="이미지가 없습니다" style="width: 100%; height: 150px;"  src="<%=request.getContextPath() %>/upload/<%=tradeImg.getStoredName() %>"></td>
+	</tr>
 
-<tr>
-<td class="active text-center">카테고리</td><td colspan="3"><%=viewTrade.getCategory() %></td>
-<td class="active text-center">제품 상태</td><td ><%=viewTrade.getProductState() %></td>
-</tr>
+	<tr>
+		<td class="thema text-center">판매 상태</td>
+		<td colspan="3"><%=viewTrade.getSaleState() %></td>
+		<td class="thema text-center">가격</td>
+		<td><%=viewTrade.getPrice() %>원</td>
+	</tr>
 
-<tr>
-<td class="active text-center">판매 상태</td><td colspan="3"><%=viewTrade.getSaleState() %></td>
-<td class="active text-center">가격</td><td><%=viewTrade.getPrice() %>원</td>
-</tr>
-
-<tr>
-<td class="active text-center">아이디</td><td><%=viewTrade.getUserid() %></td>
-<td class="active text-center">전화번호</td><td><%=viewTrade.getUserphone() %></td>
-<td class="active text-center">조회수</td><td><%=viewTrade.getHit() %></td>
-</tr>
-<tr>
-<td class="active" colspan="6">대표 사진</td>
-</tr>
-<tr>
-<td colspan="6"><img alt="이미지가 없습니다" style="width: 100%; height: 300px;"  src="<%=request.getContextPath() %>/upload/<%=tradeImg.getStoredName() %>"></td>
-</tr>
-
-<tr>
-<td class="active" colspan="6">본문</td>
-</tr>
-<tr>
-	<td colspan="6">
-		<%=viewTrade.getContent() %>
-	</td>
-</tr>
-
+	<tr>
+		<td class="thema text-center">아이디</td>
+		<td colspan="3"><%=viewTrade.getUserid() %></td>
+		<td class="thema text-center">전화번호</td>
+		<td><%=viewTrade.getUserphone() %></td>
+	<tr>
+		<td class="thema" colspan="10">본문</td>
+	</tr>
+	<tr>
+		<td colspan="10" style="height: 300px;"><%=viewTrade.getContent() %></td>
+	</tr>
 </table>
 
 
@@ -119,7 +124,7 @@ $(document).ready(function() {
 
 <div class="text-center">
 	<button id="btnList" class="btn btn-primary">목록</button>
-<%if(session.getAttribute("login") != null && session.getAttribute("userid").equals(viewTrade.getUserid()) ) {%>
+<%if(session.getAttribute("login") != null && session.getAttribute("userid").equals(viewTrade.getUserid())  ) {%>
 	<button id="btnUpdate" class="btn btn-info">수정</button>
 	<button id="btnDelete" class="btn btn-danger">삭제</button>
 	<button id="btnWish" class="btn btn-warning">관심</button>

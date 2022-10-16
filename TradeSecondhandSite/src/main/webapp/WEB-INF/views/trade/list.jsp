@@ -25,7 +25,7 @@ $(document).ready(function(){
 })
 </script>
 
-<h1>거래글 목록</h1>
+<h1>중고거래</h1>
 <hr>
 <div>
 <form action="/trade/list" method="post" name="search" >
@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 <table class="table table-striped table-hover table-condensed">
 <tr>
-	<th style="width: 15%">글번호</th>
+	<th style="width: 15%">NO</th>
 	<th style="width: 15%">판매 상태</th>
 	<th style="width: 30%">제목</th>
 	<th style="width: 15%">아이디</th>

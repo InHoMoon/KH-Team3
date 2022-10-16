@@ -69,6 +69,13 @@ function updateContents() {
 
 </script>
 
+<style>
+	.thema {
+	background-color: #104138; 
+	color: white;
+	}
+</style>
+
 
 <!-- <style> -->
 <!-- /*   .ck-editor__editable { height: 500px; } */ -->
@@ -86,7 +93,7 @@ function updateContents() {
 	
 	<table  class="table table-bordered">
 		<tr>
-			<td class="text-center active">제목</td>
+			<td class="text-center thema">제목</td>
 			<td colspan="3"><input type="text" name="title" style="width: 100%;" placeholder="제목을 입력하세요" value="<%=updateTrade.getTitle() %>"></td>
 			<td>
 				<select class="form-control text-center" name="category"  id="category" >
@@ -121,11 +128,11 @@ function updateContents() {
 		</tr>
 		
 		<tr>
-			<td class="text-center active">아이디</td>
+			<td class="text-center thema">아이디</td>
 			<td class="text-center"  colspan="2"><%=session.getAttribute("userid") %></td>
-			<td class="text-center active">전화번호</td>
+			<td class="text-center thema">전화번호</td>
 			<td class="text-center"><input type="text" name="userphone" value="<%=updateTrade.getUserphone() %>"></td>
-			<td class="text-center active">판매가격</td>
+			<td class="text-center thema">판매가격</td>
 			<td class="text-right" ><input type="number" name="price"  placeholder="가격을 입력하세요"  value="<%=updateTrade.getPrice() %>"> 원</td>
 		</tr>
 		<tr>

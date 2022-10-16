@@ -759,7 +759,7 @@ public class TradeDaoImpl implements TradeDao {
 		sql += "	SELECT rownum rnum, T.* FROM (";
 		sql += "		SELECT";
 		sql += "			tradeno, title, userid, sale_state";
-		sql += "			, hit, insert_date, product_state";
+		sql += "			, hit, insert_date, product_state, price";
 		sql += "		FROM trade";
 		sql += "        WHERE category= ?";
 		sql += "		ORDER BY tradeno DESC";
@@ -787,6 +787,7 @@ public class TradeDaoImpl implements TradeDao {
 				t.setInsertDate(rs.getDate("insert_date"));
 				t.setProductState(rs.getString("product_state"));
 				t.setSaleState(rs.getString("sale_state"));
+				t.setPrice(rs.getInt("price"));
 
 				// 리스트에 결과값 저장
 				relatedList.add(t);

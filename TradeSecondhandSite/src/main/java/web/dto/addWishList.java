@@ -2,7 +2,7 @@ package web.dto;
 
 import java.util.Date;
 
-public class WishList {
+public class addWishList {
 	
 	private int wishlistno;
 	private int userno;
@@ -10,9 +10,9 @@ public class WishList {
 	private int tradeno;
 	private Date addDate;
 	
-	public WishList() { }
+	public addWishList() { }
 
-	public WishList(int wishlistno, int userno, String userid, int tradeno, Date addDate) {
+	public addWishList(int wishlistno, int userno, String userid, int tradeno, Date addDate) {
 		super();
 		this.wishlistno = wishlistno;
 		this.userno = userno;

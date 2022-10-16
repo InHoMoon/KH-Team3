@@ -31,35 +31,35 @@ public class WishListController extends HttpServlet {
 		//Trade 객체 생성
 		Trade trade = new Trade();
 		
-		TradeImg tradeImg = tradeService.viewImg(trade);
+//		TradeImg tradeImg = tradeService.viewImg(trade);
 		
 		//세션 정보 객체
 		HttpSession session = req.getSession();
+//		
+//		req.setAttribute("imgno", tradeImg.getImgno());
+//		req.setAttribute("tradeno", tradeImg.getTradeno());
+//		req.setAttribute("price", trade.getPrice());
 		
-		req.setAttribute("imgno", tradeImg.getImgno());
-		req.setAttribute("tradeno", tradeImg.getTradeno());
-		req.setAttribute("price", trade.getPrice());
 		
-		
-		System.out.println(tradeImg);
+//		System.out.println(tradeImg);
 
 		//---------------------------------------------------------
 		
 		String url = null;
 
-		if( session.getAttribute("userno") == null ) {
+		if( session.getAttribute("userid") == null ) {
 			
 			//비로그인 상태 전달할 URL
 			url = "/WEB-INF/views/mypage/accessFailure.jsp";
 		} else {
-
-//			int userno = (int) session.getAttribute("userno");
+			
+			String userid = (String) session.getAttribute("userid");
 			
 			//위시리스트 목록 조회
-			List<Trade> wishList = wishListService.getWishList();
+			List<Trade> wishList = wishListService.getWishList(userid);
 
 			//조회결과 MODEL값 전달
-			req.setAttribute("wishList", wishList);
+			req.setAttribute("wishList", wishList);	
 			
 			//로그인 상태 전달할 URL
 			url = "/WEB-INF/views/mypage/wishlist.jsp";

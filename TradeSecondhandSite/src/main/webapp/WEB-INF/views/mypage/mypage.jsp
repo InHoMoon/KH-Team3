@@ -6,24 +6,27 @@
 <%@ include file="../layout/header.jsp"%>
 
 <%	List<Trade> mypostList = (List) request.getAttribute("mypostList"); %>
+<%	List<Trade> wishList = (List) request.getAttribute("wishList"); %>
 
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".updateInfo").click(function() {
-		$(location).attr('href', '/update/user?userno=<%=session.getAttribute("userno") %>')
+		$(location).attr('href', '/update/user')
 	})
 })
 
 </script>
 
 <style type="text/css">
-li {
+ul {
 	list-style: none;
+	margin: 0px;
+	padding: 0px;
 }
 
-.wishList > li {
-	margin: 30px;
-	float: left;
+.wishList {
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .my-info {
@@ -47,6 +50,14 @@ th {
 .detail {
 	float: right;
 }
+section {
+	float: left;
+	
+	width: 18%;
+	height: 280px;
+	margin: 10px;
+}
+
 </style>
 
 <!---------------------- 내 정보 --------------------------->
@@ -68,7 +79,7 @@ th {
 
 <%	if (session.getAttribute("userid").equals("id1")) { %>
 <div class="text-center"><h1>관리자 전용 페이지</h1></div>
-<%	} else { %>
+<%	} %>
 <button type="button" class="updateInfo my-update-info btn btn-default">정보수정</button><br><br>
 
 <!--------------------- 내 게시글 -------------------------->
@@ -86,46 +97,89 @@ th {
 </tr>	
 
 <%	if(mypostList.size() != 0) { %>
-<%		for(int i=0; i<5; i++) { %>
-<tr>
-	<td class="text-center"><%=mypostList.get(i).getTradeno() %></td>
-	<td class="text-center"><%=mypostList.get(i).getSaleState() %></td>
-	<td>
-		<a href="/trade/view?tradeno=<%=mypostList.get(i).getTradeno() %>">
-			<%=mypostList.get(i).getTitle() %>
-		</a>
-	</td>
-	<td class="text-center"><%=mypostList.get(i).getHit() %></td>
-	<td class="text-center"><%=mypostList.get(i).getInsertDate() %></td>
-</tr>
-<%		} %>
+	<% if(wishList.size() > 5) { %>
+		<%	for(int i=0; i<5; i++) { %>
+		<tr>
+			<td class="text-center"><%=mypostList.get(i).getTradeno() %></td>
+			<td class="text-center"><%=mypostList.get(i).getSaleState() %></td>
+			<td>
+				<a href="/trade/view?tradeno=<%=mypostList.get(i).getTradeno() %>">
+				<%=mypostList.get(i).getTitle() %>
+				</a>
+			</td>
+			<td class="text-center"><%=mypostList.get(i).getHit() %></td>
+			<td class="text-center"><%=mypostList.get(i).getInsertDate() %></td>
+		</tr>
+		<%	} %>
+	<%	} else { %>
+		<%	for(int i=0; i<mypostList.size(); i++) { %>
+		<tr>
+			<td class="text-center"><%=mypostList.get(i).getTradeno() %></td>
+			<td class="text-center"><%=mypostList.get(i).getSaleState() %></td>
+			<td>
+				<a href="/trade/view?tradeno=<%=mypostList.get(i).getTradeno() %>">
+				<%=mypostList.get(i).getTitle() %>
+				</a>
+			</td>
+			<td class="text-center"><%=mypostList.get(i).getHit() %></td>
+			<td class="text-center"><%=mypostList.get(i).getInsertDate() %></td>
+		</tr>
+		<%	} %>
+	<%	} %>
 <%	} else { %>
-<tr>
-	<td class="text-center" colspan="5">게시글이 없습니다.</td>
-</tr>
+	<tr>
+		<td class="text-center" colspan="5"><br><br>게시글이 없습니다.</td>
+	</tr>
 <%	} %>
 </table><br><br>
 
 <!--------------------- 관심 상품 -------------------------->
 
 <h1 style="display: inline-block;">관심 상품</h1><br>
-<a href="/mypage/wishlist" class="detail">더보기 &gt;&gt;</a>
+<a href="/mypage/wishlist" class="detail">더보기 &gt;&gt;</a><br>
 
-<article class="wishList">
-
-<%-- <%	for() { %> --%>
-<section>
-	<input type="checkbox">
-	<div>
-		<a href="#"><img src="#"></a>
-	</div>
-	<ul>
-		<li onclick="location.href='#'">게시글명</li>
-		<li>가격</li>
-	</ul>
-</section>
-<%-- <%	} %> --%>
-
-</article>
+<%	if(wishList.size() != 0) { %>
+	<article class="wishList">
+	<% if(wishList.size() > 5) { %>
+		<%	for(int i=0; i<5; i++) { %>
+			<section>
+			<input type="checkbox" name="checkbox">
+			<div>
+				<a href="#"><img src="#"></a>
+			</div>
+			<ul>
+				<li>
+					<a href="/trade/view?tradeno=<%=wishList.get(i).getTradeno() %>">
+						<%=wishList.get(i).getSaleState() %>
+						<%=wishList.get(i).getTitle() %>
+					</a>
+				</li>
+				<li><%=wishList.get(i).getPrice() %>원</li>
+			</ul>
+			</section>
+		<%	} %>
+	<%	} else { %>
+		<%	for(int i=0; i<wishList.size(); i++) { %>
+			<section>
+			<input type="checkbox" name="checkbox">
+			<div>
+				<a href="#"><img src="#"></a>
+			</div>
+			<ul>
+				<li>
+					<a href="/trade/view?tradeno=<%=wishList.get(i).getTradeno() %>">
+						<%=wishList.get(i).getSaleState() %>
+						<%=wishList.get(i).getTitle() %>
+					</a>
+				</li>
+				<li><%=wishList.get(i).getPrice() %>원</li>
+			</ul>
+			</section>
+		<%	} %>
+	<%	} %>
+	</article>
+<%	} else { %>
+	<hr><br><br>
+	<div class="text-center">관심상품이 없습니다.</div>
 <%	} %>
 <%@ include file="../layout/footer.jsp"%>

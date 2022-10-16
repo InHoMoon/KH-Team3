@@ -45,12 +45,7 @@ public class TradeViewController extends HttpServlet {
 		
 //		System.out.println(cmtList);
 		
-				
-				
-				
+		
 		req.getRequestDispatcher("/WEB-INF/views/trade/view.jsp").forward(req, resp);
 	}
-	
-	
-
 }

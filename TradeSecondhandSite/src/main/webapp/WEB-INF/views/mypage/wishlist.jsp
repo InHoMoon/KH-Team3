@@ -29,13 +29,21 @@ $(document).ready(function(){
 <style type="text/css">
 .wishList {
 	display: flex;
-	justify-content: space-around;
+	flex-wrap: wrap;
 }
 
 ul {
 	list-style: none;
 	margin: 0px;
 	padding: 0px;
+}
+
+section {
+	float: left;
+	
+	width: 18%;
+	height: 280px;
+	margin: 10px;
 }
 </style>
 
@@ -48,8 +56,8 @@ ul {
 
 <hr>
 <%	if( wishList.size() != 0 ) { %>
-<%	for(int i=0; i<wishList.size(); i++ ) { %>
 <article class="wishList">
+<%	for(int i=0; i<wishList.size(); i++ ) { %>
 	<section>
 	<input type="checkbox" name="checkbox">
 	<div>
@@ -65,9 +73,10 @@ ul {
 		<li><%=wishList.get(i).getPrice() %>원</li>
 	</ul>
 	</section>
-</article>
 <%		} %>
+</article>
 <%	} else { %>
+	<br><br>
 	<div class="text-center">관심상품이 없습니다.</div>
 <%	} %>
 

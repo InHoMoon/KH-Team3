@@ -86,7 +86,7 @@ public class MypostDaoImpl implements MypostDao {
 		
 		//SQL작성
 		String sql="";
-		sql+= "SELECT count(*) cnt FROM trade";
+		sql	+= "SELECT count(*) cnt FROM trade";
 		sql += " WHERE userid = ( ";
 		sql += "	SELECT userid FROM tuser";
 		sql += "	WHERE userno = ? )";

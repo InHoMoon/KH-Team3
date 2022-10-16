@@ -15,11 +15,12 @@ public class Trade {
 	private String saleState;
 	private String category;
 	private String userphone;
+	private int wishCheck;
 	
 	public Trade() {}
-
+	
 	public Trade(int tradeno, String title, String userid, String content, int hit, Date insertDate, int price,
-			String productState, String saleState, String category, String userphone) {
+			String productState, String saleState, String category, String userphone, int wishCheck) {
 		super();
 		this.tradeno = tradeno;
 		this.title = title;
@@ -32,13 +33,15 @@ public class Trade {
 		this.saleState = saleState;
 		this.category = category;
 		this.userphone = userphone;
+		this.wishCheck = wishCheck;
 	}
 
 	@Override
 	public String toString() {
 		return "Trade [tradeno=" + tradeno + ", title=" + title + ", userid=" + userid + ", content=" + content
 				+ ", hit=" + hit + ", insertDate=" + insertDate + ", price=" + price + ", productState=" + productState
-				+ ", saleState=" + saleState + ", category=" + category + ", userphone=" + userphone + "]";
+				+ ", saleState=" + saleState + ", category=" + category + ", userphone=" + userphone + ", wishCheck="
+				+ wishCheck + "]";
 	}
 
 	public int getTradeno() {
@@ -128,8 +131,13 @@ public class Trade {
 	public void setUserphone(String userphone) {
 		this.userphone = userphone;
 	}
-	
-	
-	
+
+	public int getwishCheck() {
+		return wishCheck;
+	}
+
+	public void setwishCheck(int wishCheck) {
+		this.wishCheck = wishCheck;
+	}
 	
 }

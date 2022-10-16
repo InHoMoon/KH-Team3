@@ -13,9 +13,9 @@ public class WishListServiceImpl implements WishListService {
 	private WishListDao wishListDao = new WishListDaoImpl();
 
 	@Override
-	public List<Trade> getWishList() {
+	public List<Trade> getWishList(String userid) {
 		
-		return wishListDao.selectAll(JDBCTemplate.getConnection());
+		return wishListDao.selectWishList(JDBCTemplate.getConnection(), userid);
 	}
 
 }

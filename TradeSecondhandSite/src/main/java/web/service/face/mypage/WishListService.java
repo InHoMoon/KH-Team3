@@ -11,6 +11,6 @@ public interface WishListService {
 	 * 
 	 * @return List<Trade> - 관심상품 전체 조회 결과 목록
 	 */
-	List<Trade> getWishList();
+	List<Trade> getWishList(String userid);
 
 }

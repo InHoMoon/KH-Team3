@@ -17,18 +17,23 @@ public class WishListDaoImpl implements WishListDao {
 	private ResultSet rs;
 
 	@Override
-	public List<Trade> selectAll(Connection conn) {
+	public List<Trade> selectWishList(Connection conn, String userid) {
 
 		String sql = "";
-		sql += "SELECT * FROM trade";
+		sql += "SELECT ";
+		sql += "	tradeno, sale_state , title,";
+		sql += "	price, hit, insert_date, ";
+		sql += "	wish_check";
+		sql += " FROM trade";
+		sql += " WHERE userid = ?";
+		sql += " and wish_check = 1";
 		
-		//리스트 추출 쿼리 작성 예정
-
 		//결과 저장할 List
 		List<Trade> wishList = new ArrayList<>();
 		
 		try {
 			ps = conn.prepareStatement(sql);
+			ps.setString(1, userid);
 			
 			rs = ps.executeQuery();
 			
@@ -37,9 +42,14 @@ public class WishListDaoImpl implements WishListDao {
 				Trade wish = new Trade();
 				
 				wish.setTradeno(rs.getInt("tradeno"));
+				wish.setSaleState(rs.getString("sale_state"));
 				wish.setTitle(rs.getString("title"));
 				wish.setPrice(rs.getInt("price"));
-				wish.setSaleState(rs.getString("salestate"));
+				wish.setHit(rs.getInt("hit"));
+				wish.setInsertDate(rs.getDate("insert_date"));
+				wish.setwishCheck(rs.getInt("wish_check"));
+				
+				wishList.add(wish);
 			}
 			
 		} catch (SQLException e) {

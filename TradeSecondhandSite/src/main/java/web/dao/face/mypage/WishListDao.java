@@ -13,6 +13,6 @@ public interface WishListDao {
 	 * @param conn - DB연결 객체
 	 * @return List<Trade> - 테이블 전체조회 결과 목록
 	 */
-	public List<Trade> selectAll(Connection conn);
+	public List<Trade> selectWishList(Connection conn, String userid);
 
 }

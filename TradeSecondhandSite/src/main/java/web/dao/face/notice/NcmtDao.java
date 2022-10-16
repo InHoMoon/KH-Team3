@@ -7,13 +7,13 @@ import web.dto.Ncomment;
 
 public interface NcmtDao {
 
-	List<Ncomment> selectAllNcmt(Connection conn, String  nno);
+	List<Ncomment> selectAllNcmt(Connection conn, int  nno);
 
 	int insertNcmt(Connection conn, Ncomment ncomment);
 
-	int updateNcmt(Connection conn, Ncomment ncomment);
+	int updateNcmt(Connection conn, Ncomment ncomment, int ncmtid);
 
-	int deleteNcmt(Connection conn, Ncomment ncomment);
+	int deleteNcmt(Connection conn, int ncmtid);
 
 	
 	

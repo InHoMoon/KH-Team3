@@ -87,24 +87,18 @@ ADD CONSTRAINT nfile_fk
 DROP SEQUENCE nfile_seq;
 CREATE SEQUENCE nfile_seq;
 
+commit;
+
 SELECT * FROM nfile;
-
-
 
 DROP TABLE ncomment;
 CREATE TABLE ncomment (
 	ncmtid NUMBER  PRIMARY KEY,
-	nno NUMBER,
-	ncmtnum NUMBER DEFAULT 0,
-	ncmtcontent VARCHAR2(500),
+	nno NUMBER DEFAULT 0,
+	ncmtcontent VARCHAR2(1000),
 	ncmtwritedate DATE DEFAULT sysdate,
-	ncmtupdatetime DATE NULL,
-	ncmtdel	VARCHAR2(1)DEFAULT 0,
-	ncmtreply VARCHAR2(20) NULL,
-	ncmtorder NUMBER NULL,
-	ncmtparent NUMBER DEFAULT 0,
-	ncmtdept NUMBER NULL ,
-	userNo	NUMBER	 
+	ncmtupdatetime DATE DEFAULT sysdate,
+	userid VARCHAR2(200) NOT NULL 
 );
 
 ALTER TABLE ncomment
@@ -112,12 +106,22 @@ ADD CONSTRAINT ncomment_fk
     FOREIGN KEY (nno)
     REFERENCES notice(nno);
 
-ALTER TABLE ncomment
-ADD CONSTRAINT ncomment_fk
-    FOREIGN KEY (userNo)
-    REFERENCES tUser(userNo);
 
 DROP SEQUENCE ncomment_seq;
 CREATE SEQUENCE ncomment_seq;
 
+
+INSERT INTO ncomment ( ncmtid, nno, ncmtcontent, userid) VALUES (ncomment_seq.nextval, 131, '첫댓이다 테스트', 'id1');
+INSERT INTO ncomment ( ncmtid, nno, ncmtcontent, ncmtwritedate, ncmtupdatetime, userid) 
+VALUES (ncomment_seq.nextval, 131, '두번째 댓글입니다. ', sysdate, sysdate, 'id1');
+INSERT INTO ncomment ( ncmtid, nno, ncmtcontent, ncmtwritedate, ncmtupdatetime, userid) 
+VALUES (ncomment_seq.nextval, 131, '세번째 댓글입니다', sysdate, sysdate, 'id2');
+INSERT INTO ncomment ( ncmtid, nno, ncmtcontent, ncmtwritedate, ncmtupdatetime, userid) 
+VALUES (ncomment_seq.nextval, 132, '세번째 댓글입니다', sysdate, sysdate, 'id1');
+
+
+commit;
+
 SELECT * FROM ncomment;
+
+SELECT * FROM notice;

@@ -23,11 +23,13 @@ public class NcmtListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String nno = req.getParameter("nno");
+		System.out.println("/ncmt/list [GET]");
 		
-		List<Ncomment> ncmtList = null;
+		int nno = Integer.parseInt(req.getParameter("nno"));
+		System.out.println(nno);
 		
-		ncmtList = ncmtService.getCmtList( nno );		
+		List<Ncomment> ncmtList = ncmtService.getCmtList( nno );		
+		System.out.println(ncmtList);
 		
 		req.setAttribute("ncmtList", ncmtList);
 		

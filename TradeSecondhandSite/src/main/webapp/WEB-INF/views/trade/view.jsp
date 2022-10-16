@@ -34,7 +34,7 @@ $(document).ready(function() {
 	
 	//관심버튼
 	$("#btnWhish").click(function() {
-		$(location).attr('href', './Whish?userid=<%=session.getAttribute("userid") %>')
+		$(location).attr('href', './wishlist?userid=<%=session.getAttribute("userid") %>')
 	})
 	
 	//작성버튼
@@ -71,6 +71,11 @@ $(document).ready(function() {
 	background-color: #104138; 
 	color: white;
 	}
+	
+	table, tr, td{
+		font-size: 18px;
+		border: 2px solid #104138;
+	}
 </style>
 
 
@@ -79,7 +84,7 @@ $(document).ready(function() {
 <hr>
 
 
-<table class="table table-bordered">
+<table class="table">
 	<tr>
 		<td class="thema text-center">NO</td>
 		<td ><%=viewTrade.getTradeno() %></td>
@@ -111,10 +116,10 @@ $(document).ready(function() {
 		<td class="thema text-center">전화번호</td>
 		<td><%=viewTrade.getUserphone() %></td>
 	<tr>
-		<td class="thema" colspan="10">본문</td>
+		<td class="thema text-center" colspan="10">본문</td>
 	</tr>
 	<tr>
-		<td colspan="10" style="height: 300px;"><%=viewTrade.getContent() %></td>
+		<td colspan="10" style="font-size: 25px; height: 300px;"><%=viewTrade.getContent() %></td>
 	</tr>
 </table>
 
@@ -124,22 +129,22 @@ $(document).ready(function() {
 
 <div class="text-center">
 	<button id="btnList" class="btn btn-primary">목록</button>
+	<button id="btnWish" class="btn btn-warning">관심</button>
 <%if(session.getAttribute("login") != null && session.getAttribute("userid").equals(viewTrade.getUserid())  ) {%>
 	<button id="btnUpdate" class="btn btn-info">수정</button>
 	<button id="btnDelete" class="btn btn-danger">삭제</button>
-	<button id="btnWish" class="btn btn-warning">관심</button>
 <%} %>
 </div>
 
 <br>
 <br>
 
-<table class="table ">
+<table class="table" >
 <% if(cmtList.size()==0){ %>
-	<tr><th>댓글이 없습니다</th></tr>
+	<tr style="height: 80px;"><th>댓글이 없습니다</th></tr>
 <% }else if (cmtList.size()!=0) { %>
 	<%	for(int i=0; i<cmtList.size(); i++) { %>
-	<tr>
+	<tr style="height: 80px;">
 		<th style="width: 10%;">ID : <%= cmtList.get(i).getUserid() %>
 		<th style="width: 65%;"><%= cmtList.get(i).getCmtContent() %></th>
 		<th>작성일 : <%= cmtList.get(i).getCmtDate() %>

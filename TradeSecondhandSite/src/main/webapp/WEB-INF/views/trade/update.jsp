@@ -74,6 +74,11 @@ function updateContents() {
 	background-color: #104138; 
 	color: white;
 	}
+	
+	table, tr, td{
+		font-size: 18px;
+		border: 2px solid #104138;
+	}
 </style>
 
 

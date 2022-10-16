@@ -41,7 +41,6 @@ $(document).ready(function() {
 <% } %>
 
 
-
 <div style="width: 800px;" >
 	<table class="table" id="ncmttable">
 		<% for(int i=0; i<ncmtList.size(); i++ ) { %>

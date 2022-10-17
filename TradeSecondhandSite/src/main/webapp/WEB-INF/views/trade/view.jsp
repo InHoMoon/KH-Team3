@@ -126,10 +126,10 @@ $(document).ready(function() {
 	<button id="btnpre" class="btn btn-primary pull-left">다음글</button>
 	
 	<button id="btnList" class="btn btn-primary">목록</button>
+	<button id="btnWish" class="btn btn-warning">관심</button>
 <%if(session.getAttribute("login") != null && session.getAttribute("userid").equals(viewTrade.getUserid()) ) {%>
 	<button id="btnUpdate" class="btn btn-info">수정</button>
 	<button id="btnDelete" class="btn btn-danger">삭제</button>
-	<button id="btnWish" class="btn btn-warning">관심</button>
 <%} %>
 	<button id="btnpost" class="btn btn-primary pull-right">이전글</button>
 </div>

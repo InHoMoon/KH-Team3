@@ -23,13 +23,11 @@ public class UpdateUserController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		// 전달파라미터 저장 객체 얻기
+		// 전달파라미터 정보 얻어오기
 		User userno = updateService.getUserno(req);
-		System.out.println("UpdateUserController doGet() - 전달파라미터 객체 : " + userno);
 		
-		// 상세보기 결과 조회
+		// 회원 정보 조회
 		User updateUser = updateService.view(userno);
-		System.out.println("UpdateUserController doGet() - 상세보기 객체 : " + updateUser);
 		
 		// 조회결과 MODEL값 전달
 		req.setAttribute("updateUser", updateUser);
@@ -51,12 +49,12 @@ public class UpdateUserController extends HttpServlet {
 		// 전달 파라미터에 대한 한글 인코딩 설정(UTF-8)
 		req.setCharacterEncoding("UTF-8");
 		
-		// 회원수정 처리
+		// 회원 수정 처리
 		updateService.update(req);
 		
-		System.out.println("UpdateUserController doPost() - 회원수정 성공" + req);
+		System.out.println("UpdateUserController doPost() - 회원수정 성공");
 		
-		resp.sendRedirect("/WEB-INF/views/user/updateSucccess.jsp");
+		resp.sendRedirect("/mypage");
 		
 	}
 	

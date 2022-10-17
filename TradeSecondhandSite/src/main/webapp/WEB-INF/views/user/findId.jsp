@@ -12,7 +12,7 @@ $(document).ready(function() {
 	// 비밀번호 입력창에 엔터키 입력 시 submit
 	$("input").eq(1).keydown(function(e) {
 		if( e.keyCode == 13 ) { // 엔터키
-			$("#btnFindId").click();
+			$("#btnFindId").click()
 		}
 	})
 	
@@ -32,7 +32,7 @@ $(document).ready(function() {
 			$("input").eq(1).focus()
 		
 		} else {
-			$(this).parents("form").submit(); // 아이디 찾기 폼 제출
+			$(this).parents("form").submit() // 아이디 찾기 폼 제출
 		}
 		
 	})

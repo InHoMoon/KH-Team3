@@ -3,70 +3,34 @@
 
 <%@ include file="../layout/header.jsp" %>
 
-<!-- 필수입력항목 빈칸 : blur() -->
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	// 비밀번호 빈칸
-	$("#userpw").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "")
-			
-			$("#er_pwlength").css("display", "none")
-			$("#er_pwblank").css("display", "none")
-			$("#er_pwtext").css("display", "none")
-			
-			$("#ok_pw").css("display", "none")
-			
-		} else {
-			$("#blank_pw").css("display", "none")
-		}
-	})
-
-	// 비밀번호 확인 빈칸
-	$("#userpwck").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#blank_pwck").css("display", "")
-			$("#er_pwsame").css("display", "none")
-			$("#ok_pwck").css("display", "none")
-			
-		} else {
-			$("#blank_pwck").css("display", "none")
-		}
-	})
-
-})
-</script>
-
-
 <!-- 비밀번호 유효성 검사, 비밀번호 확인 : keyup() -->
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	$("#userpw").keyup(function() {
+		
 		var pw = $("#userpw").val()
+		var pwck = $("#userpwck").val()
 		var num = pw.search(/[0-9]/g)
 		var eng = pw.search(/[a-z]/gi)
 		var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi)
 
-		// 공백이 존재할 경우
-		if ( pw.search(/\s/) != -1 ) {			
-			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
-
-			$("#er_pwlength").css("display", "none")
-			$("#er_pwblank").css("display", "")
-			$("#er_pwtext").css("display", "none")
-			
-			$("#ok_pw").css("display", "none")
-		 
 		// 6자리 미만일 경우
-		} else if( pw.length < 6 ) {
+		if( pw.length < 6 ) {
 			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
 
 			$("#er_pwlength").css("display", "")
 			$("#er_pwblank").css("display", "none")
+			$("#er_pwtext").css("display", "none")
+			
+			$("#ok_pw").css("display", "none")
+			
+		// 공백이 존재할 경우
+		} else if ( pw.search(/\s/) != -1 ) {			
+			$("#info_pw").css("display", "none")
+
+			$("#er_pwlength").css("display", "none")
+			$("#er_pwblank").css("display", "")
 			$("#er_pwtext").css("display", "none")
 			
 			$("#ok_pw").css("display", "none")
@@ -74,7 +38,6 @@ $(document).ready(function() {
 		// 영어+숫자+특수문자 조합이 아닐 경우
 		} else if ( num < 0 || eng < 0 || spe < 0 ) {			
 			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
 
 			$("#er_pwlength").css("display", "none")
 			$("#er_pwblank").css("display", "none")
@@ -84,7 +47,6 @@ $(document).ready(function() {
 		
 		} else {
 			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
 
 			$("#er_pwlength").css("display", "none")
 			$("#er_pwblank").css("display", "none")
@@ -99,13 +61,11 @@ $(document).ready(function() {
 
 		// 비밀번호 확인 불일치
 		if( $("#userpw").val() != $("#userpwck").val()) {
-			$("#blank_pwck").css("display", "none")
 			$("#er_pwsame").css("display", "")
 			$("#ok_pwck").css("display", "none")
 			
 		// 비밀번호 확인 일치
 		} else {
-			$("#blank_pwck").css("display", "none")
 			$("#er_pwsame").css("display", "none")
 			$("#ok_pwck").css("display", "")
 		}
@@ -118,8 +78,11 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	// 비밀번호 입력창에 포커스주가
+	$("input").eq(1).focus()
+	
 	// 비밀번호 확인 입력창에 엔터키 입력 시 submit
-	$("input").eq(1).keydown(function(e) {
+	$("input").eq(2).keydown(function(e) {
 		if( e.keyCode == 13 ) { // 엔터키
 			$("#btnUpdatePw").click();
 		}
@@ -128,30 +91,24 @@ $(document).ready(function() {
 	// 비밀번호 수정 버튼
 	$("#btnUpdatePw").click(function() {
 		
-		// 필수입력항목 빈칸
-		for( i=0; i<2; i++ ) {
-			
-			if( $("input").eq(i).val() == "" ) {
-				$(".info_box").eq(i).css("display", "none")
-				$(".blank_box").eq(i).css("display", "")
-				$(".er_box").eq(i).css("display", "none")
-				$(".ok_box").eq(i).css("display", "none")
-				
-			} else {
-				$(".blank_box").eq(i).css("display", "none")
-			}
-		}
-		
 		var pw = $("#userpw").val()
 		var pwck = $("#userpwck").val()
 		var num = pw.search(/[0-9]/g)
 		var eng = pw.search(/[a-z]/gi)
 		var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi)
 		
-		// 빈칸일 경우
-		if( pw == "" || pwck == "" ) {
-			return
+		// 6자리 미만일 경우
+		if( pw.length < 6 ) {
+			$("#info_pw").css("display", "none")
+
+			$("#er_pwlength").css("display", "")
+			$("#er_pwblank").css("display", "none")
+			$("#er_pwtext").css("display", "none")
 			
+			$("#ok_pw").css("display", "none")
+			
+			$("input").eq(1).focus()
+			 
 		// 공백이 존재할 경우
 		} else if ( pw.search(/\s/) != -1 ) {
 			$("#info_pw").css("display", "none")
@@ -160,23 +117,8 @@ $(document).ready(function() {
 			$("#er_pwblank").css("display", "")
 			$("#er_pwtext").css("display", "none")
 			
-			$("#blank_pw").css("display", "none")
-			
-			$("input").eq(0).focus()
+			$("input").eq(1).focus()
 		
-		// 6자리 미만일 경우
-		} else if( pw.length < 6 ) {
-			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
-
-			$("#er_pwlength").css("display", "")
-			$("#er_pwblank").css("display", "none")
-			$("#er_pwtext").css("display", "none")
-			
-			$("#ok_pw").css("display", "none")
-			
-			$("input").eq(0).focus()
-			 
 		// 영어+숫자+특수문자 조합이 아닐 경우
 		} else if ( num < 0 || eng < 0 || spe < 0 ) {
 			$("#info_pw").css("display", "none")
@@ -185,17 +127,15 @@ $(document).ready(function() {
 			$("#er_pwblank").css("display", "none")
 			$("#er_pwtext").css("display", "")
 			
-			$("#blank_pw").css("display", "none")
-			
-			$("input").eq(0).focus()
+			$("input").eq(1).focus()
 		
 		// 비밀번호 확인 불일치
 		} else if ( pw != pwck ) {
+			
 			$("#info_pwck").css("display", "none")
 			$("#er_pwsame").css("display", "")
-			$("#blank_pwck").css("display", "none")
 			
-			$("input").eq(1).focus()
+			$("input").eq(2).focus()
 		
 		} else {
 			
@@ -234,7 +174,7 @@ $(document).ready(function() {
 	color: green;
 }
 
-.blank_box, .er_box {
+.er_box {
 	color: red;
 }
 
@@ -266,13 +206,16 @@ $(document).ready(function() {
 <div class="col-xs-10 col-xs-offset-1">
 	
 	<div class="form-group">
+		<label for="userid">아이디</label>
+		<input type="text" class="form-control" id="userid" name="userid" placeholder="ID" value="<%=session.getAttribute("userid") %>" readonly>
+	</div>
+	
+	<div class="form-group">
 		<label for="userpw">새 비밀번호</label>
 		<input type="password" class="form-control" id="userpw" name="userpw" placeholder="PASSWORD">
 		
 		<span class="info_box" id="info_pw" style="display: '';">영문, 숫자, 특수문자가 모두 포함된 6자리 이상의 조합</span>
 
-		<span class="blank_box" id="blank_pw" style="display: none;">필수 입력 사항입니다</span>
-		
 		<span class="er_box" id="er_pwlength" style="display: none;">6자리 이상 입력해주세요</span>
 		<span class="er_box" id="er_pwblank" style="display: none;">빈칸없이 입력해주세요</span>
 		<span class="er_box" id="er_pwtext" style="display: none;">영문, 숫자, 특수문자를 혼합하여 입력해주세요</span>
@@ -283,8 +226,6 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="userpwck">비밀번호 확인</label>
 		<input type="password" class="form-control" id="userpwck" name="userpwck" placeholder="PASSWORD CHECK">
-		
-		<span class="blank_box" id="blank_pwck" style="display: none;">필수 입력 사항입니다</span>
 		
 		<span class="er_box" id="er_pwsame" style="display: none;">비밀번호가 일치하지 않습니다</span>
 		

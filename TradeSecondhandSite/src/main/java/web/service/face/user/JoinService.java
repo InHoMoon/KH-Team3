@@ -2,7 +2,6 @@ package web.service.face.user;
 
 import javax.servlet.http.HttpServletRequest;
 
-import web.dto.Ufile;
 import web.dto.User;
 
 public interface JoinService {
@@ -11,7 +10,7 @@ public interface JoinService {
 	 * 회원가입 정보 추출하기
 	 * 
 	 * @param req - 요청 정보 객체
-	 * @return User - 회원가입 정보 (userid, username)
+	 * @return User - 회원가입 정보
 	 */
 	public User getJoinUser(HttpServletRequest req);
 
@@ -38,22 +37,5 @@ public interface JoinService {
 	 * @return boolean - true: 인증성공, false: 인증실패 
 	 */
 	public boolean checkId(User user);
-
-	/**
-	 * 닉네임 정보 추출하기
-	 * 
-	 * @param req - 요청 정보 객체
-	 * @return User - 닉네임 정보 (usernick)
-	 */
-	public User getCheckNick(HttpServletRequest req);
-
-	/**
-	 * 닉네임 중복체크 인증 처리
-	 * 
-	 * @param user - 신규 닉네임 정보 (usernick)
-	 * @return boolean - true: 인증성공, false: 인증실패 
-	 */
-	public boolean checkNick(User user);
-
 
 }

@@ -8,36 +8,35 @@
 <% User updateUser = (User) request.getAttribute("updateUser"); %>
 <% Ufile ufile = (Ufile) request.getAttribute("ufile"); %>
 
+
 <!-- 필수입력항목 빈칸 : blur() -->
 <script type="text/javascript">
 $(document).ready(function() {
-	
+
 	// 비밀번호 빈칸
 	$("#userpw").blur(function() {
 		if( $(this).val() == "" ) {
 			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "")
 			
-			$("#er_pwlength").css("display", "none")
+			$("#er_pwlength").css("display", "")
 			$("#er_pwblank").css("display", "none")
 			$("#er_pwtext").css("display", "none")
 			
 			$("#ok_pw").css("display", "none")
 			
 		} else {
-			$("#blank_pw").css("display", "none")
+			$("#er_pwlength").css("display", "none")
 		}
 	})
 
 	// 비밀번호 확인 빈칸
 	$("#userpwck").blur(function() {
 		if( $(this).val() == "" ) {
-			$("#blank_pwck").css("display", "")
-			$("#er_pwsame").css("display", "none")
+			$("#er_pwsame").css("display", "")
 			$("#ok_pwck").css("display", "none")
 			
 		} else {
-			$("#blank_pwck").css("display", "none")
+			$("#er_pwsame").css("display", "none")
 		}
 	})
 	
@@ -89,27 +88,6 @@ $(document).ready(function(){
 	$("input:text[numberOnly]").keyup(function() {
 		$(this).val( $(this).val().replace(/[^0-9]/g,"") )
 	})
-});
-
-// 영어+숫자 입력 가능 
-$(document).ready(function() {
-	$("input:text[engnum]").keyup(function() {
-		$(this).val( $(this).val().replace(/[^a-z0-9_.]/gi,"") )
-	})
-})
-
-// 영어+한글 입력 가능 
-$(document).ready(function() {
-	$("input:text[engkor]").keyup(function() {
-		$(this).val( $(this).val().replace(/[^ㄱ-힣a-z]/gi,"") )
-	})
-})
-
-// 영어+숫자+특수문자 입력 가능 --- 수정 필요
-$(document).ready(function() {
-	$("input:text[engkor]").keyup(function() {
-		$(this).val( $(this).val().replace(/[^ㄱ-힣a-z]/gi,"") )
-	})
 })
 
 </script>
@@ -118,30 +96,31 @@ $(document).ready(function() {
 <!-- 비밀번호 유효성 검사, 비밀번호 확인 : keyup() -->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#userpw").keyup(function( pwcheck ) {
+	
+	$("#userpw").keyup(function() {
+		
 		var pw = $("#userpw").val()
+		var pwck = $("#userpwck").val()
 		var num = pw.search(/[0-9]/g)
 		var eng = pw.search(/[a-z]/gi)
 		var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi)
 
-		// 공백이 존재할 경우
-		if ( pw.search(/\s/) != -1 ) {			
-			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
-
-			$("#er_pwlength").css("display", "none")
-			$("#er_pwblank").css("display", "")
-			$("#er_pwtext").css("display", "none")
-			
-			$("#ok_pw").css("display", "none")
-		 
 		// 6자리 미만일 경우
-		} else if( pw.length < 6 ) {
+		if( pw.length < 6 ) {
 			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
 
 			$("#er_pwlength").css("display", "")
 			$("#er_pwblank").css("display", "none")
+			$("#er_pwtext").css("display", "none")
+			
+			$("#ok_pw").css("display", "none")
+			
+		// 공백이 존재할 경우
+		} else if ( pw.search(/\s/) != -1 ) {			
+			$("#info_pw").css("display", "none")
+
+			$("#er_pwlength").css("display", "none")
+			$("#er_pwblank").css("display", "")
 			$("#er_pwtext").css("display", "none")
 			
 			$("#ok_pw").css("display", "none")
@@ -149,7 +128,6 @@ $(document).ready(function() {
 		// 영어+숫자+특수문자 조합이 아닐 경우
 		} else if ( num < 0 || eng < 0 || spe < 0 ) {			
 			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
 
 			$("#er_pwlength").css("display", "none")
 			$("#er_pwblank").css("display", "none")
@@ -159,7 +137,6 @@ $(document).ready(function() {
 		
 		} else {
 			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
 
 			$("#er_pwlength").css("display", "none")
 			$("#er_pwblank").css("display", "none")
@@ -174,13 +151,11 @@ $(document).ready(function() {
 
 		// 비밀번호 확인 불일치
 		if( $("#userpw").val() != $("#userpwck").val()) {
-			$("#blank_pwck").css("display", "none")
 			$("#er_pwsame").css("display", "")
 			$("#ok_pwck").css("display", "none")
 			
 		// 비밀번호 확인 일치
 		} else {
-			$("#blank_pwck").css("display", "none")
 			$("#er_pwsame").css("display", "none")
 			$("#ok_pwck").css("display", "")
 		}
@@ -262,11 +237,12 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	$("input").filter("[value='null']").val("");
+	
 	$("#usergender").val("<%=updateUser.getUsergender() %>").prop("selected",true);
 	
 })
 </script>
-
 
 
 <!-- 프로필 사진 유무 확인 -->
@@ -349,8 +325,8 @@ $(document).ready(function() {
 			$("#preview").html(
 					$("<img>").attr({
 						"src": ev.target.result
-						, "width": 300
-						, "height": 300
+						, "width": 200
+						, "height": 200
 					})
 			)
 		}
@@ -369,9 +345,9 @@ $(document).ready(function() {
 $(document).ready(function() {
 	
 	// 비밀번호 입력창에 포커스주기
-	$("input").eq(1).focus()
+	$("#userpw").focus()
 	
-	// 회원가입 버튼
+	// 회원수정 버튼
 	$("#btnUpdate").click(function() {
 		
 		var pw = $("#userpw").val()
@@ -380,18 +356,19 @@ $(document).ready(function() {
 		var eng = pw.search(/[a-z]/gi)
 		var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi)
 		
-		
-		if( $("#userid").val() == "" ) {
-			$("input").eq(0).focus()
+		// 비밀번호
+		// 6자리 미만일 경우
+		if( pw.length < 6 ) {
+			$("#info_pw").css("display", "none")
+
+			$("#er_pwlength").css("display", "")
+			$("#er_pwblank").css("display", "none")
+			$("#er_pwtext").css("display", "none")
 			
-			return
-		
-		// 빈칸일 경우
-		} else if( pw == "" || pwck == "" ) {
-			$("input").eq(1).focus()
+			$("#ok_pw").css("display", "none")
 			
-			return
-			
+			$("#userpw").focus()
+			 
 		// 공백이 존재할 경우
 		} else if ( pw.search(/\s/) != -1 ) {
 			$("#info_pw").css("display", "none")
@@ -400,27 +377,8 @@ $(document).ready(function() {
 			$("#er_pwblank").css("display", "")
 			$("#er_pwtext").css("display", "none")
 			
-			$("#blank_pw").css("display", "none")
-			
-			$("input").eq(1).focus()
-			
-			return
+			$("#userpw").focus()
 		
-		// 6자리 미만일 경우
-		} else if( pw.length < 6 ) {
-			$("#info_pw").css("display", "none")
-			$("#blank_pw").css("display", "none")
-
-			$("#er_pwlength").css("display", "")
-			$("#er_pwblank").css("display", "none")
-			$("#er_pwtext").css("display", "none")
-			
-			$("#ok_pw").css("display", "none")
-			
-			$("input").eq(1).focus()
-			
-			return
-			 
 		// 영어+숫자+특수문자 조합이 아닐 경우
 		} else if ( num < 0 || eng < 0 || spe < 0 ) {
 			$("#info_pw").css("display", "none")
@@ -429,49 +387,43 @@ $(document).ready(function() {
 			$("#er_pwblank").css("display", "none")
 			$("#er_pwtext").css("display", "")
 			
-			$("#blank_pw").css("display", "none")
-			
-			$("input").eq(1).focus()
-			
-			return
+			$("#userpw").focus()
 		
 		// 비밀번호 확인 불일치
 		} else if ( pw != pwck ) {
+			
 			$("#info_pwck").css("display", "none")
 			$("#er_pwsame").css("display", "")
-			$("#blank_pwck").css("display", "none")
 			
-			$("input").eq(2).focus()
-			
-			return
-		
-		} else if ( $("#username").val() == "" ) {
-			$("input").eq(3).focus()
-			
-			return
+			$("#userpwck").focus()
 			
 		} else if ( $("#useremail").val() == "" ) {
-			$("input").eq(4).focus()
 			
-			return
-		
+			$("#blank_name").css("display", "")
+			
+			$("#useremail").focus()
+			
 		} else if ( $("#userphone").val() == "" ) {
-			$("input").eq(5).focus()
 			
-			return
+			$("#blank_phone").css("display", "")
+			
+			$("#userphone").focus()
 			
 		} else if ( $("#useraddr1").val() == "" ) {
-			$("input").eq(6).focus()
 			
-			return
+			$("#blank_addr").css("display", "")
+			
+			$("#useraddr1").focus()
 			
 		} else if ( $("#useraddr2").val() == "" ) {
-			$("input").eq(7).focus()
 			
-			return
-		
+			$("#blank_addr").css("display", "")
+			
+			$("#useraddr2").focus()
+			
 		} else {
-			$(this).parents("form").submit() // 비밀번호 수정 폼 제출
+			
+			$(this).parents("form").submit() // 회원가입 폼 제출
 		}
 		
 	})
@@ -546,6 +498,8 @@ $(document).ready(function() {
 
 <div class="col-xs-10 col-xs-offset-1">
 
+	<input type="hidden" id="userno" name="userno" value="<%=updateUser.getUserno() %>">
+
 	<div class="form-group">
 		<p>'*' 표시 항목은 필수 입력 항목입니다</p>
 	</div>
@@ -561,8 +515,6 @@ $(document).ready(function() {
 		
 		<span class="info_box" id="info_pw" style="display: '';">영문, 숫자, 특수문자가 모두 포함된 6자리 이상의 조합</span>
 
-		<span class="blank_box" id="blank_pw" style="display: none;">필수 입력 사항입니다</span>
-		
 		<span class="er_box" id="er_pwlength" style="display: none;">6자리 이상 입력해주세요</span>
 		<span class="er_box" id="er_pwblank" style="display: none;">빈칸없이 입력해주세요</span>
 		<span class="er_box" id="er_pwtext" style="display: none;">영문, 숫자, 특수문자를 혼합하여 입력해주세요</span>
@@ -573,8 +525,6 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="userpwck">비밀번호 확인 *</label>
 		<input type="password" class="form-control" id="userpwck" name="userpwck" placeholder="PASSWORD CHECK">
-		
-		<span class="blank_box" id="blank_pwck" style="display: none;">필수 입력 사항입니다</span>
 		
 		<span class="er_box" id="er_pwsame" style="display: none;">비밀번호가 일치하지 않습니다</span>
 		
@@ -590,11 +540,11 @@ $(document).ready(function() {
 		<label for="useremail">이메일 *</label>
 		<input type="email" class="form-control" id="useremail" name="useremail" placeholder="ex) email@gmail.com" value="<%=updateUser.getUseremail() %>">
 		<span class="blank_box" id="blank_email" style="display: none;">필수 입력 사항입니다</span>
-	</div>		
+	</div>			
 	
 	<div class="form-group">
 		<label for="userphone">전화번호 *</label>
-		<input type="text" class="form-control" id="userphone" name="userphone" placeholder="'-' 제외하고 입력" maxlength="13" value="<%=updateUser.getUserphone() %>">
+		<input type="text" class="form-control" id="userphone" name="userphone" placeholder="'-' 제외하고 입력" minlength="9" maxlength="13" numberOnly value="<%=updateUser.getUserphone() %>">
 		<span class="blank_box" id="blank_phone" style="display: none;">필수 입력 사항입니다</span>
 	</div>		
 	
@@ -620,18 +570,19 @@ $(document).ready(function() {
 	
 	<div class="form-group">
 		<label for="userbirth">생년월일</label>
-		<input type="text" class="form-control" id="userbirth" name="userbirth" placeholder="'-' 제외하고 8자리 입력    ex) 1995-01-01" maxlength="10" value="<%=updateUser.getUserbirth() %>" >
+		<input type="text" class="form-control" id="userbirth" name="userbirth" placeholder="'-' 제외하고 8자리 입력    ex) 1995-01-01" maxlength="10" numberOnly value="<%=updateUser.getUserbirth() %>">
 	</div>		
 
 	<div class="form-group">
 		<label for="usernick">닉네임</label>
 		<input type="text" class="form-control" id="usernick" name="usernick" placeholder="NICK" value="<%=updateUser.getUsernick() %>">
-	</div>		
+	</div>	
 
 	<div class="form-group" id="beforeFile">
 		<%	if( ufile != null ) { %>
 			<label for="delFile">프로필 사진</label>
-			<a href="<%=request.getContextPath() %>/upload/<%=ufile.getUfilestoredname() %>" download="<%=ufile.getUfileoriginname() %>">
+			<a href="<%=request.getContextPath() %>/upload/<%=ufile.getUfilestoredname() %>" 
+			download="<%=ufile.getUfileoriginname() %>">
 				<%=ufile.getUfileoriginname() %>
 			</a>
 			<span id="delFile" style="color: red; font-weight: bold; cursor: pointer;">X</span>

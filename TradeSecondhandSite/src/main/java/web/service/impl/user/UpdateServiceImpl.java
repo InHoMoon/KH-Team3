@@ -149,10 +149,10 @@ public class UpdateServiceImpl implements UpdateService {
 				if( "useraddr1".equals(key) ) {
 					user.setUseraddr1(value);
 				}
-				if( "useraddr1".equals(key) ) {
+				if( "useraddr2".equals(key) ) {
 					user.setUseraddr2(value);
 				}
-				if( "useraddr1".equals(key) ) {
+				if( "useraddr3".equals(key) ) {
 					user.setUseraddr3(value);
 				}
 				if( "usergender".equals(key) ) {

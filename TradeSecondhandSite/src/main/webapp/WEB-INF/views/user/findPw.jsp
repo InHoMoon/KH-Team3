@@ -3,7 +3,6 @@
 
 <%@ include file="../layout/header.jsp" %>
 
-<!-- button -->
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -21,15 +20,24 @@ $(document).ready(function() {
 	$("#btnFindPw").click(function() {
 		
 		if( $("#userid").val() == "" ) {
-			alert("아이디를 입력하세요");
+			$("#blank_id").css("display", "")
+			$("#blank_name").css("display", "none")
+			$("#blank_email").css("display", "none")
+			
 			$("input").eq(0).focus()
 		
 		} else if ( $("#username").val() == "" ) {
-			alert("이름을 입력하세요");
+			$("#blank_id").css("display", "none")
+			$("#blank_name").css("display", "")
+			$("#blank_email").css("display", "none")
+			
 			$("input").eq(1).focus()
 			
 		} else if ( $("#useremail").val() == "" ) {
-			alert("이메일을 입력하세요");
+			$("#blank_id").css("display", "none")
+			$("#blank_name").css("display", "none")
+			$("#blank_email").css("display", "")
+			
 			$("input").eq(2).focus()
 		
 		} else {
@@ -47,73 +55,79 @@ $(document).ready(function() {
 </script>
 
 
-<!-- 필수입력항목 공백시 경고문구 출력 -->
-<script type="text/javascript">
-$(document).ready(function() {
+<style type="text/css">
+#loginform {
+	width: 500px;
 	
-	// 아이디 공백
-	$("#userid").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#required_id").css("display", "")
-		} else {
-			$("#required_id").css("display", "none")
-		}
-	})
+	margin: 0 auto;
+	padding: 30px;
 	
-	// 이름 공백
-	$("#username").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#required_name").css("display", "")
-		} else {
-			$("#required_name").css("display", "none")
-		}
-	})
+	border:1px solid #104138;
+	border-radius: 10px;
+	
+	background: whitesmoke;
+}
 
-	// 이메일 공백
-	$("#useremail").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#required_email").css("display", "")
-		} else {
-			$("#required_email").css("display", "none")
-		}
-	})
+.blank_box {
+	color: red;
+}
+
+.btn-findPw {
+	background-color: #fad703;  
+	color: #104138;
 	
-})
-</script>
+	display: inline-block;
+	float: left;
+}
+
+.btn-cancel {
+	background-color: salmon;  
+	color: #104138;
+
+	display: inline-block;
+	float: right;
+}
+</style>
+
 
 <h1 style="text-align: center;">비밀번호 찾기</h1>
 <hr>
 
 <form action="/find/pw" method="post" class="form-horizontal">
 
-	<div class="form-group">
-		<label for="userid" class="col-xs-2 col-xs-offset-2 control-label">아이디</label>
-		<div class="col-xs-4">
-			<input type="text" id="userid" name="userid" class="form-control">
-			<span class="required_box" id="required_id" style="display: none; color: red;">필수 입력 사항입니다</span>
-		</div>
-	</div>
+<fieldset id="loginform">
 
+<div class="col-xs-10 col-xs-offset-1">
+	
 	<div class="form-group">
-		<label for="username" class="col-xs-2 col-xs-offset-2 control-label">이름</label>
-		<div class="col-xs-4">
-			<input type="text" id="username" name="username" class="form-control">
-			<span class="required_box" id="required_name" style="display: none; color: red;">필수 입력 사항입니다</span>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label for="useremail" class="col-xs-2 col-xs-offset-2 control-label">이메일</label>
-		<div class="col-xs-4">
-			<input type="email" id="useremail" name="useremail" class="form-control">
-			<span class="required_box" id="required_email" style="display: none; color: red;">필수 입력 사항입니다</span>
-		</div>	
+		<label for="userid">아이디</label>
+		<input type="text" class="form-control" id="userid" name="userid" placeholder="ID">
 	</div>
 	
-	<div class="text-center">
-		<button type="button" class="btn btn-default" id="btnFindPw">비밀번호 찾기</button>
-		<button type="button" class="btn btn-default" id="btnCancel">취소</button>
+	<div class="form-group">
+		<label for="username">이름</label>
+		<input type="text" class="form-control" id="username" name="username" placeholder="NAME">
 	</div>
+	
+	<div class="form-group">
+		<label for="useremail">이메일</label>
+		<input type="email" class="form-control" id="useremail" name="useremail" placeholder="ex) email@gmail.com">
+	</div>
+	
+	<div class="form-group">		
+		<span class="blank_box" id="blank_id" style="display: none;">아이디를 입력하세요</span>
+		<span class="blank_box" id="blank_name" style="display: none;">이름을 입력하세요</span>
+		<span class="blank_box" id="blank_email" style="display: none;">이메일을 입력하세요</span>
+	</div>
+
+	<div class="form-group">
+		<button type="button" class="btn btn-findPw" id="btnFindPw">비밀번호 찾기</button>
+		<button type="button" class="btn btn-cancel" id="btnCancel">취소</button>
+	</div>
+	
+</div>
+
+</fieldset>		
 
 </form>
 

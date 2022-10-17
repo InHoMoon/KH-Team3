@@ -28,20 +28,8 @@ public class WishListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//Trade 객체 생성
-		Trade trade = new Trade();
-		
-//		TradeImg tradeImg = tradeService.viewImg(trade);
-		
 		//세션 정보 객체
 		HttpSession session = req.getSession();
-//		
-//		req.setAttribute("imgno", tradeImg.getImgno());
-//		req.setAttribute("tradeno", tradeImg.getTradeno());
-//		req.setAttribute("price", trade.getPrice());
-		
-		
-//		System.out.println(tradeImg);
 
 		//---------------------------------------------------------
 		
@@ -67,5 +55,30 @@ public class WishListController extends HttpServlet {
 
 		// 포워드
 		req.getRequestDispatcher(url).forward(req, resp);
+		
+		//----------------------------------------------------------
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }

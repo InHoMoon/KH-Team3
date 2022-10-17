@@ -3,11 +3,10 @@
 
 <%@ include file="../layout/header.jsp" %>
 
-<!-- button -->
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	// 아이디 입력창에 포커스주가
+	// 아이디 입력창에 포커스주기
 	$("input").eq(0).focus()
 	
 	// 패스워드 입력창에 엔터키 입력 시 submit
@@ -21,11 +20,15 @@ $(document).ready(function() {
 	$("#btnLogin").click(function() {
 		
 		if( $("#userid").val() == "" ) {
-			alert("아이디를 입력하세요");
+			$("#blank_id").css("display", "")
+			$("#blank_pw").css("display", "none")
+			
 			$("input").eq(0).focus()
 			
 		} else if ( $("#userpw").val() == "" ) {
-			alert("비밀번호를 입력하세요");
+			$("#blank_id").css("display", "none")
+			$("#blank_pw").css("display", "")
+			
 			$("input").eq(1).focus()
 		
 		} else {
@@ -34,92 +37,101 @@ $(document).ready(function() {
 		
 	})
 	
-	// 아이디 찾기 버튼
-	$("#btnFindId").click(function() {
-		$(location).attr('href', '/find/id') // FindIdController으로 가기
-	})
-	
-	// 비밀번호 찾기 버튼
-	$("#btnFindPw").click(function() {
-		$(location).attr('href', '/find/pw') // FindPwController으로 가기		
-	})
-	
-	// 회원가입 버튼
-	$("#btnJoin").click(function() {
-		$(location).attr('href', '/join') // JoinController로 가기
-	})
-	
 })
 </script>
 
 
-<!-- 필수입력항목 공백시 경고문구 출력 -->
-<script type="text/javascript">
-$(document).ready(function() {
+<style type="text/css">
+#loginform {
+	width: 500px;
 	
-	// 아이디 공백
-	$("#userid").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#required_id").css("display", "")
-		} else {
-			$("#required_id").css("display", "none")
-		}
-	})
+	margin: 0 auto;
+	padding: 30px;
 	
-	// 비밀번호 공백
-	$("#userpw").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#required_pw").css("display", "")
-		} else {
-			$("#required_pw").css("display", "none")
-		}
-	})
-})
-</script>
+	border:1px solid #104138;
+	border-radius: 10px;
+	
+	background: whitesmoke;
+}
+
+.blank_box {
+	color: red;
+}
+
+.btn-login {
+	background-color: #fad703;
+	color: #104138;
+}
+
+.btn-sign {
+	background-color: #104138;  
+	color: #fad703;
+}
+
+#findId, #findPw, #join  {
+	font-size: 14px;
+	color: #104138;
+	display: inline-block;
+}
+
+#contour {
+	padding: 10px;
+	font-size: 14px;
+	display: inline-block;
+}
+</style>
+
 
 <h1 style="text-align: center;">로그인</h1>
 <hr>
 
 <form action="/login" method="post" class="form-horizontal">
 
+<fieldset id="loginform">
+
+<div class="col-xs-10 col-xs-offset-1">
+	
 	<div class="form-group">
-		<label for="userid" class="col-xs-2 col-xs-offset-3 control-label">아이디</label>
-		<div class="col-xs-3">
-			<input type="text" id="userid" name="userid" class="form-control" >
-			<span class="required_box" id="required_id" style="display: none; color: red;">필수 입력 사항입니다</span>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label for="userpw" class="col-xs-2 col-xs-offset-3 control-label">비밀번호</label>
-		<div class="col-xs-3">
-			<input type="password" id="userpw" name="userpw" class="form-control">
-			<span class="required_box" id="required_pw" style="display: none; color: red;">필수 입력 사항입니다</span>
-		</div>
-	</div>
-
-	<div class="checkbox" style="text-align: center;">
-		<label>
-			<input type="checkbox" id="saveid" name="saveid"> 아이디 저장
-		</label>
-	</div>
-		
-	<div class="clearfix"></div>
-
-	<div class="text-center">
-		<button type="button" class="btn btn-default btn-lg col-xs-4 col-xs-offset-4" id="btnLogin">로그인</button>
+		<label for="userid">아이디</label>
+		<input type="text" class="form-control" id="userid" name="userid" placeholder="ID">
 	</div>
 	
-	<div class="clearfix"></div>
-
-	<div class="text-center">
-		<button type="button" class="btn btn-default" id="btnFindId">아이디 찾기</button>
-		<button type="button" class="btn btn-default" id="btnFindPw">비밀번호 찾기</button>
-		<button type="button" class="btn btn-default" id="btnJoin">회원가입</button>
+	<div class="form-group">
+		<label for="userpw">비밀번호</label>
+		<input type="password" class="form-control" id="userpw" name="userpw" placeholder="PASSWORD">
 	</div>
 
-</form>
+	<div class="form-group">	
+		<div class="form-check">
+			<input type="checkbox" class="form-check-input" id="saveid" name="saveid">
+			<label class="form-check-label" for="saveid">아이디 저장</label>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<span class="blank_box" id="blank_id" style="display: none;">아이디를 입력하세요</span>
+		<span class="blank_box" id="blank_pw" style="display: none;">비밀번호를 입력하세요</span>
+	</div>
+	
+	<div class="form-group">
+		<button type="button" class="btn btn-login btn-lg btn-block" id="btnLogin">로그인</button>
+	</div>
+	
+</div>
 
+</fieldset>
+
+<br>
+
+<div class="text-center">
+	<a href="/find/id" class="link" id="findId">아이디 찾기</a>
+	<p id="contour"> | </p>
+	<a href="/find/pw" class="link" id="findPw">비밀번호 찾기</a>
+	<p id="contour"> | </p>
+	<a href="/join" class="link" id="join">회원가입</a>
+</div>
+
+</form>
 
 <!-- 아이디 저장 쿠키 -->
 <script type="text/javascript">

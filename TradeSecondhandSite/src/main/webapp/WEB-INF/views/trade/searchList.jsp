@@ -64,7 +64,14 @@ $(document).ready(function(){
 <%	for(int i=0; i<searchList.size(); i++) { %>
 <tr>
 	<td><%=searchList.get(i).getTradeno() %></td>
-	<td><%=searchList.get(i).getSaleState() %></td>
+	<%if(searchList.get(i).getSaleState().equals("판매중")){ %>
+		<td style="color: green;"><%=searchList.get(i).getSaleState() %></td>	
+	<%} else if(searchList.get(i).getSaleState().equals("예약중")) { %>
+		<td style="color: blue;"><%=searchList.get(i).getSaleState() %></td>
+	<%} else if(searchList.get(i).getSaleState().equals("판매완료")) { %>
+		<td style="color: red;"><%=searchList.get(i).getSaleState() %></td>
+	<%} %>
+	<td>
 	<td>
 		<a href="./view?tradeno=<%=searchList.get(i).getTradeno() %>">
 			<%=searchList.get(i).getTitle() %>

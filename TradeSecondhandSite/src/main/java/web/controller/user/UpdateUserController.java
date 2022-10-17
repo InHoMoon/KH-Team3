@@ -56,8 +56,7 @@ public class UpdateUserController extends HttpServlet {
 		
 		System.out.println("UpdateUserController doPost() - 회원수정 성공" + req);
 		
-		// 회원수정 성공 페이지로 이동
-		req.getRequestDispatcher("/WEB-INF/views/user/updateSuccess.jsp").forward(req, resp);
+		resp.sendRedirect("/WEB-INF/views/user/updateSucccess.jsp");
 		
 	}
 	

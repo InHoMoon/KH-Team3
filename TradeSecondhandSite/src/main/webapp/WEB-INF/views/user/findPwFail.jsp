@@ -24,15 +24,46 @@ $(document).ready(function() {
 })
 </script>
 
-<h1 style="color: red; text-align: center;">비밀번호 찾기 실패</h1>
-<hr>
 
-<h3 style="text-align: center;">ID, 이름, EMAIL을 다시 확인하세요</h3>
+<style type="text/css">
+#failform {
+	width: 500px;
+	
+	margin: 0 auto;
+	padding: 30px;
+	
+}
 
-<div class="text-center">
-	<button type="button" class="btn btn-default" id="btnFindId">아이디 찾기</button>
-	<button type="button" class="btn btn-default" id="btnFindPw">비밀번호 찾기</button>
-	<button type="button" class="btn btn-default" id="btnMain">메인화면</button>
-</div>
+.btn-findId {
+	background-color: mediumaquamarine;  
+	color: #104138;
+}
+
+.btn-findPw {
+	background-color: mediumaquamarine;  
+	color: #104138;
+}
+
+.btn-main {
+	background-color: salmon;  
+	color: #104138;
+}
+</style>
+
+
+<fieldset id="failform">
+
+	<h1 style="color: red; text-align: center;">비밀번호 찾기 실패</h1>
+	<hr>
+	
+	<h3 style="text-align: center;">ID, 이름, EMAIL을 다시 확인하세요</h3>
+	
+	<div class="text-center">
+		<button type="button" class="btn btn-findId" id="btnFindId">아이디 찾기</button>
+		<button type="button" class="btn btn-findPw" id="btnFindPw">비밀번호 찾기</button>
+		<button type="button" class="btn btn-main" id="btnMain">메인화면</button>
+	</div>
+	
+</fieldset>
 
 <%@ include file="../layout/footer.jsp" %>

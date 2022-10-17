@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import web.dto.User;
 import web.service.face.user.JoinService;
 import web.service.impl.user.JoinServiceImpl;
 
@@ -31,11 +32,16 @@ public class JoinController extends HttpServlet {
 		// 전달 파라미터에 대한 한글 인코딩 설정(UTF-8)
 		req.setCharacterEncoding("UTF-8");
 		
+		// 전달파라미터 정보 얻어오기
+		User user = joinService.getJoinUser(req);
+		
 		// 회원정보 삽입
 		joinService.join(req);
 		
-		// 로그인 페이지로 이동
-		req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
+		req.setAttribute("user", user);
+		
+		// 로그인 성공 페이지로 이동
+		req.getRequestDispatcher("/WEB-INF/views/user/joinSuccess.jsp").forward(req, resp);
 		
 	}
 	

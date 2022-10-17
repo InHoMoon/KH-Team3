@@ -29,6 +29,17 @@ public class JoinServiceImpl implements JoinService {
 	private JoinDao joinDao = new JoinDaoImpl();
 	
 	@Override
+	public User getJoinUser(HttpServletRequest req) {
+		
+		User user = new User();
+		
+		user.setUserid( req.getParameter("userid") );
+		user.setUsername( req.getParameter("username") );
+		
+		return user;
+	}
+	
+	@Override
 	public void join(HttpServletRequest req) {
 		
 		//--- 첨부파일 추가하여 게시글 작성 처리하기 ---
@@ -123,10 +134,10 @@ public class JoinServiceImpl implements JoinService {
 				if( "useraddr1".equals(key) ) {
 					user.setUseraddr1(value);
 				}
-				if( "useraddr1".equals(key) ) {
+				if( "useraddr2".equals(key) ) {
 					user.setUseraddr2(value);
 				}
-				if( "useraddr1".equals(key) ) {
+				if( "useraddr3".equals(key) ) {
 					user.setUseraddr3(value);
 				}
 				if( "usergender".equals(key) ) {

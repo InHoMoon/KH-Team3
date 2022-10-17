@@ -37,7 +37,11 @@ DELETE wishlist;
 -- trade테이블의 wishlist등록 속성값 복사
 INSERT INTO wishlist ( wishlistno, tradeno, title, userid, content, hit, insert_date, price, product_state, sale_state, category, userphone )
 SELECT wishlist_seq.nextval, tradeno, title, userid, content, hit, insert_date, price, product_state, sale_state, category, userphone FROM trade
+<<<<<<< HEAD
+WHERE userid = 'id2';
+=======
 WHERE wish_ckeck = '1';
+>>>>>>> branch 'master' of https://github.com/InHoMoon/KH-Team3.git
 
 INSERT INTO test1 ( testno, title , content ) VALUES ( test1_seq.nextval, '테스트 두번째', '테스트내용 두번째' );
 

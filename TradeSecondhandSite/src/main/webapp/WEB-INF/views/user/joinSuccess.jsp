@@ -17,14 +17,35 @@ $(document).ready(function() {
 })
 </script>
 
-<h1 style="text-align: center;">회원가입 성공</h1>
-<hr>
 
-<h3 style="text-align: center;"><%=user.getUserid() %>님, 가입을 축하합니다</h3>
+<style type="text/css">
+#failform {
+	width: 500px;
+	
+	margin: 0 auto;
+	padding: 30px;
+	
+}
 
-<div class="text-center">
-	<button type="button" class="btn btn-default" id="btnLogin">로그인</button>
-</div>
+.btn-login {
+	background-color: #fad703;
+	color: #104138;
+}
+</style>
+
+
+<fieldset id="failform">
+
+	<h1 style="text-align: center;">회원가입 성공</h1>
+	<hr>
+	
+	<h3 style="text-align: center;"><%=user.getUserid() %>님, 가입을 축하합니다</h3>
+	
+	<div class="text-center">
+		<button type="button" class="btn btn-login" id="btnLogin">로그인</button>
+	</div>
+
+</fieldset>
 
 <%@ include file="../layout/footer.jsp" %>
  

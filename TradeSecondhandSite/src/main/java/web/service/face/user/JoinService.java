@@ -8,6 +8,14 @@ import web.dto.User;
 public interface JoinService {
 
 	/**
+	 * 회원가입 정보 추출하기
+	 * 
+	 * @param req - 요청 정보 객체
+	 * @return User - 회원가입 정보 (userid, username)
+	 */
+	public User getJoinUser(HttpServletRequest req);
+
+	/**
 	 * 회원정보 입력
 	 * 입력한 회원정보를 DB에 저장한다
 	 * 
@@ -46,5 +54,6 @@ public interface JoinService {
 	 * @return boolean - true: 인증성공, false: 인증실패 
 	 */
 	public boolean checkNick(User user);
+
 
 }

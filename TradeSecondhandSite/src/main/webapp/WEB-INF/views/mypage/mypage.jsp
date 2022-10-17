@@ -11,7 +11,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".updateInfo").click(function() {
-		$(location).attr('href', '/update/user')
+		
+		// 정보수정 - 수정페이지 연동하는 버튼입니다...수정하지 마세요......
+		$(location).attr('href', '/update/user?userno=<%=session.getAttribute("userno") %>') 
+		
 	})
 })
 

@@ -19,14 +19,41 @@ $(document).ready(function() {
 })
 </script>
 
-<h1 style="text-align: center;">아이디 찾기 성공</h1>
-<hr>
 
-<h3 style="text-align: center;"><%=session.getAttribute("username") %>님의 아이디는 <strong style="color: blue;"><%=session.getAttribute("userid") %></strong>입니다</h3>
+<style type="text/css">
+#failform {
+	width: 500px;
+	
+	margin: 0 auto;
+	padding: 30px;
+	
+}
 
-<div class="text-center">
-	<button type="button" class="btn btn-default" id="btnLogin">로그인</button>
-	<button type="button" class="btn btn-default" id="btnFindPw">비밀번호 찾기</button>
-</div>
+.btn-login {
+	background-color: #fad703;
+	color: #104138;
+}
+
+.btn-findPw {
+	background-color: mediumaquamarine;  
+	color: #104138;
+}
+</style>
+
+
+<fieldset id="failform">
+
+	<h1 style="color: red; text-align: center;">아이디 찾기 성공</h1>
+	<hr>
+	
+	<h3 style="text-align: center;"><%=session.getAttribute("username") %>님의 아이디는 <strong style="color: blue;"><%=session.getAttribute("userid") %></strong>입니다</h3>
+	<br>
+	
+	<div class="text-center">
+		<button type="button" class="btn btn-login" id="btnLogin">로그인</button>
+		<button type="button" class="btn btn-findPw" id="btnFindPw">비밀번호 찾기</button>
+	</div>
+
+</fieldset>
 
 <%@ include file="../layout/footer.jsp" %>

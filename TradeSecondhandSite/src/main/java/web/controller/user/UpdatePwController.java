@@ -31,9 +31,11 @@ public class UpdatePwController extends HttpServlet {
 		
 		// 회원수정 전달파라미터 추출하기
 		User user = updateService.getUpdateUserpw(req);
+		System.out.println("UpdatePwController doPost() - 회원수정 확인" + user);
 		
 		// 회원수정 처리
 		updateService.updatePw(user);
+		System.out.println("UpdatePwController doPost() - 회원수정 확인" + user);
 		
 		// 로그인 페이지로 리다이렉트
 		req.getRequestDispatcher("/WEB-INF/views/user/updatePwSuccess.jsp").forward(req, resp);

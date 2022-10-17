@@ -86,7 +86,15 @@ $(document).ready(function() {
 	
 	//검색 폼 제출 버튼
 	$("#btnSearch").click(function() {
-		$("form").submit();
+		
+		if( $("#searchinput").val() == "" ) {
+			alert('검색어를 입력해주세요!');
+
+			$("input").eq(0).focus()
+			
+		} else {
+			$("form").submit();
+		}
 	})
 	
 

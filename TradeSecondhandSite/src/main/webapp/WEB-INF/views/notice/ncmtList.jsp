@@ -36,9 +36,6 @@ $(document).ready(function() {
 </style>
 
 
-<% if( ncmtList == null ) { %>
-	등록된 댓글이 없습니다.
-<% } %>
 
 
 <div style="width: 800px;" >
@@ -47,10 +44,11 @@ $(document).ready(function() {
 				<tr>
 					<td class="text-center col-md-2"  rowspan="2"><span style="background-color:#fad703">&nbsp;&nbsp;<%= ncmtList.get(i).getUserid() %>&nbsp;&nbsp;</span></td>
 					<td style="color: #a8a8a8"><%= ncmtList.get(i).getNcmtwritedate() %></td>
-					<td class="text-right"><% if (session.getAttribute("userid").equals(ncmtList.get(i).getUserid()) ) { %>
+					<td class="text-right">
+						<% if ( session.getAttribute("login") != null && session.getAttribute("userid").equals(ncmtList.get(i).getUserid()) ) { %>
 						<a class="ncmtdel"  style="color: #d9534f"
 						href="/ncmt/delete?nno=<%= ncmtList.get(i).getNno() %>&ncmtid=<%= ncmtList.get(i).getNcmtid() %>">삭제</a>
-					<% } %>
+						<% } %>
 					</td>
 				</tr>
 				<tr style="border-bottom: 1px solid #ccc;">

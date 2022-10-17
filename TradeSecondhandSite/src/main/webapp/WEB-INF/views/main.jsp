@@ -30,19 +30,29 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	
+	$("#mainSearchbtn").click(function() {
+			
+			if( $("#searchText").val() == "" ) {
+				$("#search_keyword").css("display", "")
+
+				$("input").eq(0).focus()
+				
+			}  else {
+				$(this).parents("form").submit(); // 로그인 폼 제출
+			}
+			
+		})
 	
 })
 </script>
-
-
+<div class="text-center"><span  id="search_keyword"  style="color:tomato; display: none;" >&nbsp; 검색어를 입력해주세요!</span></div>
 <div>
 	<form action="/trade/list" method="post" name="search">		
 	        <input  class="form-control" type="hidden" name="searchField" value="title">
             <div class="input-group col-xs-6 centered"  >
 	           <input type="text" class="form-control input-lg" placeholder="찾으시는 물건을 입력해주세요 :D" name="searchText" id="searchText">
                <div class="input-group-btn">
-                  <button type="submit" class="btn btn-default" id="mainSearchbtn"><span class="glyphicon glyphicon-search"></span></button>
+                  <button type="button" class="btn btn-default" id="mainSearchbtn"><span class="glyphicon glyphicon-search"></span></button>
                </div>
             </div>
     </form>

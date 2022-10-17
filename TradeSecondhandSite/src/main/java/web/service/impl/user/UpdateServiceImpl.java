@@ -98,7 +98,7 @@ public class UpdateServiceImpl implements UpdateService {
 			e.printStackTrace();
 		}
 
-		// 회원가입 정보 DTO객체
+		// 회원 정보 DTO객체
 		User user = new User();
 		
 		// 프로필 사진 정보 DTO객체
@@ -131,6 +131,9 @@ public class UpdateServiceImpl implements UpdateService {
 				}
 				
 				// key에 맞게 value를 DTO에 삽입하기
+				if( "userno".equals(key) ) {
+					user.setUserno(Integer.parseInt(value));
+				}
 				if( "userid".equals(key) ) {
 					user.setUserid(value);
 				}

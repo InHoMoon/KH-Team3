@@ -42,7 +42,7 @@ public class JoinServiceImpl implements JoinService {
 	@Override
 	public void join(HttpServletRequest req) {
 		
-		//--- 첨부파일 추가하여 게시글 작성 처리하기 ---
+		//--- 첨부파일 추가하여 회원가입 처리하기 ---
 		
 		// multipart/form-data 인코딩 확인
 		boolean isMultipart = ServletFileUpload.isMultipartContent(req);
@@ -235,29 +235,6 @@ public class JoinServiceImpl implements JoinService {
 		}
 		
 		// 아이디 중복체크 성공
-		return true;
-		
-	}
-	
-	@Override
-	public User getCheckNick(HttpServletRequest req) {
-		
-		User user = new User();
-		
-		user.setUsernick( req.getParameter("usernick") );
-		
-		return user;
-	}
-	
-	@Override
-	public boolean checkNick(User user) {
-		
-		// 닉네임 중복체크 실패
-		if( joinDao.checkCntUserByUsernick(JDBCTemplate.getConnection(), user) > 0 ) {
-			return false;
-		}
-		
-		// 닉네임 중복체크 성공
 		return true;
 		
 	}

@@ -45,10 +45,6 @@ public class UpdateDaoImpl implements UpdateDao {
 				user.setUsergender( rs.getString("usergender") );
 				user.setUserbirth( rs.getString("userbirth") );
 				user.setUsernick( rs.getString("usernick") );
-				user.setUsergrade( rs.getString("usergrade") );
-				user.setUserjoindate( rs.getDate("userjoindate") );
-				user.setUserupdate( rs.getDate("userupdate") );
-				user.setReportcount( rs.getInt("reportcount") );
 				
 			}
 			

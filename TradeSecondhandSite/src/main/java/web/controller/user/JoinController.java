@@ -29,19 +29,11 @@ public class JoinController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		// 전달 파라미터에 대한 한글 인코딩 설정(UTF-8)
-		req.setCharacterEncoding("UTF-8");
-		
-		// 전달파라미터 정보 얻어오기
-		User user = joinService.getJoinUser(req);
-		
-		// 회원정보 삽입
+		// 회원가입 처리
 		joinService.join(req);
-		
-		req.setAttribute("user", user);
-		
-		// 로그인 성공 페이지로 이동
-		req.getRequestDispatcher("/WEB-INF/views/user/joinSuccess.jsp").forward(req, resp);
+
+		// 로그인 페이지로 리다이렉트
+		resp.sendRedirect("/login");
 		
 	}
 	

@@ -6,6 +6,14 @@ import web.dto.Ufile;
 import web.dto.User;
 
 public interface JoinDao {
+	
+	/**
+	 * 시퀀스를 이용하여 다음 회원 번호 조회하기
+	 * 
+	 * @param conn - DB 연결 객체
+	 * @return - 다음 회원 번호
+	 */
+	public int selectNextUserno(Connection conn);
 
 	/**
 	 * 회원 정보 삽입
@@ -15,14 +23,6 @@ public interface JoinDao {
 	 * @return int - INSERT 수행 결과
 	 */
 	public int insert(Connection conn, User user);
-
-	/**
-	 * 시퀀스를 이용하여 다음 회원 번호 조회하기
-	 * 
-	 * @param conn - DB 연결 객체
-	 * @return - 다음 회원 번호
-	 */
-	public int selectNextUserno(Connection conn);
 
 	/**
 	 * 프로필 사진 삽입
@@ -41,14 +41,5 @@ public interface JoinDao {
 	 * @return int - 0: 중복 아이디 없음, 1: 중복 아이디 있음
 	 */
 	public int checkCntUserByUserid(Connection conn, User user);
-
-	/**
-	 * 닉네임 중복체크 확인
-	 * 
-	 * @param conn - DB 연결 객체
-	 * @param user - 사용자가 입력한 usernick
-	 * @return int - 0: 중복 아이디 없음, 1: 중복 아이디 있음
-	 */
-	public int checkCntUserByUsernick(Connection conn, User user);
 
 }

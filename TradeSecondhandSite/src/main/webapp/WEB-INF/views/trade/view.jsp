@@ -198,6 +198,7 @@ $(document).ready(function() {
 		<th class="text-center">가격</th>
 	</tr>
 		<% for(int i=0; i<relatedList.size(); i++){ %>
+		<% if(relatedList.get(i).getTradeno()!=viewTrade.getTradeno()){ %>
 	<tr>
 		<td><%=relatedList.get(i).getTradeno() %></td>
 		<td>
@@ -210,6 +211,7 @@ $(document).ready(function() {
 		<td><%=relatedList.get(i).getPrice() %></td>	
 	</tr>
 		<%} %>
+	<%} %>
 
 </table>
 

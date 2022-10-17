@@ -70,7 +70,7 @@ $(document).ready(function() {
 <hr>
 	<!-- 최신 글목록 영역 (왼)  -->
 	<div>
-		<div class="col-md-6">
+		<div class="col-md-7">
 			<div>
 			<span style="font-size: 25px;">최신글 </span>
 			<a href="./trade/list">더보기</a>
@@ -78,10 +78,10 @@ $(document).ready(function() {
 		<table class="table table-striped table-hover table-condensed">
 		<tr>
 			<th style="width: 10%">NO</th>
-			<th style="width: 15%">구분</th>
+			<th style="width: 20%">구분</th>
 			<th style="width: 45%">제목</th>
 			<th style="width: 10%">가격</th>
-			<th style="width: 20%">작성일</th>
+			<th style="width: 15%">작성일</th>
 		</tr>
 		
 		<% for( int i=0; i<newlist.size(); i++ ) { %>
@@ -100,9 +100,9 @@ $(document).ready(function() {
 		</table>
 		
 	<!-- 최신 글목록 영역 (왼)  -->		
-		</div class="col-md-4">
+		</div class="col-md-2">
 			
-		    	<div class="col-md-6">
+		    	<div class="col-md-5">
 		     		<img  class="img-responsive" src="/resources/image/sitepic.jpg" alt=""  >
 			    <div>
 			        <h3>마중마켓</h3>

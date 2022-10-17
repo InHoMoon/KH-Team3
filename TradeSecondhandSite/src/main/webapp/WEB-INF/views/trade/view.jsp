@@ -44,7 +44,6 @@ $(document).ready(function() {
 	})
 	//다음버튼
 	$("#btnpost").click(function() {
-<%-- 		<% if(viewTrade.getTradeno()) %> --%>
 		$(location).attr('href', './view?tradeno=<%=viewTrade.getTradeno()-1 %>')
 	})
 	
@@ -61,12 +60,7 @@ $(document).ready(function() {
 	})
 	<%} %>
 	
-// 	//댓글 수정버튼
-<%-- 	<%	for(int i=0; i<cmtList.size(); i++) { %> --%>
-<%-- 	$("#btnCmtUp<%=cmtList.get(i).getCmtno() %>").click(function() { --%>
-<%-- 		$(location).attr('href', './cmtup?cmtno=<%=cmtList.get(i).getCmtno() %>') --%>
-// 	})
-<%-- 	<%} %> --%>
+
 	
 	
 
@@ -155,7 +149,6 @@ $(document).ready(function() {
 		<!-- 게시물 작성자거나 댓글 작성자 아이디일 경우 삭제 버튼 -->
 		<% if(cmtList.get(i).getUserid().equals(session.getAttribute("userid")) || viewTrade.getUserid().equals(session.getAttribute("userid"))) {%>
 			<button id="btnCmtDel<%=cmtList.get(i).getCmtno() %>" class="btn btn-danger">삭제</button>
-<%-- 			<button id="btnCmtUp<%=cmtList.get(i).getCmtno() %>" class="btn btn-info">수정</button> --%>
 		<%} %>
 	<%} %>
 	</tr>

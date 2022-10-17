@@ -25,7 +25,7 @@ $(document).ready(function(){
 })
 </script>
 
-<h1>거래글 목록</h1>
+<h1>중고거래</h1>
 <hr>
 <div>
 <form action="/trade/list" method="post" name="search" >
@@ -38,7 +38,7 @@ $(document).ready(function(){
 			</select></td>
 			<td><input type="text" class="form-control"
 				placeholder="검색어 입력" name="searchText" maxlength="100"></td>
-			<td><button type="submit" class="btn btn-success">검색</button></td>
+			<td><button type="submit" class="btn" style="background-color:#fad703">검색</button></td>
 		</tr>
 	</table>
 	</form>
@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 <table class="table table-striped table-hover table-condensed">
 <tr>
-	<th style="width: 15%">글번호</th>
+	<th style="width: 15%">NO</th>
 	<th style="width: 15%">판매 상태</th>
 	<th style="width: 30%">제목</th>
 	<th style="width: 15%">아이디</th>
@@ -57,9 +57,15 @@ $(document).ready(function(){
 <%	for(int i=0; i<tradeList.size(); i++) { %>
 <tr>
 	<td><%=tradeList.get(i).getTradeno() %></td>
-	<td><%=tradeList.get(i).getSaleState() %></td>
+	<%if(tradeList.get(i).getSaleState().equals("판매중")){ %>
+		<td style="color: green;"><%=tradeList.get(i).getSaleState() %></td>	
+	<%} else if(tradeList.get(i).getSaleState().equals("예약중")) { %>
+		<td style="color: blue;"><%=tradeList.get(i).getSaleState() %></td>
+	<%} else if(tradeList.get(i).getSaleState().equals("판매완료")) { %>
+		<td style="color: red;"><%=tradeList.get(i).getSaleState() %></td>
+	<%} %>
 	<td>
-		<a href="./view?tradeno=<%=tradeList.get(i).getTradeno() %>">
+		<a style="color: black;" href="./view?tradeno=<%=tradeList.get(i).getTradeno() %>">
 			<%=tradeList.get(i).getTitle() %>
 		</a>
 	</td>

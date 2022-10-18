@@ -34,7 +34,8 @@ public class TradeListController extends HttpServlet {
 		//페이징 된 게시글 목록 조회
 		List<Trade> tradeList = tradeService.getList(paging);
 		
-	
+		
+		
 
 		
 		

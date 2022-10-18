@@ -118,6 +118,7 @@ public interface TradeService {
 	 */
 	public List<Trade> viewRelated(Trade tradeno);
 
+	
 
 
 

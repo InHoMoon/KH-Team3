@@ -193,6 +193,8 @@ public interface TradeDao {
 	public int deleteAllCmt(Connection conn, Trade tradeno);
 
 
+
+
 	
 
 }

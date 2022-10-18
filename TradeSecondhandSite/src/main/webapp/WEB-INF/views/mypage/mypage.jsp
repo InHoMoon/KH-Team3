@@ -1,4 +1,5 @@
 <%@page import="web.dto.Trade"%>
+<%@page import="web.dto.WishList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -6,7 +7,7 @@
 <%@ include file="../layout/header.jsp"%>
 
 <%	List<Trade> mypostList = (List) request.getAttribute("mypostList"); %>
-<%	List<Trade> wishList = (List) request.getAttribute("wishList"); %>
+<%	List<WishList> wishList = (List) request.getAttribute("wishList"); %>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -29,7 +30,7 @@ ul {
 
 .wishList {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: flex-start;
 }
 
 .my-info {
@@ -88,7 +89,7 @@ section {
 <!--------------------- 내 게시글 -------------------------->
 
 <h1 style="display: inline-block;">내 게시글</h1><br>
-<a href="/mypage/mypost" class="detail">더보기 &gt;&gt;</a>
+
 
 <table class="table table-striped table-condensed">
 <tr>
@@ -100,7 +101,8 @@ section {
 </tr>	
 
 <%	if(mypostList.size() != 0) { %>
-	<% if(wishList.size() > 5) { %>
+<a href="/mypage/mypost" class="detail">더보기 &gt;&gt;</a>
+	<% if(mypostList.size() > 5) { %>
 		<%	for(int i=0; i<5; i++) { %>
 		<tr>
 			<td class="text-center"><%=mypostList.get(i).getTradeno() %></td>
@@ -139,9 +141,9 @@ section {
 <!--------------------- 관심 상품 -------------------------->
 
 <h1 style="display: inline-block;">관심 상품</h1><br>
-<a href="/mypage/wishlist" class="detail">더보기 &gt;&gt;</a><br>
 
 <%	if(wishList.size() != 0) { %>
+<a href="/mypage/wishlist" class="detail">더보기 &gt;&gt;</a><br>
 	<article class="wishList">
 	<% if(wishList.size() > 5) { %>
 		<%	for(int i=0; i<5; i++) { %>

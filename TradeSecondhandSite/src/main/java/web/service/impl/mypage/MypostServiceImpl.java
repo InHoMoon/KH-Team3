@@ -38,7 +38,7 @@ public class MypostServiceImpl implements MypostService {
 		int totalCont = mypostDao.selectCnt(JDBCTemplate.getConnection(), userno);
 
 		//페이징 객체 생성
-		Paging paging = new Paging(totalCont, curPage, 8, 5); //게시글 수 8 페이징 수 5
+		Paging paging = new Paging(totalCont, curPage); //게시글 수 8 페이징 수 5
 
 		//페이징 객체 반환
 		return paging;

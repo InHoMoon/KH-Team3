@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import util.Paging;
 import web.dto.Trade;
+import web.dto.WishList;
 import web.service.face.mypage.MypostService;
 import web.service.face.mypage.WishListService;
 import web.service.impl.mypage.MypostServiceImpl;
@@ -47,7 +48,7 @@ public class MypageController extends HttpServlet {
 			List<Trade> mypostList = mypostService.getList(paging, userno);
 			
 			//관심상품 목록 조회
-			List<Trade> wishList = wishListService.getWishList(userid);
+			List<WishList> wishList = wishListService.getWishList(req, userid);
 			
 			//조회결과 MODEL값 전달
 			req.setAttribute("mypostList", mypostList);

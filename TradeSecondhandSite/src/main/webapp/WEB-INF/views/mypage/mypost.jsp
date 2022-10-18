@@ -62,7 +62,6 @@ a {
 	<th style="width: 10%">조회수</th>
 	<th style="width: 10%">작성일</th>
 </tr>
-
 <%	for(int i=0; i<mypostList.size(); i++) { %>
 <tr>
 	<td class="text-center"><input type="checkbox" name="checkbox"></td>
@@ -77,7 +76,6 @@ a {
 	<td class="text-center"><%=mypostList.get(i).getInsertDate() %></td>
 </tr>
 <%	} %>
-
 </table>
 
 <article>

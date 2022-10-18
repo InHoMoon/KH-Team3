@@ -31,9 +31,10 @@ public class JoinController extends HttpServlet {
 		
 		// 회원가입 처리
 		joinService.join(req);
-
-		// 로그인 페이지로 리다이렉트
-		resp.sendRedirect("/login");
+		
+		req.setAttribute("msg", "가입을 축하합니다");
+		
+		req.getRequestDispatcher("/WEB-INF/views/user/joinAlert.jsp").forward(req, resp);
 		
 	}
 	

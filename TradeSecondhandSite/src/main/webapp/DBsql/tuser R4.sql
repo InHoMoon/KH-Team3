@@ -8,7 +8,7 @@ CREATE TABLE tuser (
     , username VARCHAR2(200) NOT NULL
     , useremail VARCHAR2(100) NOT NULL
     , userphone VARCHAR2(50) NOT NULL
-    , useraddr1 VARCHAR2(4000) NOT NULL
+    , useraddr1 VARCHAR2(10) NOT NULL
     , useraddr2 VARCHAR2(4000) NOT NULL
     , useraddr3 VARCHAR2(4000)
     , usergender VARCHAR2(1)

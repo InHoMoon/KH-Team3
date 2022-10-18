@@ -29,17 +29,6 @@ public class JoinServiceImpl implements JoinService {
 	private JoinDao joinDao = new JoinDaoImpl();
 	
 	@Override
-	public User getJoinUser(HttpServletRequest req) {
-		
-		User user = new User();
-		
-		user.setUserid( req.getParameter("userid") );
-		user.setUsername( req.getParameter("username") );
-		
-		return user;
-	}
-	
-	@Override
 	public void join(HttpServletRequest req) {
 		
 		//--- 첨부파일 추가하여 회원가입 처리하기 ---

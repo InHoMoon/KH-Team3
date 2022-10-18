@@ -212,6 +212,8 @@ $(document).ready(function() {
 					
 					if( data.checkId == true ) {
 						
+						$("#check_id").val("checked")
+						
 						$("#userid").attr("readonly", true)
 						
 						$("#er_idck").css("display", "none")
@@ -222,6 +224,8 @@ $(document).ready(function() {
 						$("#btnChangeId").css("display", "")
 
 					} else {
+						
+						$("#check_id").val("")
 						
 						$("#userid").val("")
 						$("#userid").attr("readonly", false)
@@ -396,6 +400,8 @@ $(document).ready(function() {
 	// 아이디 변경
 	$("#btnChangeId").click(function() {
 		
+		$("#check_id").val("")
+
 		$("#userid").val("")
 		$("#userid").attr("readonly", false)
 		
@@ -418,23 +424,14 @@ $(document).ready(function() {
 		var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi)
 		
 		
-		if( $("#userid").val() == "" ) {
+		if( $("#check_id").val() == "" ) {
 			
 			$("#er_idck").css("display", "")
 			$("#er_id").css("display", "none")
 			$("#ok_id").css("display", "none")
 			
-			$("input").eq(0).focus()
+			$("#userid").focus()
 			
-		// 아이디 중복체크 검사
-		} else if( $("#btnCheckId").css("display") == "" ) {  
-			
-			$("#er_idck").css("display", "")
-			$("#er_id").css("display", "none")
-			$("#ok_id").css("display", "none")
-			
-			$("input").eq(0).focus()
-		
 		// 비밀번호
 		// 6자리 미만일 경우
 		} else if( pw.length < 6 ) {
@@ -446,7 +443,7 @@ $(document).ready(function() {
 			
 			$("#ok_pw").css("display", "none")
 			
-			$("input").eq(1).focus()
+			$("#userpw").focus()
 			 
 		// 공백이 존재할 경우
 		} else if ( pw.search(/\s/) != -1 ) {
@@ -456,7 +453,7 @@ $(document).ready(function() {
 			$("#er_pwblank").css("display", "")
 			$("#er_pwtext").css("display", "none")
 			
-			$("input").eq(1).focus()
+			$("#userpw").focus()
 		
 		// 영어+숫자+특수문자 조합이 아닐 경우
 		} else if ( num < 0 || eng < 0 || spe < 0 ) {
@@ -466,7 +463,7 @@ $(document).ready(function() {
 			$("#er_pwblank").css("display", "none")
 			$("#er_pwtext").css("display", "")
 			
-			$("input").eq(1).focus()
+			$("#userpw").focus()
 		
 		// 비밀번호 확인 불일치
 		} else if ( pw != pwck ) {
@@ -474,37 +471,37 @@ $(document).ready(function() {
 			$("#info_pwck").css("display", "none")
 			$("#er_pwsame").css("display", "")
 			
-			$("input").eq(2).focus()
+			$("#userpwck").focus()
 			
 		} else if ( $("#username").val() == "" ) {
 			
 			$("#blank_name").css("display", "")
 			
-			$("input").eq(3).focus()
+			$("#name").focus()
 
 		} else if ( $("#useremail").val() == "" ) {
 			
 			$("#blank_name").css("display", "")
 			
-			$("input").eq(4).focus()
+			$("#useremail").focus()
 			
 		} else if ( $("#userphone").val() == "" ) {
 			
 			$("#blank_phone").css("display", "")
 			
-			$("input").eq(5).focus()
+			$("#userphone").focus()
 			
 		} else if ( $("#useraddr1").val() == "" ) {
 			
 			$("#blank_addr").css("display", "")
 			
-			$("input").eq(6).focus()
+			$("#useraddr1").focus()
 			
 		} else if ( $("#useraddr2").val() == "" ) {
 			
 			$("#blank_addr").css("display", "")
 			
-			$("input").eq(7).focus()
+			$("#useraddr2").focus()
 			
 		} else {
 			
@@ -603,6 +600,8 @@ $(document).ready(function() {
 		<span class="er_box" id="er_id" style="display: none;">이미 등록된 아이디입니다</span>
 		
 		<span class="ok_box" id="ok_id" style="display: none;">사용가능한 아이디입니다</span>
+
+		<input type="hidden" id="check_id" name="check_id" value="">
 	</div>
 	
 	<div class="form-group">

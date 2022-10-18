@@ -16,11 +16,13 @@ public class Trade {
 	private String category;
 	private String userphone;
 	private int wishCheck;
+	private String storedName;
 	
 	public Trade() {}
-	
+
 	public Trade(int tradeno, String title, String userid, String content, int hit, Date insertDate, int price,
-			String productState, String saleState, String category, String userphone, int wishCheck) {
+			String productState, String saleState, String category, String userphone, int wishCheck,
+			String storedName) {
 		super();
 		this.tradeno = tradeno;
 		this.title = title;
@@ -34,6 +36,7 @@ public class Trade {
 		this.category = category;
 		this.userphone = userphone;
 		this.wishCheck = wishCheck;
+		this.storedName = storedName;
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class Trade {
 		return "Trade [tradeno=" + tradeno + ", title=" + title + ", userid=" + userid + ", content=" + content
 				+ ", hit=" + hit + ", insertDate=" + insertDate + ", price=" + price + ", productState=" + productState
 				+ ", saleState=" + saleState + ", category=" + category + ", userphone=" + userphone + ", wishCheck="
-				+ wishCheck + "]";
+				+ wishCheck + ", storedName=" + storedName + "]";
 	}
 
 	public int getTradeno() {
@@ -132,12 +135,22 @@ public class Trade {
 		this.userphone = userphone;
 	}
 
-	public int getwishCheck() {
+	public int getWishCheck() {
 		return wishCheck;
 	}
 
-	public void setwishCheck(int wishCheck) {
+	public void setWishCheck(int wishCheck) {
 		this.wishCheck = wishCheck;
 	}
+
+	public String getStoredName() {
+		return storedName;
+	}
+
+	public void setStoredName(String storedName) {
+		this.storedName = storedName;
+	}
+	
+	
 	
 }

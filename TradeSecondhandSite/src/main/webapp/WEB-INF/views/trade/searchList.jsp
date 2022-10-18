@@ -53,8 +53,8 @@ $(document).ready(function(){
 
 <table class="table table-striped table-hover table-condensed">
 <tr>
-	<th style="width: 15%">글번호</th>
-	<th style="width: 15%">판매 상태</th>
+	<th style="width: 10%">NO</th>
+	<th style="width: 10%">판매 상태</th>
 	<th style="width: 30%">제목</th>
 	<th style="width: 15%">아이디</th>
 	<th style="width: 10%">조회수</th>
@@ -62,7 +62,7 @@ $(document).ready(function(){
 </tr>
 
 <%	for(int i=0; i<searchList.size(); i++) { %>
-<tr>
+<tr class="text-center">
 	<td><%=searchList.get(i).getTradeno() %></td>
 	<%if(searchList.get(i).getSaleState().equals("판매중")){ %>
 		<td style="color: green;"><%=searchList.get(i).getSaleState() %></td>	
@@ -71,7 +71,6 @@ $(document).ready(function(){
 	<%} else if(searchList.get(i).getSaleState().equals("판매완료")) { %>
 		<td style="color: red;"><%=searchList.get(i).getSaleState() %></td>
 	<%} %>
-	<td>
 	<td>
 		<a href="./view?tradeno=<%=searchList.get(i).getTradeno() %>">
 			<%=searchList.get(i).getTitle() %>

@@ -56,7 +56,13 @@ public class TradeServiceImpl implements TradeService {
 	@Override
 	public List<Trade> getList(Paging paging) {
 		//게시글 전체 조회
-		return tradeDao.selectAll(JDBCTemplate.getConnection(), paging);
+		Connection conn = JDBCTemplate.getConnection();
+		
+		List<Trade> tradeList = tradeDao.selectAll(conn, paging);
+		
+		
+		
+		return tradeList;
 	}
 
 	@Override
@@ -479,7 +485,12 @@ public class TradeServiceImpl implements TradeService {
 		} else {
 			JDBCTemplate.rollback(conn);
 		}
-		
+		//댓글 삭제
+		if(tradeDao.deleteAllCmt(conn, tradeno)>0){
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
 	}
 
 	@Override
@@ -553,6 +564,8 @@ public class TradeServiceImpl implements TradeService {
 		
 		return relatedList;
 	}
+
+	
 
 
 

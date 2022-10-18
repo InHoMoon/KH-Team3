@@ -184,4 +184,15 @@ public interface TradeDao {
 	 */
 	public List<Trade> selectListByCategory(Connection conn, String category);
 
+	/**
+	 * 게시물 번호로 댓글 삭제
+	 * @param conn
+	 * @param tradeno
+	 * @return
+	 */
+	public int deleteAllCmt(Connection conn, Trade tradeno);
+
+
+	
+
 }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import util.Paging;
 import web.dto.Trade;
+import web.dto.TradeImg;
 import web.service.face.trade.TradeService;
 import web.service.impl.trade.TradeServiceImpl;
 
@@ -32,6 +33,10 @@ public class TradeListController extends HttpServlet {
 		
 		//페이징 된 게시글 목록 조회
 		List<Trade> tradeList = tradeService.getList(paging);
+		
+	
+
+		
 		
 		//게시글 목록 조회 결과 전달
 		req.setAttribute("tradeList", tradeList);

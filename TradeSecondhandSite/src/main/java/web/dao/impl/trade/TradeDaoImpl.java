@@ -808,5 +808,33 @@ public class TradeDaoImpl implements TradeDao {
 		return relatedList;
 	}
 
+	@Override
+	public int deleteAllCmt(Connection conn, Trade tradeno) {
+		String sql="";
+		sql+="DELETE tradecmt";
+		sql+=" WHERE tradeno = ?";
+		
+		int res = 0;
+		
+		try {
+			ps=conn.prepareStatement(sql);
+			
+			ps.setInt(1, tradeno.getTradeno());
+			
+			res=ps.executeUpdate();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		
+		return res;
+	}
+
+	
+
+
 
 }

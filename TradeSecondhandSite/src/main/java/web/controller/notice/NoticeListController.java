@@ -61,18 +61,18 @@ public class NoticeListController extends HttpServlet {
 			
 			
 			//페이징 없이 전달
-			//List<NoticeImage> searchlist = noticeService.getImgSearch(keyWord, searchWord);
+			List<NoticeImage> searchlist = noticeService.getImgSearch(keyWord, searchWord);
 			
 			
 			//검색(페이징 있)
 		
 			// 전달파라미터에서 현재 페이징 객체 계산하기
-			Paging paging = noticeService.getSearchPaging(req, keyWord, searchWord );
-			System.out.println(paging);
+			//Paging paging = noticeService.getSearchPaging(req, keyWord, searchWord );
+			//System.out.println(paging);
 					
 				
 			//게시글 페이징 목록 조회
-			List<NoticeImage> searchlist = noticeService.getNoticeSearchList( paging, keyWord, searchWord );
+			//List<NoticeImage> searchlist = noticeService.getNoticeSearchList( paging, keyWord, searchWord );
 				
 			
 			
@@ -84,7 +84,7 @@ public class NoticeListController extends HttpServlet {
 			req.setAttribute("searchWord", searchWord);
 			
 			//페이징 객체 MODEL값 전달
-			req.setAttribute("paging", paging);
+			//req.setAttribute("paging", paging);
 			
 			//View 지정 및 응답
 			req.getRequestDispatcher("/WEB-INF/views/notice/noticeList.jsp").forward(req, resp);

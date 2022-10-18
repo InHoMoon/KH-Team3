@@ -16,7 +16,7 @@ public interface UpdateService {
 	public User getUserno(HttpServletRequest req);
 	
 	/**
-	 * 전달된 userno를 이용하여 회원정보를 조회한다
+	 * 전달된 userno를 이용하여 회원 정보를 조회한다
 	 * 
 	 * @param userno - 조회할 userno를 가진 DTO객체
 	 * @return User - 조회된 회원 정보
@@ -32,7 +32,7 @@ public interface UpdateService {
 	public Ufile viewFile(User updateUser);
 
 	/**
-	 * 회원정보 수정
+	 * 회원 정보 수정
 	 * 
 	 * @param req - 요청 정보 객체
 	 */
@@ -42,14 +42,14 @@ public interface UpdateService {
 	 * 회원 정보 추출하기
 	 * 
 	 * @param req - 요청 정보 객체
-	 * @return User - 회원수정 정보 객체 ( userpw )
+	 * @return User - 비밀번호 수정 정보 객체 ( userid, userpw )
 	 */
 	public User getUpdateUserpw(HttpServletRequest req);
 
 	/**
 	 * 전달된 데이터를 이용하여 비밀번호 수정
 	 * 
-	 * @param user - 회원수정 정보 객체 ( userpw )
+	 * @param user - 비밀번호 수정 정보 객체 ( userid, userpw )
 	 */
 	public void updatePw(User user);
 

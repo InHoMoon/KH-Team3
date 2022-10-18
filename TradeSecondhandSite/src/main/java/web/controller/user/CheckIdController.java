@@ -52,7 +52,6 @@ public class CheckIdController extends HttpServlet {
 		Map<String, Object> resultId = new HashMap<String, Object>();
 		
 		resultId.put("checkId", isCheckId);
-		resultId.put("userid", user.getUserid());
 		
 		out.append( new Gson().toJson(resultId) );
 		

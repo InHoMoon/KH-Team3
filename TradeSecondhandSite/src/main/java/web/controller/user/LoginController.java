@@ -30,7 +30,7 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		// 전달파라미터 로그인 정보 얻어오기
+		// 전달파라미터 정보 얻어오기
 		User user = loginService.getLoginUser(req);
 		
 		// 로그인 인증
@@ -49,14 +49,7 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("login", isLogin);
 			session.setAttribute("userno", user.getUserno());
 			session.setAttribute("userid", user.getUserid());
-			session.setAttribute("username", user.getUsername());
-			session.setAttribute("useremail", user.getUseremail());
-			session.setAttribute("userphone", user.getUserphone());
-			session.setAttribute("useraddr1", user.getUseraddr1());
 			session.setAttribute("useraddr2", user.getUseraddr2());
-			session.setAttribute("useraddr3", user.getUseraddr3());
-			session.setAttribute("usergender", user.getUsergender());
-			session.setAttribute("userbirth", user.getUserbirth());
 			session.setAttribute("usernick", user.getUsernick());
 			session.setAttribute("usergrade", user.getUsergrade());
 			
@@ -68,6 +61,7 @@ public class LoginController extends HttpServlet {
 		} else {
 			System.out.println("LoginController doPost() - 로그인 실패" + user);
 			
+			// 로그인 실패 페이지로 이동
 			req.getRequestDispatcher("/WEB-INF/views/user/loginFail.jsp").forward(req, resp);
 			
 		}

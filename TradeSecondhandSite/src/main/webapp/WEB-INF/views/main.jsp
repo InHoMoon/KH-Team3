@@ -30,19 +30,29 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	
+	$("#mainSearchbtn").click(function() {
+			
+			if( $("#searchText").val() == "" ) {
+				$("#search_keyword").css("display", "")
+
+				$("input").eq(0).focus()
+				
+			}  else {
+				$(this).parents("form").submit(); // 로그인 폼 제출
+			}
+			
+		})
 	
 })
 </script>
-
-
+<div class="text-center"><span  id="search_keyword"  style="color:tomato; display: none;" >&nbsp; 검색어를 입력해주세요!</span></div>
 <div>
 	<form action="/trade/list" method="post" name="search">		
 	        <input  class="form-control" type="hidden" name="searchField" value="title">
             <div class="input-group col-xs-6 centered"  >
 	           <input type="text" class="form-control input-lg" placeholder="찾으시는 물건을 입력해주세요 :D" name="searchText" id="searchText">
                <div class="input-group-btn">
-                  <button type="submit" class="btn btn-default" id="mainSearchbtn"><span class="glyphicon glyphicon-search"></span></button>
+                  <button type="button" class="btn btn-default" id="mainSearchbtn"><span class="glyphicon glyphicon-search"></span></button>
                </div>
             </div>
     </form>
@@ -60,7 +70,7 @@ $(document).ready(function() {
 <hr>
 	<!-- 최신 글목록 영역 (왼)  -->
 	<div>
-		<div class="col-md-6">
+		<div class="col-md-7">
 			<div>
 			<span style="font-size: 25px;">최신글 </span>
 			<a href="./trade/list">더보기</a>
@@ -68,10 +78,10 @@ $(document).ready(function() {
 		<table class="table table-striped table-hover table-condensed">
 		<tr>
 			<th style="width: 10%">NO</th>
-			<th style="width: 15%">구분</th>
+			<th style="width: 20%">구분</th>
 			<th style="width: 45%">제목</th>
 			<th style="width: 10%">가격</th>
-			<th style="width: 20%">작성일</th>
+			<th style="width: 15%">작성일</th>
 		</tr>
 		
 		<% for( int i=0; i<newlist.size(); i++ ) { %>
@@ -90,9 +100,9 @@ $(document).ready(function() {
 		</table>
 		
 	<!-- 최신 글목록 영역 (왼)  -->		
-		</div class="col-md-4">
+		</div class="col-md-2">
 			
-		    	<div class="col-md-6">
+		    	<div class="col-md-5">
 		     		<img  class="img-responsive" src="/resources/image/sitepic.jpg" alt=""  >
 			    <div>
 			        <h3>마중마켓</h3>

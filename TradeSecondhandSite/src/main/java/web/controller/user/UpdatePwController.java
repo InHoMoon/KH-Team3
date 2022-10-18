@@ -29,15 +29,14 @@ public class UpdatePwController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		// 회원수정 전달파라미터 추출하기
+		// 전달파라미터 정보 얻어오기
 		User user = updateService.getUpdateUserpw(req);
-		System.out.println("UpdatePwController doPost() - 회원수정 확인" + user);
 		
-		// 회원수정 처리
+		// 비밀번호 수정 처리
 		updateService.updatePw(user);
-		System.out.println("UpdatePwController doPost() - 회원수정 확인" + user);
+		System.out.println("UpdatePwController doPost() - 비밀번호 수정 확인" + user);
 		
-		// 로그인 페이지로 리다이렉트
+		// 비밀번호 수정 성공 페이지로 이동
 		req.getRequestDispatcher("/WEB-INF/views/user/updatePwSuccess.jsp").forward(req, resp);
 		
 	}

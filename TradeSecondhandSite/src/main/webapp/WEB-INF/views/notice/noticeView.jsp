@@ -19,7 +19,8 @@ $(document).ready(function() {
 
 	//목록버튼
 	$("#btnList").click(function() {
-		$(location).attr('href', './list')
+		history.go(-1)
+		//$(location).attr('href', './list')
 	})
 	
 	//수정버튼
@@ -138,35 +139,42 @@ $(document).ready(function(){
 	$("#btnReply").click(function() {
 		console.log("#btnReply 클릭")
 		
-		var ncmtcomment = $("#ncmtcomment").val(); //댓글 내용
-		var nno = "<%= viewNotice.getNno() %>"; //게시물 번호
-		var userid = "<%=session.getAttribute("userid") %>"; //댓글 작성자 아이디
 		
-		var param={ "ncmtcomment": ncmtcomment, "nno": nno, "userid": userid};
-	        //var param="ncmtcomment="+ncmtcomment+"&nno="+nno;
+		
+		if( $("#ncmtcomment").val() == "" ) {
+				alert('댓글을 입력해주세요!');
 
+				$("input").eq(0).focus()
+				
+			}  else {
+				
+			var ncmtcomment = $("#ncmtcomment").val(); //댓글 내용
+			var nno = "<%= viewNotice.getNno() %>"; //게시물 번호
+			var userid = "<%=session.getAttribute("userid") %>"; //댓글 작성자 아이디
+			
+			var param={ "ncmtcomment": ncmtcomment, "nno": nno, "userid": userid};
+		        //var param="ncmtcomment="+ncmtcomment+"&nno="+nno;
 		
-		$.ajax({
-			type: "post"	//요청 메소드
-			, url: "/ncmt/write"	//요청 URL
-			, data: param
-			, dataType: "html"	//응답 데이터의 형식
-			, success: function( data ) {
-				console.log("AJAX 성공")
-				
-				//응답 데이터 반영
-				$("#listReply").html( data )
-				
-				//입력칸 초기화
-				$("#ncmtcomment").val("")
-				
-				
-			}
-			, error: function() {
-				console.log("AJAX 실패")
-			}
-		})
-				
+			$.ajax({
+				type: "post"	//요청 메소드
+				, url: "/ncmt/write"	//요청 URL
+				, data: param
+				, dataType: "html"	//응답 데이터의 형식
+				, success: function( data ) {
+					console.log("AJAX 성공")
+					
+					//응답 데이터 반영
+					$("#listReply").html( data )
+					
+					//입력칸 초기화
+					$("#ncmtcomment").val("")
+					
+				}
+				, error: function() {
+					console.log("AJAX 실패")
+				}
+			})
+		}		
 	})
  
 })
@@ -174,7 +182,6 @@ $(document).ready(function(){
 
 
 <%-- 댓글 작성 창 (로그인 할때만 보임) --%>
-
 <div class="form-inline">
 
 		<textarea class="form-control" id="ncmtcomment" 

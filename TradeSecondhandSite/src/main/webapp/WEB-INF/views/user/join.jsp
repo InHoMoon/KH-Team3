@@ -71,6 +71,15 @@ $(document).ready(function() {
 		}
 	})
 
+	// 이름 빈칸
+	$("#username").keyup(function() {
+		if( $(this).val() == "" ) {
+			$("#blank_name").css("display", "")
+		} else {
+			$("#blank_name").css("display", "none")
+		}
+	})
+
 	// 이메일 빈칸
 	$("#useremail").blur(function() {
 		
@@ -153,6 +162,13 @@ $(document).ready(function(){
 $(document).ready(function() {
 	$("input:text[engnum]").keyup(function() {
 		$(this).val( $(this).val().replace(/[^a-z0-9]/gi,"") )
+	})
+})
+
+// 한글 입력 불가능 
+$(document).ready(function() {
+	$("input:text[nkor]").keyup(function() {
+		$(this).val( $(this).val().replace(/[ㄱ-ㅎ가-힣]/gi,"") )
 	})
 })
 
@@ -692,7 +708,7 @@ $(document).ready(function() {
 	
 	<div class="form-group">
 		<label for="userpw">비밀번호 *</label>
-		<input type="password" class="form-control" id="userpw" name="userpw" placeholder="PASSWORD">
+		<input type="password" class="form-control" id="userpw" name="userpw" placeholder="PASSWORD" nkor>
 		
 		<span class="info_box" id="info_pw" style="display: '';">영문, 숫자, 특수문자가 모두 포함된 6자리 이상의 조합</span>
 
@@ -705,7 +721,7 @@ $(document).ready(function() {
 
 	<div class="form-group">
 		<label for="userpwck">비밀번호 확인 *</label>
-		<input type="password" class="form-control" id="userpwck" name="userpwck" placeholder="PASSWORD CHECK">
+		<input type="password" class="form-control" id="userpwck" name="userpwck" placeholder="PASSWORD CHECK" nkor>
 		
 		<span class="er_box" id="er_pwsame" style="display: none;">비밀번호가 일치하지 않습니다</span>
 		
@@ -720,7 +736,7 @@ $(document).ready(function() {
 	
 	<div class="form-group">
 		<label for="useremail">이메일 *</label>
-		<input type="email" class="form-control" id="useremail" name="useremail" placeholder="ex) email@gmail.com">
+		<input type="email" class="form-control" id="useremail" name="useremail" placeholder="ex) email@gmail.com" nkor>
 		<span class="er_box" id="er_email" style="display: none;">이메일 형식이 올바르지 않습니다</span>
 	</div>		
 	

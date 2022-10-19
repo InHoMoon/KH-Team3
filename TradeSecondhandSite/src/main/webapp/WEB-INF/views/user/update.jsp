@@ -12,7 +12,8 @@
 <!-- 필수입력항목 빈칸 : blur() -->
 <script type="text/javascript">
 $(document).ready(function() {
-
+	
+	
 	// 비밀번호 빈칸
 	$("#userpw").blur(function() {
 		if( $(this).val() == "" ) {
@@ -40,21 +41,50 @@ $(document).ready(function() {
 		}
 	})
 	
+
 	// 이메일 빈칸
 	$("#useremail").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#blank_email").css("display", "")
-		} else {
-			$("#blank_email").css("display", "none")
-		}
+		
+		  var regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+		  //test 함수 == 문자열이 정규식을 만족하는지 판별하는 함수
+		  //조건을 만족하면 true를 반환, 만족하지 못하면 false반환
+		  if( regEmail.test( $("#useremail").val() ) ) {
+			  $("#er_email").css("display", "none")
+		  } else {
+			  $("#er_email").css("display", "")
+		  }
 	})
 
-	// 전화번호 빈칸
-	$("#userphone").blur(function() {
-		if( $(this).val() == "" ) {
-			$("#blank_phone").css("display", "")
+	// 이메일 빈칸
+	$("#useremail").keyup(function() {
+		
+		  var regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+		  //test 함수 == 문자열이 정규식을 만족하는지 판별하는 함수
+		  //조건을 만족하면 true를 반환, 만족하지 못하면 false반환
+		  if( regEmail.test( $("#useremail").val() ) ) {
+			  $("#er_email").css("display", "none")
+		  } else {
+			  $("#er_email").css("display", "")
+		  }
+	})
+
+	// 전화번호 문자수
+	$("#userphone").keyup(function() {
+		if( $(this).val().length < 9 ) {
+			$("#er_phone").css("display", "")
 		} else {
-			$("#blank_phone").css("display", "none")
+			$("#er_phone").css("display", "none")
+		}
+	})
+	
+	// 전화번호 문자수
+	$("#userphone").blur(function() {
+		if( $(this).val().length < 9 ) {
+			$("#er_phone").css("display", "")
+		} else {
+			$("#er_phone").css("display", "none")
 		}
 	})
 
@@ -87,6 +117,20 @@ $(document).ready(function() {
 $(document).ready(function(){
 	$("input:text[numberOnly]").keyup(function() {
 		$(this).val( $(this).val().replace(/[^0-9]/g,"") )
+	})
+});
+
+// 영어+숫자 입력 가능 
+$(document).ready(function() {
+	$("input:text[engnum]").keyup(function() {
+		$(this).val( $(this).val().replace(/[^a-z0-9]/gi,"") )
+	})
+})
+
+// 영어+한글 입력 가능 
+$(document).ready(function() {
+	$("input:text[engkor]").keyup(function() {
+		$(this).val( $(this).val().replace(/[^ㄱ-ㅎ가-힣a-z]/gi,"") )
 	})
 })
 
@@ -352,10 +396,14 @@ $(document).ready(function() {
 		
 		var pw = $("#userpw").val()
 		var pwck = $("#userpwck").val()
+		var email = $("#useremail").val()
 		var num = pw.search(/[0-9]/g)
 		var eng = pw.search(/[a-z]/gi)
 		var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi)
+		var at = email.search(/[@]/g)
+		var regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 		
+			
 		// 비밀번호
 		// 6자리 미만일 경우
 		if( pw.length < 6 ) {
@@ -377,6 +425,8 @@ $(document).ready(function() {
 			$("#er_pwblank").css("display", "")
 			$("#er_pwtext").css("display", "none")
 			
+			$("#ok_pw").css("display", "none")
+			
 			$("#userpw").focus()
 		
 		// 영어+숫자+특수문자 조합이 아닐 경우
@@ -387,25 +437,27 @@ $(document).ready(function() {
 			$("#er_pwblank").css("display", "none")
 			$("#er_pwtext").css("display", "")
 			
+			$("#ok_pw").css("display", "none")
+			
 			$("#userpw").focus()
 		
 		// 비밀번호 확인 불일치
 		} else if ( pw != pwck ) {
 			
-			$("#info_pwck").css("display", "none")
+			$("#ok_pwck").css("display", "none")
 			$("#er_pwsame").css("display", "")
 			
 			$("#userpwck").focus()
+
+		} else if ( !regEmail.test( $("#useremail").val() ) ) {
 			
-		} else if ( $("#useremail").val() == "" ) {
-			
-			$("#blank_name").css("display", "")
+			$("#er_email").css("display", "")
 			
 			$("#useremail").focus()
+
+		} else if ( $("#userphone").val().length < 9 ) {
 			
-		} else if ( $("#userphone").val() == "" ) {
-			
-			$("#blank_phone").css("display", "")
+			$("#er_phone").css("display", "")
 			
 			$("#userphone").focus()
 			
@@ -489,6 +541,7 @@ $(document).ready(function() {
 </style>
 
 
+
 <h1 style="text-align: center;">회원정보 수정</h1>
 <hr>
 
@@ -539,19 +592,19 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="useremail">이메일 *</label>
 		<input type="email" class="form-control" id="useremail" name="useremail" placeholder="ex) email@gmail.com" value="<%=updateUser.getUseremail() %>">
-		<span class="blank_box" id="blank_email" style="display: none;">필수 입력 사항입니다</span>
-	</div>			
+		<span class="er_box" id="er_email" style="display: none;">이메일 형식이 올바르지 않습니다</span>
+	</div>		
 	
 	<div class="form-group">
 		<label for="userphone">전화번호 *</label>
-		<input type="text" class="form-control" id="userphone" name="userphone" placeholder="'-' 제외하고 입력" minlength="9" maxlength="13" numberOnly value="<%=updateUser.getUserphone() %>">
-		<span class="blank_box" id="blank_phone" style="display: none;">필수 입력 사항입니다</span>
+		<input type="text" class="form-control" id="userphone" name="userphone" placeholder="'-' 제외하고 입력" maxlength="13" numberOnly value="<%=updateUser.getUserphone() %>">
+		<span class="er_box" id="er_phone" style="display: none;">전화번호 형식이 올바르지 않습니다</span>
 	</div>		
 	
 	<div class="form-group">
 		<label for="useraddr1">주소 *</label>
 		<br>
-		<input type="text" class="form-control" id="useraddr1" name="useraddr1" placeholder="우편번호" value="<%=updateUser.getUseraddr1() %>">
+		<input type="text" class="form-control" id="useraddr1" name="useraddr1" placeholder="우편번호" numberOnly value="<%=updateUser.getUseraddr1() %>">
 		<button type="button" class="btn btn-post" id="btnPost" onclick="DaumPostcode()" value="우편번호 찾기">우편번호 찾기</button>
 		<br>
 		<input type="text" class="form-control" id="useraddr2" name="useraddr2" placeholder="주소" value="<%=updateUser.getUseraddr2() %>">
@@ -576,7 +629,7 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label for="usernick">닉네임</label>
 		<input type="text" class="form-control" id="usernick" name="usernick" placeholder="NICK" value="<%=updateUser.getUsernick() %>">
-	</div>	
+	</div>		
 
 	<div class="form-group" id="beforeFile">
 		<%	if( ufile != null ) { %>
